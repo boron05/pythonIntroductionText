@@ -34,6 +34,9 @@ h2{
     padding-top: 3em;
 }
 
+h2.index{
+    margin-top: 1em;
+}
 span.bs{
     font-family: Arial;
 }
