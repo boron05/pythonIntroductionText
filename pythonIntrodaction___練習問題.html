@@ -334,7 +334,6 @@ C:\XXX>python prime_factorization.py
         <table align="center">
             <tr>
                 <th></th>
-                <th></th>
                 <th>id</th>
                 <th>氏名</th>
                 <th>class</th>
@@ -347,7 +346,6 @@ C:\XXX>python prime_factorization.py
                 <th>平均</th>
             </tr>
             <tr>
-                <td></td>
                 <td></td>
                 <td>1</td>
                 <td>相川</td>
@@ -401,7 +399,6 @@ C:\XXX>python prime_factorization.py
                 <td>・</td>
             </tr>
             <tr>
-                <td></td>
                 <td>合計</td>
                 <td></td>
                 <td></td>
@@ -415,7 +412,6 @@ C:\XXX>python prime_factorization.py
                 <td>?</td>
             </tr>
             <tr>
-                <td></td>
                 <td>平均</td>
                 <td></td>
                 <td></td>
@@ -430,6 +426,9 @@ C:\XXX>python prime_factorization.py
             </tr>
         </table>
         つまり、保存する際に合計・平均列と合計・平均行を追加できればよい。
+        なお、csv形式で書き込む際にはデータを','で区切る必要があるが、
+        これには文字列メソッド「join()」を用いると良い。
+        使い方は「','.join(リスト)」でリストの各要素を','で区切った文字列が得られる。
     </p>
     
 </div>
