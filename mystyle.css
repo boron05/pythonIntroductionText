@@ -26,8 +26,9 @@ table td {/*table内のtdに対して*/
 }
 h1.top{
     text-align: center;
-    background-color: yellow;
-    margin: #b0c4de;
+    background-color: #b0c4de;
+    color: #ffffff;
+    margin: 0;   
 }
 h2{
     padding-top: 3em;
