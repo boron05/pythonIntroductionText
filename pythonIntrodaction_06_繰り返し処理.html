@@ -1,0 +1,446 @@
+﻿<html lang="ja">
+<head>
+    <title>繰り返し処理 | Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" href="prism.js"></script>
+    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="main">
+
+<div class="section-6">
+<h2>6. 繰り返し処理</h2>
+    <p>
+        プログラミングの中身は、前節で紹介した「条件分岐」と
+        ここでみていく「繰り返し処理」で（ほとんど）成り立っている。
+        Pythonでは繰り返し処理に「while文」と「for文」が用いられる。
+        なお、実用上はPythonの繰り返し処理は遅い為、
+        陽にコードに書かない工夫ができるとよい。
+    </p>
+<h3 class="underline">6.1 while文</h3>
+    <p>
+       単純な例だが、0～9までを表示するコードは以下で書ける。
+    </p>
+<pre class=line-numbers data-label="sample06_01_00_whileCount.py">
+<code class="language-python">
+c = 0           # カウンタ
+# 10未満のときループ
+while c < 10:
+    print(c)    # 表示
+    c += 1      # 自身に+1（c = c + 1）
+print('---END---')
+</code>
+</pre>
+    <p>
+        基本的な文法は上記の例のように「while 条件:」で書く。
+        条件が真(True)の間whileの中身を繰り返す。
+    </p> 
+    <p>
+        面倒に書くと以下でも同じ処理である。
+        （無駄に行数がかさばるだけなので、おすすめしない）
+    </p>
+<pre class=line-numbers data-label="sample06_01_01_whileFlag.py">
+<code class="language-python">
+flag = True # while条件用フラグ
+c = 0       # カウンタ
+# フラグがTrueのときループ
+while flag:
+    print(c)    # 表示
+    c += 1      # 自身に+1
+    # カウンタが10のとき
+    if c == 10:
+        flag = False    # フラグをFalseに
+print('---END---')
+</code>
+</pre>
+    <p>
+        上記以外にも、ループを抜けるには「break」が利用できる。
+    </p>
+<pre class=line-numbers data-label="sample06_01_02_whileBreak.py">
+<code class="language-python">
+c = 0
+# 無限ループ
+while True:
+    print(c)
+    c += 1
+    if c == 10:
+        break   # ループの強制終了
+print('---END---')
+</code>
+</pre>
+    <p>
+        「else」を利用すると、「break」でループを抜けなかったときの処理を記述できる。
+    </p>
+<pre class=line-numbers data-label="sample06_01_03_whileElse.py">
+<code class="language-python">
+c = 0
+while c < 99:
+    print(c)
+    c += 1
+    if c == 10:
+        print('---break---')
+        break   # ループの強制終了
+else:
+    print('without break')
+print('---END---')
+</code>
+</pre>
+    <p>
+        「continue」というものある。
+        「continue」の後ろの処理が実行されず、
+        whileに最初の処理に飛ぶ。
+    </p>
+<pre class=line-numbers data-label="sample06_01_04_whileContinue.py">
+<code class="language-python">
+c = 0
+while c < 99:
+    c += 1
+    if c == 10:
+        print('---break---')
+        break   # ループの強制終了
+    elif c % 2 == 1:
+        continue
+
+    print('偶数', c)
+else:
+    print('without break')
+print('---END---')
+</code>
+</pre>
+    <p>
+        「break」、「else」、「continue」を組み合わせると多重ループを
+        抜けられる。
+    </p>
+<pre class=line-numbers data-label="sample06_01_05_whileNestBreak.py">
+<code class="language-python">
+x = 0
+while x < 10:
+    x += 1
+    y = 0
+    while y < 10:
+        y += 1
+        print(x, 'x', y , '=', x*y)
+        if (x == 5) and (y == 10):
+            print('---break inner loop---')
+            break   # ループの強制終了
+    else:
+        print('---END inner loop without break---')
+        continue
+
+    print('---break outer loop---')
+    break
+print('---END---')
+</code>
+</pre>
+    <p>
+        なお、上記の「else」、「continue」など例は学習用に紹介しただけで、実用性はほぼない。
+        後述する「for文」で解決するものがほとんどである。
+    </p>
+
+    <h4>リスト操作</h4>
+    <p>
+        繰り返しを用いる場面として、シーケンス型（リスト・辞書型など）を操作したいときが多い。
+    </p>
+<pre class=line-numbers data-label="sample06_01_06_whileList.py">
+<code class="language-python">
+mylist = [5, 10, 15, 20]
+print(len(mylist))
+idx = 0
+while idx < len(mylist):
+    print(mylist[idx])
+    idx += 1
+print('---END---')
+</code>
+</pre>
+    <p>
+        上記の例4行目の「len()」はオブジェクトの長さ(要素の数)を
+        返すPythonの組み込み関数である。
+    </p>
+    <p>
+        whileでリストを扱う際は、「len()」で要素数を取得し、インデックス番号をカウンタとして
+        使用する必要がある。
+        リストや辞書型を扱う際は「while」ではなく、「for」でループを回した方が簡潔に書ける。
+    </p>
+    <p>
+        for文は予め要素数が決めっているときやループを回す回数が分かる際に用いるとよい。
+        一方のwhile文が何回ループを回せば良いかが不確定の場合に用いることが多い。
+        以下はwhile文を用いたinput()の例である。
+    </p>
+<pre class=line-numbers data-label="sample06_01_07_InputLoop.py">
+<code class="language-python">
+err_cnt = 0
+while True:
+    input_str = input('数値を入力して下さい >')
+    if input_str.isnumeric():
+        input_num = float(input_str)
+        break
+    else:
+        err_cnt += 1
+        print(err_cnt, '【ERROR】入力値が数値ではありません')
+print(input_num**2)
+print('---END---')
+</code>
+</pre>
+    <p>
+        「isnumeric()」は文字列が数値型に変換可能か判定するPythonの組み込み関数である。
+        このコードは入力が数値になるまでwhileを回し続けるものになっている。
+        なお、同様の処理であれば
+        エラーが出た際の処理を記述するtry-except文でも書ける
+        （7章参照）。
+    </p>
+<h3 class="underline">6.2 for文</h3>
+    <p>
+        for文はwhileでは面倒だったリストや辞書型を容易に扱える。
+    </p>
+<pre class=line-numbers data-label="sample06_02_00_forList.py">
+<code class="language-python">
+mylist = [5, 10, 15, 20]
+for ele in mylist:
+    print(ele)
+print('---END---')
+</code>
+</pre>
+    <p>
+        基本的な文法は上記の例のように「for 変数 in リストなど:」で書く。
+        例では変数eleに各要素が順に代入されてループされていく。
+        インデックス指定用の変数を書かなくてよいのでwhileよりも楽である。
+        （他言語ではfor-eachに相当するだろう。）
+    </p>
+    <p>
+        0～9まで表示したいときなどは組み込み関数「range()」を用いる。
+    </p>
+<pre class=line-numbers data-label="sample06_02_01_forRange.py">
+<code class="language-python">
+for x in range(10):
+  print(x)
+</code>
+</pre>
+    <p>
+        「range()」は連番を作成することができる。
+        渡せるパラメータは「range(stop)」（引数が1つ）か
+        「range(start, stop[, step])」（引数が2か3つ）である。
+    </p>
+<pre class=line-numbers data-label="sample06_02_02_forRangeStep.py">
+<code class="language-python">
+# start、stop指定
+for x in range(2, 15):
+    print(x)
+
+# start、stop、step指定
+for x in range(2, 15, 2):
+    print(x)
+
+# stepに負も可能
+for x in range(11, -5, -3):
+    print(x)
+</code>
+</pre>
+    <p class="no-indent">
+        ※range()でリストを生成している（range(0, 4) -> [0, 1, 2, 3]）ように思えるかもしれないが、
+        実際はそうではなく（ほぼ同じ様に使えるが）、range型を生成している。
+    </p>
+    <p>
+        for文と共に用いられる関数として、rangeの他にも
+        「enumerate」や「zip」などの便利なものがある。
+    </p>
+<pre class=line-numbers data-label="sample06_02_03_forZipEnum.py">
+<code class="language-python">
+mylist = [5, 10, 15, 20]
+mylist2 = [1, 6, 8, 2]
+
+# インデックス番号も回す
+for i, x in enumerate(mylist):
+    print(i, x)
+
+# 複数のリストをまとめて
+for a, b in zip(mylist, mylist2):
+    print(a, b, a + b)
+</code>
+</pre>
+    <p>
+        辞書型（json）の検索の例も紹介しておく。
+        大枠にリストがあり、その中に辞書型を格納している構造である。
+    </p>
+<pre class=line-numbers data-label="sample06_02_04_json.py">
+<code class="language-python">
+book_info = [
+    {
+        'isbn': '9784000076418',
+        'title': '力学',
+        '著者' : '戸田盛和',
+        'シリーズ名': '物理入門コース',
+        '出版社': '岩波書店',
+        '出版年月': '1982.11',
+        '定価': 2500
+    },
+    {
+        'isbn': '9784785320355',
+        'title': '熱力学',
+        '著者' : '三宅哲',
+        '出版社': '裳華房',
+        '出版年月': '1989.4',
+        '定価': 2500
+    },
+    {
+        'isbn': '9784785320263',
+        'title': '電磁気学',
+        '著者' : '中山正敏',
+        '出版社': '裳華房',
+        '出版年月': '1986.12',
+        '定価': 2500
+    },
+    {
+        'isbn': '9784000079273',
+        'title': '統計力学',
+        '著者' : '長岡洋介',
+        '出版社': '岩波書店',
+        'シリーズ名': '岩波基礎物理シリーズ',
+        '出版年月': '1994.7',
+        '定価': 3200
+    },
+    {
+        'isbn': '9784621083116',
+        'title': '第2版 シュッツ 相対論入門 2 一般相対論',
+        '著者' : ['江里口良治', '二間瀬敏史'],
+        '出版社': '丸善出版',
+        '出版年月': '2010.12',
+        '定価': 4400
+    }
+]
+
+target_publisher = '岩波書店'
+for dict in book_info:
+    if dict['出版社'] == target_publisher:
+        print(dict['title'], dict['著者'])
+</code>
+</pre>
+<h3 class="underline">6.3 内包表記</h3>
+    <p>
+        Pythonではリストの生成時などに、「内包表記」と呼ばれる記法が利用できる。
+        まず、4章でリストについて紹介したときはに用いたappend()を使用する例を
+        書いておく。
+    </p>
+<pre class=line-numbers data-label="sample06_03_00_comprehensions.py">
+<code class="language-python">
+mylist1 = []
+
+for i in range(20):
+    mylist.append(i**2)
+print(mylist1)
+
+mylist2 = [i**2 for i in range(20)]
+print(mylist2)
+</code>
+</pre>
+    <p>
+        上記のコードは0～19までの平方数をlistに入れる例である。
+        mylist2が内包表記で作ったものであり、
+        forだと空リストの生成まで含めて3行必要だが、これなら1行で済む。
+        また、三項演算子を用いて生成することもできる。
+    </p>
+<pre class=line-numbers data-label="sample06_03_01_comprehensionsIf.py">
+<code class="language-python">
+a = float(input('number >'))
+even_odd = '偶数' if a % 2 == 0 else '奇数'
+print(even_odd)
+
+mylist1 = []
+for i in range(20):
+    if i % 3 == 0:
+        mylist.append(i**2)
+    else:
+        mylist.append(0)
+print(mylist1)
+
+mylist2 = [i**2 if i % 3 == 0 else 0 for i in range(20)]
+print(mylist2)
+</code>
+</pre>
+    <p>
+        内包表記や三項演算子は慣れるまで読みにくいかもしれないが、コード数を減らせるだけでなく、
+        実行速度が速いという利点がある（特にリストの内包表記）。
+        下記は実行スピードを検証する例である。
+    </p>
+<pre class=line-numbers data-label="sample06_03_02_comprehensionsSpeedTest.py">
+<code class="language-python">
+import time     # 実行時間計測用
+import random   # 乱数発生用
+import copy     # リストのコピー用
+
+# 削除する要素
+target_int = 3
+# 要素数
+list_size = 50000
+
+# 0～9までの整数をランダムに格納する
+list_a = [random.randint(0, 9) for x in range(list_size)]
+# list_aと同じ値を格納した別のリストを作成
+list_b = list_a.copy()  
+print(target_int, 'count', list_a.count(target_int))
+
+# forでのremove速度計測
+ut = time.perf_counter()    # 現在時刻
+for x in range(list_size):
+    try:
+        list_a.remove(target_int)   # 該当する要素がないとValueError
+    except ValueError:
+        break
+print('forでのremove', time.perf_counter()-ut, 'sec')
+print(target_int, 'count', list_a.count(target_int))
+
+# 内包表記でのremove（新規リスト作成）速度計測
+ut = time.perf_counter() # 現在時刻
+new_list = [x for x in list_b if x != target_int]
+print('内包表記での要素削除', time.perf_counter()-ut, 'sec')
+print(target_int, 'count', new_list.count(target_int))
+</code>
+</pre>
+    <p>
+        最初の3行は用いるライブラリをimportしている箇所となる。
+        さらにまだ説明していないtry-exceptを用いているので、
+        コードを理解する必要はなく、結果だけみてfor文が遅いことを実感してくれればよい。
+        注意すべきは内包表記の部分でのifの位置のみである。
+        ifのみだとforの右側に書くようになる。
+    </p>
+    <p class="no-indent">
+        ※「for 要素 in リスト:」と説明したが、
+        正確にいうとリストではなく「イテレータ（iterator）」が入る。
+        リストや辞書型はこのイテレータの一種である。
+       iteratableなオブジェクトを自作することもできる。
+       また、似たものとして「ジェネレータ」というものも存在する。
+    </p>
+    <p>
+        第5章の条件分岐と本章の繰り返し処理を習得できれば、
+        基本的なプログラムが作れるようになったと思って良い。
+        何か作りたいプログラムを自身で書いてみると良い学習になるかもしれない。
+        ここでは、入門書によくある例として素数判定プログラムを紹介する。
+    </p>
+<pre class=line-numbers data-label="sample06_03_02_comprehensionsSpeedTest.py">
+<code class="language-python">
+print('-1入力で終了')
+
+while True:
+    num = int(input('自然数 >'))
+    if num == -1:
+        break
+    flag = True
+    for x in range(2, num):
+        if num % x == 0:
+            flag = False
+            break
+    print(flag)
+</code>
+</pre>
+    <p>
+        上記のアルゴリズムは単純なものであり、
+        エラトステネスの篩などのより効率的な素数判定法もある。
+    </p>
+    <p>
+        練習の例として行列の積を計算するプログラムをfor文で書いてみるとかも面白いかもしれない。
+    </p>
+</div>
+</div>
+</body>
+<script src="prism.js"></script>
+</html>

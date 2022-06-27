@@ -1,0 +1,249 @@
+﻿<html lang="ja">
+<head>
+    <title>条件分岐 | Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" href="prism.js"></script>
+    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="main">
+
+<div class="section-5">
+<h2>5. 条件分岐</h2>
+    <p>
+        この章ではプログラミングを行う上で必須であろう条件分岐の書き方と、
+        3章で紹介したブロックを用いた文法について紹介する。
+    </p>
+<h3 class="underline">5.1 if文</h3>
+    <p>
+        Pythonで条件分岐を行いたいときはif文を用いる。
+       他言語ではswitch-case文をサポートしているものもあるが、
+       Pythonでの条件分岐はifのみである。
+    </p>
+    <p>
+        下記の例では「input()」関数を用いているが、
+        これはコマンドプロンプトから入力を受ける組み込み関数である。
+    </p>
+<pre class=line-numbers data-label="sample05_01_00_if.py">
+<code class="language-python">
+str_a = input('a >')    # 文字列'a >'を表示し、入力を待つ
+str_b = input('b >')    # 入力した型は文字列型となる
+
+a = float(a)    # 数値に変換
+b = float(b)
+
+print(a, b)
+if a > b:
+    print('a大なりb')
+
+print('---END---')
+</code>
+</pre>
+    <p>
+        基本的な文法は上記の例のように「if 条件:」で書く。
+        条件が真(True)であれば、ifブロックの中を実行する。
+    </p> 
+    <p>
+        また、ifの後ろに「elif 条件:」や「else:」を続けることもできる。
+        「elif」はelse ifの略であり、最初の条件ifに当てはまらなかった場合に
+        追加で条件分岐させることができる。
+        「elif」は複数個書いてもよい。
+        「else」はifでもelifでもFalseだった場合に最後に実行される部分となる。
+    </p>
+<pre class=line-numbers data-label="sample05_01_01_elif.py">
+<code class="language-python">
+str_a = input('a >')    
+str_b = input('b >')    
+
+a = float(a)    # 数値に変換
+b = float(b)
+
+if a > b:
+    print('a > b')
+    c = a - b
+    print('|a - b|=', c)
+elif a < b:
+    print('a < b')
+    c = b - a
+    print('|a - b|=', c)
+else:
+    print('a = b')
+    print('|a - b|=', 0)
+</code>
+</pre>
+    <p>
+        <div class="pic_frame">
+            <img src="fig_imgs/fig_05-00_ifelifelse.png" title="条件分岐のフローチャート" width="500">
+            <p>条件分岐のフローチャート</p> 
+        </div>
+    </p>
+
+    <h4>比較演算子</h4>
+    <p>
+        上記の例で何気なく「<」や「>」を用いたがこれらは比較演算子と呼ばれるもので、
+        右と左のものを比べて「True」か「Flase」を返すはたらきがある。
+        <table border="1" style="border-collapse: collapse" align="center">
+            <tr>
+                <th>比較演算子</th>
+                <th>説明</th>
+            </tr>
+          <tr>
+                <td>x <span class="font-red">==</span> y</td>
+                <td>xとyが等しい</td>
+          </tr>
+          <tr>
+                <td>x <span class="font-red">!=</span> y</td>
+                <td>xとyが等しくない</td>
+          </tr>
+          <tr>
+                <td>x <span class="font-red">></span> y</td>
+                <td>xはyより大きい</td>
+          </tr>
+          <tr>
+                <td>x <span class="font-red"><</span> y</td>
+                <td>xはyより小さい</td>
+          </tr>
+          <tr>
+                <td>x <span class="font-red">>=</span> y</td>
+                <td>xはy以上</td>
+          </tr>
+          <tr>
+                <td>x <span class="font-red"><=</span> y</td>
+                <td>xはy以下</td>
+          </tr>
+        </table>
+        「is演算子」と呼ばれるオブジェクトが等しいかを判定するものも存在する。
+        「==」は同じ値を持っているかを判定するが、
+        「is」は生成されたオブジェクト自体を比較する。
+    </p>
+<pre class=line-numbers data-label="sample05_01_02_is.py">
+<code class="language-python">
+a = [0, 2, 4]
+b = [0, 2, 4]
+c = a
+
+#id()は組み込み関数でオブジェクトのid番号を返す
+print(id(a), id(b))     
+
+print(a == b)   # -> True
+print(a is b)   # -> False
+print(a is c)   # -> True
+</code>
+</pre>
+    <p>
+        上記の例では「a == b」でリストに格納された値が順番も含め等しいためTrueを返すが、
+        「a is b」の場合はオブジェクトが異なる為、Falseを返す。
+    </p>
+    <h4>論理演算子</h4>
+    <p>
+        複合条件を表現したいときは「and」、「or」、「not」を用いる。
+    </p>
+<pre class=line-numbers data-label="sample05_01_03_booleanOperations.py">
+<code class="language-python">
+str_a = input('a >')
+a = float(a)
+
+print(a % 2 == 0)
+print(a % 3 == 0)
+print((a % 2 == 0) and (a % 3 == 0))
+
+if (a % 2 == 0) and (a % 3 == 0):
+    print('2と3の倍数です')
+
+if (a % 3 == 0) and (a % 6 != 0):
+    print('3の倍数ではありますが、6の倍数ではありません')
+</code>
+</pre>
+<h4>入れ子（ネスト、nesting）</h4>
+    <p>
+        ifブロックの中にifブロックを入れるネスト構造も作れる。
+    </p>
+<pre class=line-numbers data-label="sample05_01_04_nesting.py">
+<code class="language-python">
+score = int(input('SCORE >'))
+grade = “不可”
+if score >= 60:
+    grade = “可”
+    if score >= 70:
+        grade = “良”
+        if score >= 80:
+            grade = “優”
+            if score >= 90:
+                grade = “秀”
+
+print(score, grade)
+</code>
+</pre>
+    <p>
+        elifで書くなら
+    </p>
+<pre class=line-numbers data-label="sample05_01_05_elifgrade.py">
+<code class="language-python">
+score = int(input('SCORE >'))
+if score >= 90:
+    grade = '秀'
+elif score >= 80:
+    grade = '優'
+elif score >= 70:
+    grade = '良'
+elif score >= 60:
+    grade = '可'
+else:
+    grade = '不可'
+
+print(score, grade)
+</code>
+</pre>
+    <p>
+        <div class="pic_frame">
+            <img src="fig_imgs/fig_05-01_nesting.png" title="ネストの階層" width="500">
+            <p>ネストの階層</p> 
+        </div>
+    </p>
+    <p>
+        PythonにおいてTrueまたはFalseの情報を保持するbool型は数値型の一種であり、
+        他の数値型と相互変換が可能で、Trueは1をFalseは0を意味した（4章参照）。
+        つまり、ifの条件式のところに数値型を書いても良い。
+        数値型を条件式に書いた場合は、0はFalseを意味し、それ以外の数値はTrueとみなされる。
+    </p>
+<pre class=line-numbers data-label="sample05_01_06_ifnumber.py">
+<code class="language-python">
+a = float(input('a >'))
+b = float(input('b >'))
+
+if a:
+    print('Not Zero')
+    print('b / a = ', b/a)
+else:
+    print('Is Zero')
+
+if a != 0:
+    print('Not Zero')
+    print('b / a = ', b/a)
+else:
+    print('Is Zero')
+</code>
+</pre>
+<h3 class="underline">5.2 三項間演算子（1行のif文）</h3>
+    <p>
+        if文ではifブロックを作り、その中に処理を記述すると述べたが、
+        その処理が1つである場合1行で書くこともできる。
+        また、「if-else」も1行で記述する「三項演算子」と呼ばれる書き方もあり
+        「真のときに返す値 if 条件 else 偽のときに返す値」と記述する。
+    </p>
+<pre class=line-numbers data-label="sample05_02_00_oneLineIf.py">
+<code class="language-python">
+score = int(input('SCORE >'))
+
+if score >= 60: print(score, '合格')
+
+judg = '合格' if score >= 60 else '不合格'
+print(judg)
+</code>
+</pre>
+</div>
+</div>
+</body>
+<script src="prism.js"></script>
+</html>

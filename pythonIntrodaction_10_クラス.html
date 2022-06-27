@@ -1,0 +1,363 @@
+﻿<html lang="ja">
+<head>
+    <title>クラス | Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" href="prism.js"></script>
+    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="main">
+
+<div class="section-10">
+<h2>10. クラス</h2>
+    <p>
+        「関数」はいくつかの処理を一つにまとめたものであるが、さらにこれらをまとめてクラスを定義できる。
+        このクラスの定義がオブジェクト指向の利点なのだが、深入りすると終りが見えなくなるため
+        例を紹介して終わる。
+        また、Pythonコードの例をネットで探すと、
+        おまじない「if __name__ == '__main__':」
+        がよく出てくるであろうかから、
+        これの説明だけはしておく。
+    </p>
+    <h3 class="underline">10.1 クラスの定義</h3>
+    <p>
+        前セクションで紹介した入力を行う関数を拡張しつつクラスにまとめる。
+    </p>
+<pre class=line-numbers data-label="myclassinput.py">
+<code class="language-python">
+# キー入力に関する処理をまとめたクラスとして
+# Input_Numberを作ってみる
+# コンストラクタいらないな…例が悪いかも
+class InputNumber:
+
+    # 数値入力
+    def input_num(self, str='数値入力>'):
+        while True:
+            x = input(str)
+            try:
+                float_x = float(x)
+                return float_x      # 関数はreturnした時点で処理が終り、それ以降の処理は行わない
+            except ValueError:
+                print('数値を入力して下さい:', x)
+    
+    # 整数判定
+    def check_int(self, num):
+        if num.is_integer():    # floatには整数判定メソッドis_integer()
+            int_x = int(num)
+            return True, int_x
+        else:
+            return False, num
+
+    # 整数入力
+    def input_int(self, str='整数入力>'):
+        while True:
+            float_x = self.input_num(str)    # input_num関数を利用
+            flag, num = self.check_int(float_x)
+            if flag:
+                return num
+            else:
+                print('整数を入力して下さい:', num)
+
+    # 下限と上限の間の数値入力
+    def input_between_num(self, lower=-float('inf'), upper=float('inf')):
+        while True:
+            float_x = self.input_num(f'{lower}～{upper}の間の数値を入力>')
+            if float_x >= lower and upper >= float_x:
+                return float_x
+            else:
+                print('入力範囲が正しくありません:', float_x)
+
+    # 下限と上限の間の数値入力
+    def input_between_int(self, lower=-float('inf'), upper=float('inf')):
+        while True:
+            float_x = self.input_between_num(lower, upper)
+            flag, num = self.check_int(float_x)
+            if flag:
+                return num
+            else:
+                print('整数を入力して下さい:', num)
+
+    # 複数個の入力に対応
+    def input_nums(self, str='数値入力>', delimiter = ','):
+       while True:
+            x = input(str)
+            try:
+                float_xs = [float(s) for s in x.split(delimiter)]
+                return float_xs
+            except ValueError:
+                print('数値を入力して下さい:', x)
+
+    # N個の入力に対応
+    def input_nums_N(self, N, str='数値入力>', delimiter=','):
+        while True:
+            nums = self.input_nums(str=str, delimiter=delimiter)
+            if len(nums) == N:
+                return nums
+            else:
+                print('入力個数が正しくありません')
+
+if __name__ == '__main__':
+    inputN = InputNumber()
+    inputN.input_between_int(5, 9)
+</code>
+</pre>
+    <p>
+        1~70行目までがInputNumber()クラスである。
+        72行目以降はこのInputNumber()クラスが正常に使えるかを試している部分になる。
+        他のPythonプログラムはこのクラスをimportすることで利用できるようになる
+        （モジュール化させる）が
+        「if __name__ == '__main__':」はモジュール化させたときに無視されるので、動作確認を行うのに適している。
+    </p>
+    <p>
+        次のセクションで上記コードを使うので、
+        コピペするなどしてファイル名「myclassinput.py」で保存しておくことを推奨する。
+    </p>
+    <p class="no-indent">
+        ※上記のクラスの例ではコンストラクタを定義していないが、
+        クラスを定義するときは「def __init__():」でコンストラクタを作り、初期化処理などを行うのが一般的である。
+        最初に述べたが、クラスの扱いはオブジェクト指向に直結する。本テキストは入門であるからこれ以上は触れない。
+    </p>
+    <p class="no-indent">
+        ※上記の処理であればクラス化する必要はない。
+        下記にクラス化しないで、モジュール化させたものを書いておく。
+        これも次の章で利用するため、ファイル名「mymoduleinput.py」として保存しておくことを勧める。
+    </p>
+<pre class=line-numbers data-label="mymoduleinput.py">
+<code class="language-python">
+# 数値入力
+def input_num(str='数値入力>'):
+    while True:
+        x = input(str)
+        try:
+            float_x = float(x)
+            return float_x      # 関数はreturnした時点で処理が終り、それ以降の処理は行わない
+        except ValueError:
+            print('数値を入力して下さい:', x)
+
+# 整数判定
+def check_int(num):
+    if num.is_integer():    # floatには整数判定メソッドis_integer()
+        int_x = int(num)
+        return True, int_x
+    else:
+        return False, num
+
+# 整数入力
+def input_int(str='整数入力>'):
+    while True:
+        float_x = input_num(str)    # input_num関数を利用
+        flag, num = check_int(float_x)
+        if flag:
+            return num
+        else:
+            print('整数を入力して下さい:', num)
+
+# 下限と上限の間の数値入力
+def input_between_num(lower=-float('inf'), upper=float('inf')):
+    while True:
+        float_x = input_num(f'{lower}～{upper}の間の数値を入力>')
+        if float_x >= lower and upper >= float_x:
+            return float_x
+        else:
+            print('入力範囲が正しくありません:', float_x)
+
+# 下限と上限の間の数値入力
+def input_between_int(ower=-float('inf'), upper=float('inf')):
+    while True:
+        float_x = input_between_num(lower, upper)
+        flag, num = check_int(float_x)
+        if flag:
+            return num
+        else:
+            print('整数を入力して下さい:', num)
+
+# 複数個の入力に対応
+def input_nums(str='数値入力>', delimiter = ','):
+   while True:
+        x = input(str)
+        try:
+            float_xs = [float(s) for s in x.split(delimiter)]
+            return float_xs
+        except ValueError:
+            print('数値を入力して下さい:', x)
+
+# N個の入力に対応
+def input_nums_N(N, str='数値入力>', delimiter=','):
+    while True:
+        nums = input_nums(str=str, delimiter=delimiter)
+        if len(nums) == N:
+            return nums
+        else:
+            print('入力個数が正しくありません')
+</code>
+</pre>
+
+
+<h3 class="underline">10.2 メソッドと関数</h3>
+    <p>
+        ここまで「メソッド(method)」という単語について何も説明をしていなかった。
+        （何故なら説明が面倒だったからである。）
+        おそらく初出は第4章でリストに要素を追加するときはappend()メソッドを用いるなどと
+        書いた部分である。
+        メソッドとは何かというと関数である。
+        関数と"ほぼ"同義だと捉えてしまって構わない。
+        一応Pythonだと区別しており、真面目に書くなら「クラス内にある関数を
+        インスタンスを生成してから呼び出すとメソッドと呼んでいる」となる。
+        「インスタンス」というのがオブジェクト指向を学ばないと意味が分からないだろう。
+        インスタンスという言葉を用いずにメソッドを説明しようとすると少し粗い説明になるが、
+        「クラス内にある関数をメソッドと呼ぶ」ということになる。
+        もっと表面的にいうなら「xxx.関数名(引数)」で書くのをメソッドと呼び、
+        ドットを用いずに「関数名(引数)」と書けるなら関数と呼んでいるだけである。
+    </p>
+    <p>
+        下記の例は口座アカウントの情報を保持するためのクラスである。
+        メソッドと関数の違いを示すために書いたコードではあるが、
+        オブジェクト指向にも関わってくるため読み飛ばしてしまっても問題ない。
+    </p>
+<pre class=line-numbers data-label="sample10_02_00_bankAccountClass.py">
+<code class="language-python">
+class BankAccount:
+
+    users = []
+
+    # 氏名と初期預金額
+    def __init__(self, name, amount):
+        self.name = name
+        BankAccount.users.append(name)
+        self.__balance = amount
+
+    # 預け入れ
+    def deposit(self, amount):
+        self.__balance += amount
+        print_str = f'Succeed Deposit {amount:,} yen ' \
+                    f'({self.__balance-amount:,} -> {self.__balance:,})'
+        print(print_str)
+
+    # 引き出し
+    def withdrawal(self, amount):
+        self.__balance -= amount
+        print_str = f'Succeed Withdrawal {amount:,} yen ' \
+                    f'({self.__balance+amount:,} -> {self.__balance:,})'
+        print(print_str)
+
+    # 送金
+    def transfer(self, other, amount):
+        print(f'Transfer {self.name} -> {other.name}')
+        other.deposit(amount)
+        self.withdrawal(amount)
+
+    # 残高取得
+    def getBalance(self):
+        return self.__balance
+
+    # 残高表示
+    def print_info(self):
+        print(f'name: {self.name}\t balance: {self.__balance:8,}')
+
+# 金利計算
+def calc_interest(balance, rate=1.0001):
+    return balance * (rate - 1)
+
+# 銀行口座インスタンス生成
+account0 = BankAccount('富山花子', 200000)
+account1 = BankAccount('石川太郎', 100000)
+
+# 収支処理
+account0.deposit(50000)     # 支出メソッド利用
+account1.withdrawal(25000)  # 収入メソッド利用
+
+# 送金
+account0.transfer(account1, 50000)     # 送金メソッド利用
+
+# 残高取得メソッド利用
+b0 = account0.getBalance()  
+b1 = account1.getBalance()
+
+# 金利計算関数
+itr0 = calc_interest(b0)
+itr1 = calc_interest(b1, 1.0003)
+
+print('金利')
+print(f'氏名: {account0.name:6} 利息:{itr0:3,.0f}円')
+print(f'氏名: {account1.name:6} 利息:{itr1:3,.0f}円')
+</code>
+</pre>
+
+<h3 class="underline">10.3 if __name__ == '__main__':</h3>
+    <p>
+        ネット上でPythonのサンプルコードを見つけたとき、
+        高確率で書いてあるであろう記述が「if __name__ == '__main__':」である。
+        前述したようにこれは、モジュールやクラスの動作確認を行う際によく用いられる。
+    </p>
+    <p>
+        もう少し詳しく見てみる。
+        if文であるから、変数__name__が文字列"__main__"に等しいとき、
+        if文中を実行するという意味となっている。
+        問題なのはこの変数__name__が一体何かということである。
+        結論から言えば、「スクリプトファイルをコマンドラインから
+        実行したときにそのスクリプトはモジュール化される。
+        その際のモジュール名は"__main__"となり変数__name__に設定される。」
+        (Javaでいうmainメソッドみたいなもの。)ということになる。
+        かみ砕けば、一番最初に実行される処理（モジュール）の名前__name__が"__main__"に自動的になるという意味である。
+    </p>
+    <p>
+        例として、9章の最後のサンプルコードを見てみる。
+        このコードは1～29行目までに3つの関数を定義している。
+        プログラムの処理は上から下へ逐次的に実行されるから、
+        このコードをコマンドラインから呼んだ時に
+        一番最初に実行されるのはinput_int()関数であろうか（反語）。
+        実際は31行目のprint()がこのコードで一番最初に実行される部分である。
+        その後32～36行目のwhile処理に移行し、
+        while内の33行目で13行目のinput_between_int関数が呼ばれる。
+        クラスや関数はスクリプトファイルの前方に書かれていたとしても、
+        それがメイン処理（グローバル環境）で呼ばれるまでは実行されない。
+        そして、このメイン処理を実行するときにPythonは自動的に__name__という変数をつくり、
+        それに"__main__"を代入している。下記のコードを実行してみるとよい。
+        __name__という変数をどこにも宣言していないにも関わらず、
+        下記のコードはエラーにならないことが分かるだろう。
+    </p>
+<pre class=line-numbers data-label="sample10_03_00___name__.py">
+<code class="language-python">
+print(__name__)
+</code>
+</pre>
+    <p>
+        下記の説明は第11章を読んだ後の方が分かりやすいだろう。
+    </p>
+    <p>
+        "MyClassTest1.py"はコマンドから実行しても何も起こらない。
+        他方の"MyClassTest2.py"と"MyClassTest3.py"はファイル内でMyClassクラスを呼び出している為、
+        処理が実行され"Test"文字列がコマンドに表示される。
+        "MyClassTest1.py"はコードの量が一番少なくて済むが、
+        単一のスクリプトファイルでデバッグが行えないというデメリットが存在する。
+        <div class="pic_frame">
+            <img src="fig_imgs/fig_10-00_testscript.png" title="自作クラスの動作テスト" width="600">
+            <p>自作クラスの動作テストの違い</p> 
+        </div>
+    </p>
+    <p>
+        下図は外部ファイルを呼び出したときの処理の違いを表した図である。
+        "myTest1.py"と"myTest3.py"は同じ結果を示すが、
+        "myTest2.py"は"Start Call"文字列の前に"Test"文字列がコマンドに表示されるという違いが出る。
+        これは"myTest2.py"が呼び出す"MyClassTest2.py"は
+        グローバル環境でMyClassクラスを呼び出している為、
+        "myTest2.py"が"MyClassTest2.py"をインポートした時にも、
+        この"MyClassTest2.py"のグローバル環境下での
+        MyClassクラスの呼び出しが発生するからである。
+        その為、MyClassクラスは"myTest2.py"と"MyClassTest2.py"からの呼び出しによって
+        計2回呼ばれることになり、"Test"文字列が2回表示されることになる。
+        "myTest3.py"で"MyClassTest3.py"をインポートした時は、
+        このときのメインプロセスは"myTest3.py"の方であるから"
+        MyClassTest3.py"内のifブロック内は実行されない。
+        （なお、"myTest3.py"内にprint(MyClassTest3.__name__)を付け加えると"MyClassTest3"が表示される。）
+        <div class="pic_frame">
+            <img src="fig_imgs/fig_10-01_callpy.png" title="自作クラスの呼び出し" width="600">
+            <p>自作クラスの呼び出し</p> 
+        </div>
+    </p>
+</div>
+</div>
+</body>
+<script src="prism.js"></script>
+</html>

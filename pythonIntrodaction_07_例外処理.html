@@ -1,0 +1,196 @@
+﻿<html lang="ja">
+<head>
+    <title>Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" href="prism.js"></script>
+    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="main">
+
+<div class="section-7">
+<h2>7. 例外処理</h2>
+    <p>
+        前節の最後に「try-except」を用いたコード例を書いたが、
+        これは「例外処理」と呼ばれ実行時にエラーを検出した際の処理を
+        記述できる。
+        プログラムは実行時にエラーを検出すると、その段階で処理を停止する。
+        しかし、例外処理を書いておけばエラーを検出しても処理を続けさせることができる。
+    </p>
+    <p>
+        <div class="pic_frame">
+            <img src="fig_imgs/fig_07-00_tryexcept.png" title="例外処理のフローチャート" width="500">
+            <p>例外処理のフローチャート</p> 
+        </div>
+    </p>
+<h3 class="underline">7.1 try-except</h3>
+    <p>
+       0での割り算を回避する例を見てみる
+    </p>
+<pre class=line-numbers data-label="sample07_01_00_zeroDivError.py">
+<code class="language-python">
+a = 12
+b = 0
+
+try:
+    c = a / b
+except ZeroDivisionError as zde:
+    c = 0
+    print(zde)  # -> division by zero
+print(c)        # -> 0
+</code>
+</pre>
+    <p>
+        基本的な文法は上記の例のように、
+        「try:」のブロック内にエラーとなる可能性がる処理を記述し、
+        「except エラーの種類:」のブロック内にエラーが検出された場合の
+        処理を記述する。
+        「except ZeroDivisionError as zde:」の"as"は
+        "ZeroDivisionError"オブジェクトを"zde"という変数名で扱うという意味である。
+        つまり、「print(zde)」は「print(ZeroDivisionError)」と同義である。
+        ZeroDivisionErrorのつづりが長いので省略したいだけであり、"as zde"部分は無くてもよい。
+    </p> 
+    <p>
+        例外の種類はZeroDivisionErrorの他にも多くの組み込み例外が存在する。
+        一例を紹介する。
+        <table border="1" style="border-collapse: collapse" align="center">
+            <tr>
+                <th>組み込み例外</th>
+                <th>説明</th>
+            </tr>
+          <tr>
+                <td>SyntaxError</td>
+                <td>構文に関するエラー</td>
+          </tr>
+          <tr>
+                <td>IndentationError</td>
+                <td>インデントが正しくない場合のエラー</td>
+          </tr>
+          <tr>
+                <td>TypeError</td>
+                <td>型に関するエラー</td>
+          </tr>
+          <tr>
+                <td>ValueError</td>
+                <td>型は合っているが値が適切でない</td>
+          </tr>
+          <tr>
+                <td>IndexError</td>
+                <td>リストなどで存在しないインデックスを参照</td>
+          </tr>
+        </table>
+        「SyntaxError」と「IndentationError」は実行時のエラーでなく、
+        処理が実行されるまえに検出される。
+        よって、通常はtry-exceptを用いて例外処理を行うことはない。
+        単に文法エラーなので、単語のつづりやインデントを修正すればよいだけである。
+    </p>
+<pre class=line-numbers data-label="sample07_01_01_bulitInExceptions.py">
+<code class="language-python">
+a = 'カエル'
+b = 5
+c = [1, 3, 5]
+
+try:
+    print(a + b)    # -> Error
+    print(int(a))   # -> Error
+    print(c[3])     # -> Error
+except TypeError:
+    print('TypeError')
+except ValueError:
+    print('ValueError')
+except IndexError:
+    print('IndexError')
+</code>
+</pre>
+    <p>
+        上記コードだと6行目でエラーが検出され、これはTypeErrorである。
+        他の例外も見たければ6～8行目をコメントアウトするなどして試してみるとよい。
+    </p> 
+    <p>
+        上記では3種類の例外別に処理を書いたが、except節を用いてまとめて例外を
+        受けることも出来る。
+    </p>
+<pre class=line-numbers data-label="sample07_01_02_except.py">
+<code class="language-python">
+a = 'カエル'
+b = 5
+c = [1, 3, 5]
+
+try:
+    print(a + b)
+    print(int(a))
+    print(c[3])
+except:
+    print('何かしらのエラー')
+</code>
+</pre>
+    <p>
+        記述が少なく楽で良いのだが、エラーの詳細が分からなくなるため非推奨とされている。
+    </p>
+    <p>
+        「except:」節の他にも「else:」と「finally:」が使える。
+        「else:」はエラーが発生しなかった場合に実行される部分となり、
+        「finally:」は常に実行される部分となる（エラーの有無に関わらず実行）。
+    </p>
+<pre class=line-numbers data-label="sample07_01_03_elseFinally.py">
+<code class="language-python">
+a = 2
+b = 3
+
+try:
+    print(a / b)    # -> 0.6666666
+except ZeroDivisionError as e:
+    print('catch ZeroDivisionError:', e)
+except:
+    print('Anything Error')
+else:
+    print('finish (no error)')
+finally:
+    print('all finish')
+</code>
+</pre>
+    <p>
+        組み込み例外の一例を紹介したが、
+        "組み込み"とはPythonが標準で持っているものを言うのであり、
+        逆に言うと"組み込み"ではない例外も存在する。
+        それはユーザー定義例外と呼ばれ、その名の通り自作の例外を作ることもできる。
+        （ここでは紹介しない。Exceptionを継承したクラスを作成することになる。
+        エラー発生した際にそのエラー情報をテキストファイルに保存して
+        ログを作りたいときなどに使うのだろう。）
+    </p>
+<h3 class="underline">7.2 入力処理での利用</h3>
+    <p>
+        実用的な例としてinput()と組み合わせて使うと便利である。
+        下記は、数値だけを受け付ける例である。
+    </p>
+<pre class=line-numbers data-label="sample07_02_00_inputLoopTry.py">
+<code class="language-python">
+# 数値が入力されるまでループ
+while True:
+    input_str = input('Number >')
+    try:
+        a = float(input_str)
+    except ValueError as ve:
+        print('Not Number')
+    except:
+        print('Anything ERROR')
+    else:
+        print('success')
+        break            # エラーが出なければbreak
+
+print('平方数: ', a**2)
+</code>
+</pre>
+    <p>
+        6.1節ではisnumeric()を用いて数値判定を行ったが、
+        実はこの関数、漢数字'一'、'九'などでもTrueを返してくる。
+        float('九')はErrorとなるからisnumeric()を用いるよりも
+        tryで例外処理したほうが確実である。
+    </p>
+
+</div>
+</div>
+</body>
+<script src="prism.js"></script>
+</html>

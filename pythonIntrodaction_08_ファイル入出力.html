@@ -1,0 +1,326 @@
+﻿<html lang="ja">
+<head>
+    <title>ファイル入出力 | Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" href="prism.js"></script>
+    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="main">
+
+<div class="section-8">
+<h2>8. ファイル入出力</h2>
+    <p>
+        これまではコマンドプロンプトにprint()で結果を表示したり、input()で入力してきた。
+        しかし、テキストファイル(.txt)やcsvファイルを読み込みデータ解析したい場面も多いだろう。
+        あるいは、計算結果を別ファイルに保存したときに用いるのがファイルの入出力処理である。
+    </p>
+<h3 class="underline">8.1 ファイル読み込み</h3>
+    <p>
+       ファイル読み込み（または書き込み）を行うには、初めにファイルを開く処理が必要になる
+       （人がダブルクリックでファイルを開くことに相当する処理である）。
+       その後、読み込み（または書き込み）を行い、最後にファイルを閉じる処理を記述する（ウィンドウのの×ボタンをクリックすることに相当する処理）。
+    </p>
+    <p>
+       以下は古典的なファイル読み込みの例である。
+    </p>
+<pre class=line-numbers data-label="sample08_01_00_openReadClose.py">
+<code class="language-python">
+path = 'sample_data1.txt'
+f = open(path, mode='r', encoding='utf-8')
+txt = f.read()
+f.close()
+print(txt)
+</code>
+</pre>
+    <p>
+        2行目がファイルを開く処理である。
+        「open(ファイルのパス [, mode, encoding])」のように記述する。
+        引数のmodeとencodingは省略が可能で、その場合は「mode='r'」の読み込みモード、
+        encodingのデフォルトはosに依存するが、windowsならCP932が指定される。
+    </p>
+    <p>
+        ファイルのパスは絶対パスか相対パスで指定する。
+        絶対パスはwindowsの場合はドライブ名から始まり「C:\xx\aa\sample.txt」などと書く。
+        相対パスは現在のパス（カレントディレクトリ）からの相対的なファイルやディレクトリの位置を示し、
+        同じディレクトリ内にあるファイルなら「sample.txt」でよい。
+<div class="foldertree">
+<pre>
+<b>Folder_A</b>
+├─ <b>Folder_B</b> ← Current[Working] Directory
+│   ├─ Python Script File ← Executable File
+│   ├─ File_1
+│   ├─ File_2
+│   └─ <b>Folder_C</b>
+│         └─ File_3
+└─ File_4
+</pre>
+</div>
+        例えば上記のようなフォルダ構造であったとき、py Script FileからFile_1またはFile_2を読み込むときは
+        単に「open('File_1')」でよい。
+        カレントディレクトリ内にあるサブフォルダ内のファイル（File_3）を読み込むときは
+        「open('Folder_C/File_3')」で読める。また、自身よりも上の階層にあるファイル（File_4）を読むときは
+        「open('../File_4')」と書く。
+    </p>
+    <p>
+        さて、厄介なのがencoding（文字エンコード）である。
+        ファイルごとに適切なエンコードを選択する必要があり、不適切だと文字化けが発生する。
+        （"ョ縺縲"みたいな文字列みたことがないだろうか。あれが文字化けである。）
+        人間であれば「あ」「い」「今」「A」など多様な文字を判別できるが、
+        コンピュータは元を辿れば2進数しか判断できないため直接的な区別を行えない。
+        （「00010110」や「11100010」のようなものしか判断できない。）
+        文字エンコードとは、コンピュータが文字を扱えるように、
+        例えば「あ」を「00010001」、「い」を「00010010」とするような変換規則のことをいう
+        （実際は2進数8桁ではない）。
+        そして、面倒なことにこの変換規則が複数存在するため、変換規則「utf-8」では
+        「00010001→あ」だったものが、変換規則「shift-jis」では「00010001→ィ」となることが
+        あり、文字化けが発生する。
+    </p>
+    <p>
+        良く用いられるエンコードは「Shift_JIS」と「UTF-8」である。
+        「Shift_JIS」はその名の通り日本産業規格で定められたものであり、日本での使用が多い。
+        Windowsで日本語を扱うときはこのエンコードとなるが、Windows上では呼び方が異なり
+        「CP932」と呼ぶ。
+        一方の「UTF-8」は世界的に標準な文字コードであり、
+        特にweb上（htmlなど）で用いられる。
+        プログラムコードを書く際はUTF-8の使用を推奨しているものが多い。
+    </p>
+    <p>
+        また、文字コード「UTF-8」を指定する際に「BOM」の有無を選択できる
+        （メモ帳でも可能。一昔前のメモ帳だとできなかった気がする）。
+        「BOM」とは「Byte Order Mark」の略であり、
+        ファイルがUTF-8であることを示す3バイトの＜0xEF 0xBB 0xBF＞の情報がファイルの先頭に明記される。
+        プログラムで外部ファイルを扱うときはBOM無しが一般的である。
+        （web上でもUTF-8(BOM無)が標準である。
+        ExcelなどのWindowsアプリケーションだとCP932がデフォルトの為、
+        UTF-8で書きたいときはBOM有にしないと文字化けすることがあるらしい。）
+    </p>
+    <p>
+        話をPythonに戻せば、「encoding='utf8'」は別名
+        'utf-8'、'UTF-8'、'U8'、'UTF'と書いても良い。
+        多くの文字コードに対応したいのであれば、ファイル読み込み時に
+        Python側で文字コード判定を行う必要がある（codecsライブラリを用いる）。
+        なお、本テキストではファイルは全てUTF-8 BOM無であると仮定して説明していく。
+    </p>
+    <p>
+        コードを見ると2行目で開き、3行目で読み込み、4行目で閉じるという処理を行っている。
+        open()したファイルを変数'f'で定義し、f.read()でその'f'の内の全体を単一の文字列として
+        txtに代入している。最後にはclose()して読み込みは終了である。
+        最後のclose()を書き忘れた場合は、Pythonがファイルを開いたままを維持し続けることになるため、
+        その状態で別のアプリなどからファイルを編集しようとするとデータが破損するおそれがある。
+        つまり、open後は必ずcloseしておきたいのだが、いちいちcloseを書くのは手間が掛かるし、
+        書き忘れることもある。
+    </p>
+    <p>
+        close()忘れを防ぐため、Pythonでは「with文」が用いられることが多い。
+    </p>
+<pre class=line-numbers data-label="sample08_01_01_withOpenRead.py">
+<code class="language-python">
+path = 'sample_data1.txt'
+with open(path, mode='r', encoding='utf-8') as f
+    txt = f.read()
+print(txt)
+</code>
+</pre>
+    <p>
+        この書き方の方が安全かつ少ない記述で済む。
+        open()とclose()でwithと同じ処理を書こうとすると、
+        try-exceptで例外処理して必ずclose()を行うなどの記述をすることになる。
+        （他言語であればファイル入出力は必ずtryの中に記述せよなどのルールがある言語もある）
+    </p>
+<pre class=line-numbers data-label="sample08_01_02_tryOpenRead.py">
+<code class="language-python">
+path = 'sample_data1.txt'
+f = None
+try:
+    f = open(path, 'r', encoding='utf-8')
+    try:
+        txt = f.read()
+    except:
+        print('ERROR')
+finally:
+    if f:
+        f.close()
+print(txt)
+</code>
+</pre>
+    <p>
+        読み込みには「read()」の他にも「readlines()」と「readline()」が存在する。
+        read()はファイル全体を単一の文字列として読み込む。
+        readlines()はファイル全体をリストとして読み込む（1行が1つの要素となる）。
+        readline()はファイルを一行づつ読み込む
+        （複数行のファイル全体を読み込みたいときはfor文でループさせる必要がある）。
+        readline()はファイルが一行で書かれている場合ぐらいでしか使わない。
+        readlines()はcsv形式で書かれたデータを読み込みたいときには有用ではある。
+    </p>
+<pre class=line-numbers data-label="sample08_01_03_readlines.py">
+<code class="language-python">
+path = 'sample_data1.txt'
+with open(path, mode='r', encoding='utf-8') as f
+    list_data = f.readlines()
+print(list_data)
+</code>
+</pre>
+    <p>
+        上記コードだと「['id,氏名,class,数学,英語,理科,社会,国語\n', '1,相川,A,89,85,72,75,90\n',…」のように表示される。
+        見て分かるように'～'で囲まれているから文字列であり、それが1次元のリストとして読まれている。
+        折角読み込めたので平均点などを計算したいが、
+        1次元リストだと扱いずらくcsv形式なら2次元リスト(excelのようなテーブル状)に直したい。
+        また、文字列の末尾に'\n'が見られるがこれは改行コードと呼ばれるもので、
+        行の末尾を表している。
+        Mac(Unix系)では改行コードは'\n'(LF)、Windows系なら\r\n(CR+LF)が
+        改行コードとして使われる。(私の環境だとエディタの設定で'\n'を改行コードとしている。)
+        読み込み後は改行コードは邪魔なだけなので削除することが多い。
+        下記コードでは2次元リスト化および、改行コードの削除と数値型に変換の処理を行ったものである。
+    </p>
+<h4>ファイル読み込みと応用（解析処理）</h4>
+    <p>
+        下記コードでは2次元リスト化および、改行コードの削除と数値型に変換の処理を行ったものである。
+    </p>
+<pre class=line-numbers data-label="sample08_01_04_arrangeCsv.py">
+<code class="language-python">
+path = "sample_data1.txt"               # ファイル名
+with open(path, encoding="UTF-8") as f: # ファイルオープン
+    list_data = f.readlines()           # ファイル読み込み
+
+# 一時的な2次元リスト生成
+tmp_list= []                        # 一時的な2dリスト生成
+for row in list_data:
+    tmp_list.append(row.split(',')) # ','で文字列を分割し、リストに追加
+
+# 改行コード「\n」の削除
+list_2d = []                    # 2dリスト生成
+for rows in tmp_list:
+    rows[-1] = rows[-1].strip() # 一番右の列（末尾）にある改行コード削除
+    list_2d.append(rows)        # リストに追加
+print(list_2d)
+
+# 列データリスト
+ids = []
+names = []
+class_ = []
+mats = []
+engs = []
+scis = []
+socs = []
+jpns = []
+
+# 数値データを文字列型 -> 整数型に変換
+for i, rows in enumerate(list_2d):
+    if i == 0:
+        continue
+    ids.append(int(rows[0]))
+    names.append(rows[1])
+    class_.append(rows[2])
+    mats.append(int(rows[3]))
+    engs.append(int(rows[4]))
+    scis.append(int(rows[5]))
+    socs.append(int(rows[6]))
+    jpns.append(int(rows[7]))
+
+print(f'数学の平均点:{sum(mats)/len(mats):.2f}')
+print(f'英語の平均点:{sum(engs)/len(engs):.2f}')
+print(f'理科の平均点:{sum(scis)/len(scis):.2f}')
+print(f'社会の平均点:{sum(socs)/len(socs):.2f}')
+print(f'国語の平均点:{sum(jpns)/len(jpns):.2f}')
+
+max_mat = max(mats)
+print('数学の最高点:', max_mat)
+for i, mat in enumerate(mats):
+    if mat == max_mat:
+        print('最高得点者:', names[i])
+</code>
+</pre>
+    <p>
+        長いコードのように感じるかもしれないが、可読性を高めるためにfor文で書いた箇所は
+        内包表記で書けるところもあり、より簡潔な記述も出来る。
+        新出の表現は8行目のspilt(',')である。これは「'1,2,3,5'.split(',')」などと書くことで
+        カンマ','で文字列を分割し、リストを返す「'1,2,3,5'.split(',')」 -> 「[1, 2, 3, 5]」。
+        13行目のstrip()は文字列のスペース、タブ、改行を削除することができる（付録B参照）。
+        また、40～44行目に書いたprint()部分はf-string記法を用いて小数点第2位まで表示している。
+        46行目以降は数学の最高得点者を調べる処理である。
+    </p>
+    <p>
+        学習用にreadlines()を用いたが、実用上はread()で全体読み込みした後、
+        split('\n')で1dリスト化した方が記述が少なくて済む。
+        初学者には読みにくいと思うが、出来る限りコードを減らした例も書いておく。
+    </p>
+<pre class=line-numbers data-label="sample08_01_05_arrangeCsvShort.py">
+<code class="language-python">
+path = "sample_data1.txt"               # ファイル名
+with open(path, encoding="UTF-8") as f: # ファイルオープン
+    txt = f.read()                      # ファイル読み込み
+
+rows = txt.split('\n')  # 改行コードで分割し1dリスト生成
+# 内包表記で','で分割し2dリスト生成（行データ）
+row_2d = [row.split(',') for row in rows]
+# ヘッダー、id、氏名、クラス列削除
+row_2d_data_str = [row[3:] for row in row_2d[1:]]
+# 氏名列（ヘッダー無）
+name_col = [row[1] for row in row_2d[1:]]
+header = row_2d[0]
+# 行と列を入れ変える
+col_2d_data_str = [list(x) for x in zip(*row_2d_data_str)]
+# 数値型に変換
+col_2d_data_int = [[int(x) for x in col] for col in col_2d_data_str]
+
+# 各教科の平均点算出
+for i, col_1d_data_int in enumerate(col_2d_data_int):
+    print(header[i+3], 'ave: ', sum(col_1d_data_int)/len(col_1d_data_int))
+
+# 各教科の最高得点とその得点者の表示
+max_scores = [max(col_1d_data_int) for col_1d_data_int in col_2d_data_int]
+for i, col_1d_data_int in enumerate(col_2d_data_int):
+    print(header[i+3], 'の最高点', max_scores[i])
+    for row_idx, score in enumerate(col_1d_data_int):
+        if score == max_scores[i]:
+            print('  ',name_col[row_idx])
+</code>
+</pre>
+    <p>
+        10行目に2重の内包表記で2次元リストを作成している。
+        コードを理解する必要はないが、csvデータの解析は面倒だと感じてくれればよい。
+    </p>
+
+<h3 class="underline">8.2 ファイル書き込み</h3>
+    <p>
+        読み込みは「mode='r'」であったが、書き込みたいときは「mode='w'」または「mode='a'」である。
+        'w'はファイルの新規作成または上書きを行う。
+        'a'は既存のファイルに追記を行う（ファイルが存在しない場合は'w'と同じ処理）。
+    </p>
+<pre class=line-numbers data-label="sample08_02_00_write.py">
+<code class="language-python">
+output_txt1 = '書き込みテスト文字列\n改行コードも書ける'
+
+path = 'output_sample.txt'
+with open(path, mode='w', encoding='utf8', newline='\n') as f:
+    f.write(output_txt1)
+
+output_txt2 = '追記テスト\n'
+with open(path, mode='a', encoding='utf8', newline='\n') as f:
+    f.write(output_txt2)
+    f.write(1)
+
+output_txts = ['A\n', 'BB', 'CCC']
+with open(path, mode='a', encoding='utf8', newline='\n') as f:
+    f.writelines(output_txts)
+</code>
+</pre>
+    <p>
+        write()は引数に単一の文字列を受け、writelines()はリストをまとめて書き込める。
+        引数newlineは改行文字コードの種類を指定できる。
+        省略するとWindowsのデフォルトである'\r\n'が指定される。
+    </p>
+    <p class="no-indent">
+        ※書き込みのmodeには'x'も指定できこれは排他生成を行う。
+        ファイルが存在しない場合にのみ（新規作成のみ）実行され、
+        存在するファイルのパスを渡された場合はFileExistsErrorを出す。
+        安全にファイル書込みを行いたい場合はファイルの存在確認を行い
+        例外処理を用いて記述した方が良い。
+    </p>
+</div>
+</div>
+</body>
+<script src="prism.js"></script>
+</html>

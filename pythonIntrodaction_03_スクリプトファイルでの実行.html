@@ -1,0 +1,203 @@
+﻿<html lang="ja">
+<head>
+    <title>スクリプトファイルでの実行 | Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" href="prism.js"></script>
+    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+</head>
+<body>
+<div class="main">
+
+<div class="secsion-3">
+<h2 id="3.">3. スクリプトファイルでの実行</h2>
+    <p>
+        対話モードでの実行はすぐにPythonを起動できるため、簡単な計算を行う際には便利であるが、
+        分岐処理や繰り返し処理などの複雑な処理を記述するのには適さない。
+        複数行におよぶ処理を記述するときはコードを一度ファイルに保存し、
+        それを実行したほうが効率がよい。
+        また、「プログラミング言語」と呼ぶからにはそこにはその言語特有の文法が存在する。
+        文法を知らなければコードを書くことができない。
+        この章では、スクリプトファイルの実行方法や基礎的なコードの書き方
+        などについて紹介する。
+    </p>
+    <p>
+        なお、これ以降は完全にWindows環境での話となる（iOSは分かりません）。
+    </p>
+
+<h3 id="3.1" class="underline">3.1 スクリプトファイルの実行方法</h3>
+    <p>
+        テキストエディタを起動する。
+        Windowsならメモ帳が標準装備されているはずである。
+    </p>
+<pre class=line-numbers data-label="sample03_01_00_hello.py">
+<code class="language-python">
+print("HELLO WORK!")
+</code>
+</pre>
+    <p>
+        テキストエディタに上記のコードを書き、
+        ファイル名は自由に決めてよいがここでは「sample030100_hello.py」として保存することにする。
+        文字コードは「UTF-8」を指定し、拡張子は「.py」として保存する。
+        この際にWindowsから警告がでるかもしれないが、無視してよい。
+        このようにコードを書いたファイルのことをスクリプトファイルと呼ぶ。
+    </p>
+    <p>
+        スクリプトファイルを保存したら、コマンドプロンプトを起動し、
+        スクリプトファイルを保存したディレクトリまで移動する。
+        例では、「C:\User\XXX\Uni\PythonIntroduction」ディレクトリにスクリプトファイルを保存したとする。
+        移動方法は「cd ディレクトリ」である。
+        移動出来たら、「python sample030100_hello.py」と入力し、
+        「HELLO WORK!」と表示されば成功である。
+    </p>
+<pre data-label="スクリプトファイルの実行">
+<code class="language-shell">
+C:\Users\XXX\>
+C:\Users\XXX\>cd C:\User\XXX\Uni\PythonIntroduction
+C:\Users\XXX\Uni\PythonIntroduction>
+C:\Users\XXX\Uni\PythonIntroduction>python sample030100_hello.py
+HELLO WORK!
+</code>
+</pre>
+    <p>
+        なお、「python スクリプトファイル名.py」でなく「py スクリプトファイル名.py」でも良い。
+        更に言うと、複数バージョンのPythonがインストールされている場合は
+        「py -3.9 スクリプトファイル名.py」のようにバージョンを指定することも出来る。
+        バージョンを指定しない場合は最新のバージョンが選択・実行される。
+    </p>
+    <p>
+        テキストエディタの例としてメモ帳を挙げたが、実際、コードを書く上でメモ帳はかなり不便である。
+        特に致命的なのは行数が分からないことである。
+        Pythonはインタプリンタの言語であり、処理を上から順に逐次実行し、
+        実行時に文法ミスなどがある行に到達するとエラーが出るが、この時に何行目でエラーが出ているかが表示される。
+        メモ帳だと行数が分からない為、エラーの修正（デバッグ）に時間がかかる。
+        更に言うなら、統合環境ではコードの記述から実行まで、コマンドプロンプトを開かずとも行えるものが多い。
+        私は、テキストエディタとして「Notepad++」を使用することが多い。
+        このエディタは行数表示は勿論、単語の強調やブロックでの折り畳み、マクロを使用することで
+        コマンドプロンプトを開かず即時実行ができるという点でおすすめである。
+        少しプログラミングをやれば実感できると思うが、
+        いちいちコマンドプロンプトで実行するというのは相当の時間をロスする。
+        「Notepad++」についてはAppendix Cを参照。
+    </p>
+<h3 id="3.2" class="underline">3.2 Pythonの基本文法</h3>
+<h4>コメントアウトとインデント</h4>
+    <p>
+        Pythonはコードの制御に「改行」と「インデント（字下げ）」を用いる。
+        1行に1つの処理（命令）しか書けず、文末を表すのに改行に用いる。
+        日本語で例えるなら、句点「。」が文末を表し、
+    </p>
+    <p class="block"><b>
+        aに2を代入せよ。
+        bに7を代入せよ。
+        a+bを計算し、その結果をcに代入せよ。
+        cの値を表示せよ。</b>
+    </p>
+    <p>
+        のように書くが、Pythonなら「。」の代わりに「改行」を使う。
+    </p>
+    <p class="block"><b>
+        aに2を代入せよ<br>
+        bに7を代入せよ<br>
+        a+bを計算し、その結果をcに代入せよ<br>
+        cの値を表示せよ<br></b>
+    </p>
+<pre class="line-numbers" data-label="sample03_02_00_codeRule.py">
+<code class="language-python">
+# 足し算
+a = 2
+b =       7     # 文頭以外のスペースは無視
+c = a + c
+print(c)  # print()で表示
+</code>
+</pre>
+    <p>
+        文頭のスペース、すなわち「インデント」は「ブロック」を表す。
+        「ブロック」とは複数の処理を1つのまとまりとして捉えたものである。
+        下にifブロックの例を記す。
+        ifは条件分岐を表すが、これについては後述するのでここでは理解する必要はなく、
+        インデントを用いるコードのイメージを持ってくれればよい。
+        文頭のスペースが「インデント」として認識されるが、これ以外のスペースは無視される。
+        なお、インデントによるブロック制御のことを「オフサイドルール」と呼ぶ。
+    </p>
+    <p>
+        「コメントアウト」とはプログラムが処理を実行する際に、実行されず無視される部分のことで、
+        Pythonでは「#」以降が無視される。
+        コメントアウトをなぜ用いるかというと、
+        スクリプトファイルに記述するのがPythonコードのみだと何を処理しているのかが分かりにくい
+        場合があり、自分または他の人が見てもどのような処理を行っているのかを
+        一目で分かるようにする（可読性を高める）ためである。
+        また、複数行に及ぶコメントアウトには三連引用符「'''コメントアウト'''」のように
+        囲むことでも実現できる。
+        （正しくは複数行にわたる文字列であるが、役割的には同じである。）
+    </p>
+<pre class="line-numbers" data-label="sample03_02_01_offsideRule.py">
+<code class="language-python">
+a = 9
+b = 10
+print(a, b) # カンマ,で区切るとまとめて表示できる
+if a > b:
+    print("a大なりb")
+elif a < b:
+    print("a小なりb")
+else:
+    print("aとbは等しいです")
+
+'''
+複数行におよぶコメントアウト
+PEP8では非推奨だった気がする
+複数行に及ぶ処理を記述したいときは
+バックスラッシュ\で改行を無視するか、丸括弧で囲むことで自由に改行できる
+'''
+d1 = 1 + 2 + 3 + 4 + 5 \
+    + 6 + 7 + 8 \
+    + 9 + 10
+
+d2 = (1 + 2 + 3 + 4 + 5
+    + 6 + 7 + 8
+    + 9 + 11)
+
+print(d1, d2)
+</code>
+</pre>
+
+    <p>
+        改行とインデントによる制御は、他の言語と見比べると分かりやすいかもしれない。
+        例として、Javaでsample030201_offsideRule.pyの1～9行目の部分を書いておく。
+        Javaでは文末をセミコロン;で表し、ブロックは波括弧{}で囲むことで表現する。
+        逆にいうと、Javaではこのルールさえ守ればいくらでも読みにくいコードが書ける。
+    </p>
+<pre class="line-numbers" data-label="sample03_02_02_codeExample.java">
+<code class="language-java">
+int a = 9;
+int b = 10;
+System.out.println(a, b);
+if(a > b){
+    System.out.println("a大なりb");
+}else if(a < b){
+    System.out.println("a小なりb");
+}else{
+    System.out.println("aとbは等しいです");
+}
+</code>
+</pre>
+    <p>
+        上記の例ではPythonのifブロックとの比較のためif文の箇所は綺麗に書いたが、
+        文末を表すのが改行ではない場合、可読性にとって最悪の例だが、
+        改行を全くせず1行で書いてもエラーにならない。
+        あくまで個人的な印象だが、インタプリンタ言語は改行で、
+        コンパイル言語はセミコロンで書いている印象がある。
+    </p>
+<pre class="line-numbers" data-label="sample03_02_03_oneLineCodeExample.java">
+<code class="language-java">
+int a=9;int b=10;System.out.println(a,b);if(a>b){System.out.println("a大なりb");}else if(a< b){
+System.out.println("a小なりb");}else{System.out.println("aとbは等しいです");}
+
+</code>
+</pre>
+
+</div>
+</div>
+</body>
+<script src="prism.js"></script>
+</html>

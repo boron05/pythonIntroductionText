@@ -1,0 +1,526 @@
+﻿<html lang="ja">
+<head>
+    <title>変数と型 | Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" href="prism.js"></script>
+    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+</head>
+<body>
+<div class="main">
+
+<div class="section-4">
+<h2>4. 変数と型</h2>
+    <p>
+        この章では「型」についての考え方を一通り説明する。
+        ごちゃごちゃとした説明が続くため文章を読みたくなければ、
+        コードだけ読み、Pythonの文法だけ理解しておけばよい。
+    </p>
+
+<h3 id="4.1" class="underline">4.1 変数の型</h3>
+    <p>
+        変数において、格納されている値の種類を示す「型」というものが存在する。
+        2章・3章でPythonの例として挙げたコードの中で登場しているのは「整数型」と「浮動小数点数型」、
+        「文字列型」と呼ばれるもので、これ以外にも基本型がいくつか存在する。
+        Pythonでは変数の宣言時に、変数の型を明示する必要はない。
+        このように変数の型を明示しないことを「動的型付け」という。
+        一方で、変数宣言時に型を指定することを「静的型付け」といい、C言語やJavaがこれに該当する。
+        （セクション3.2でJavaコードの例を紹介した。
+        そこでは「int」というのが変数の前についているのが、このように型を定義し変数を宣言する。）
+    </p>
+    <p class="no-indent">
+        ※Pythonはオブジェクト指向の言語である為、「型」もオブジェクトであり「クラス」に等しい。
+        すなわち、基本型とはPythonが標準ですでに定義しているクラスのことをいう。
+    </p>
+    <p>
+        Pythonに存在する基本型は以下のものである。
+        <div class="tree">
+          <ul>基本型
+            <li><i class="fa fa-folder-open"></i>数値型
+              <ul>
+                <li><i class="fa fa-folder-open"></i><b>ブール型</b>（bool）: 「True」か「False」または「1」か「０」を格納
+                <li><i class="fa fa-folder-open"></i><b>整数型</b>（int）:整数値を格納
+                <li><i class="fa fa-folder-open"></i><b>浮動小数点数型</b>（float）:64ビットの浮動小数点数を格納
+                <li><i class="fa fa-folder-open"></i><b>複素数型</b>（complex）:複素数を格納。虚数は「j」で表す
+                </ul>
+            <li><i class="fa fa-folder-open"></i> コレクション（collection）: 他のオブジェクトを集約したもの
+                <ul>
+                    <li><i class="fa fa-folder-open"></i>シーケンス型（sequence）: インデックスを指定して要素を参照できるオブジェクト
+                    <ul>
+                        <li><i class="fa fa-folder-open"></i><b>リスト型</b>（list）: 
+                            要素には順序があり、インデックスを用いて要素を指定する
+                            要素の追加・変更・削除が可能
+                        <li><i class="fa fa-folder-open"></i><b>タプル型</b>（tuple）: 
+                            要素には順序があり、インデックスを用いて要素を指定する
+                            要素の追加・変更・削除は不可
+                        <li><i class="fa fa-folder-open"></i><b>文字列型</b>（str）: 
+                            シーケンスの1種ためリスト・タプルと似た扱いができる
+                    </ul>
+                    <li><i class="fa fa-folder-open"></i>集合型
+                    <ul>
+                        <li><i class="fa fa-folder-open"></i><b>集合型</b>（set）: 要素の重複を許さず、順序をもたない
+                    </ul>
+                    <li><i class="fa fa-folder-open"></i>マップ型
+                    <ul>
+                        <li><i class="fa fa-folder-open"></i><b>辞書型</b>（dict）: キーに対応する値を格納する。
+                    </ul>
+                </ul>
+        </div>
+    </p>
+    <div class="pic_frame">
+        <img src="fig_imgs\fig_04-00_builtintypes.png" title="Pythonの組み込み型" width="300">
+        <p>Pythonの組み込み型の一例。</p>
+    </div>
+    <p>
+        Pythonでは、変数へ値を代入する際に値の型が何であるかを自動的に判定することで型を決定する。
+        一般的に、動的型付け言語はコードが簡潔に書ける代わりに処理速度を犠牲にすることが多い。
+        （Pythonではfor文を回すと急激に速度が落ちるが、これは型の判定に時間を要するためである。）
+    </p>
+
+<h3 id="4.2" class="underline">4.2 数値型と文字列型</h3>
+    <p>
+        使用頻度が高いであろう数値と文字列についての扱いを紹介する。
+    </p>
+    <p>
+        数値型・文字列型ともに、これまで紹介したように書けばよいが、
+        文字列型は文字列をシングルクォーテンション' '
+        またはダブルクォーテンション" "で囲うことに必要せよ。
+    </p>
+    <p>
+        変数の型が何であるかは「type()」で確認できる。
+        これはPythonが標準で実装する「組み込み関数」と呼ばれるものの1つで、
+        type()以外にも「print()」や「range()」、「len()」、「input()」など数多くのものが実装されている。
+    </p>
+<pre class="line-numbers" data-label="sample04_02_00_type.py">
+<code class="language-python">
+a = False
+b = 2
+c = 2.7
+d = 3 + 4j
+e = 'こんにちは。'
+
+print(type(a))
+print(type(b))
+print(type(c))
+print(type(d))
+print(type(e))
+print(type('13'))
+print(type(type(a)))
+</code>
+</pre>
+    <p>
+        Pythonでは数値型であるbool、int、float、complexは相互変換を自動で行うため、
+        演算子を用いた計算が可能である。
+        boolの「True」は「1」に相当し、「False」は「0」に相当するため、bool + intなども演算できる。
+    </p>
+    <p>
+        また、文字列型同士であれば「+」演算子を用いることができ、「文字列 + 文字列」で
+        これは文字列の連結を意味する。
+        さらに、文字列型と整数型であれば「*」演算子が適用可能で、「文字列 * n」と書けば、
+        文字列のn回連結を意味する。
+    </p>
+    <p>
+        一方で、「文字列型 + 整数型」などはエラーとなる。
+    </p>
+<pre class="line-numbers" data-start="15" data-label="sample04_02_00_type.py">
+<code class="language-python">
+print(a + b)
+print(b + c)
+print(c + d)
+print(((c + d) ** (b + a) + c ) / b + a)
+
+str1 = '明日は'
+str2 = '日曜日'
+print(str1 + str2)
+print(str1 * b + str2)
+# print(d + e)                    # コメントアウトを外して実行するとエラー
+# print('bの値は' + b + 'です。')  # 以降結果を「-> Error」のように書く
+</code>
+</pre>
+<h4>型の変換</h4>
+    <p>
+        プログラミングにおいて「文字列型 + 数値型」（連結）などの表現をしたい場面はよくある。
+        これを行うには数値型を文字列型に変換する必要がある。
+        数値型 -> 文字列型を行うには組み込み関数「str()」を用いる。
+    </p>
+    <p class="no-indent">
+        ※実際には、数値型をstr()関数で変換することはほとんどない。
+        何故なら、例えば「2/3」を計算した後に、str()で変換させると
+        文字列「'0.6666666666666666'」を得るが、ここまで桁数が必要でない場合も多い。
+        少数点以下の桁数を2桁まで表示させたいなど、
+        表示形式を指定したい場合は「format()」メソッドなどを用いる。
+        表示形式についての詳細はAppendix Bを参照。
+    </p>
+    <p>
+        文字列型 -> 数値型を行うには、intへの変換には「int()」、floatへの変換には「float()」、
+        complexへの変換には「complex()」で行える。
+    </p>
+<pre class="line-numbers" data-label="sample04_02_01_casting.py">
+<code class="language-python">
+a = 21.3
+print(type(a))                      # -> &lt;class 'int'>
+str_a = str(a)
+print(type(str_a))                  # -> &lt;class 'str'>
+print('aの値は' + str_a + 'です。')  # -> 'aの値は21.3です。'
+
+str_b = "１５"
+str_c = "-1.3"
+str_d = "2 + 6j"
+int_b = int(str_b)          # 全角も変換可能
+float_c = float(str_c)
+complex_d = complex(str_d)
+print(int_b)
+print(float_c)
+print(complex_d)
+print(float_c * complex_d)
+</code>
+</pre>
+
+
+<h3 id="4.3" class="underline">4.3 シーケンス型</h3>
+
+<h4 id="4.3.1">4.3.1 リスト</h4>
+    <p>
+        Pythonのコレクションの中でも最も使用頻度が多いと思われるのが「リスト」である。
+        他の言語では「配列」に相当するが、要素の追加・削除ができるという点では他の言語と異なる。
+        リストの要素には、オブジェクトを格納できる。
+        すなわち、どんな型でも格納でき、2次元のリストなども手軽に作れる。
+    </p>
+    
+<pre class=line-numbers data-label="sample04_03_00_list.py">
+<code class="language-python">
+# リストの生成
+list1 = [1, 2 , 3, "AS", 1.2]   # []で挟みカンマで区切る
+
+print(list1)            # 全体表示
+print(type(list1))      # 型表示
+print(list1[0])         # 最初のインデックスはゼロから
+print(type(list1[0]))   # 0番目の要素の型
+print(list1[2])         # インデックス2番目を表示
+print(list1[-1])        # 末尾を表示
+
+list_a = [2] * 4        # 要素の値が2で要素数が4つのリストを生成
+list_b = [0, "R"] * 3   # こうゆうのも可
+print(list_a)
+print(list_b)
+
+# 要素の変更
+list1[1] = 5
+print(list1)
+
+# 要素の追加（末尾に追加）
+list2 = ["a", "b" ,"c"]     # 新しくlist2を生成
+list2.append("d")           # 追加
+print(list2)
+
+list2_ = ['e', 'f']         # 末尾に加えるリスト
+list2.extend(list2_)        # 拡張
+print(list2)
+list3 = list2 + ["g", "h"]  # +演算子でも拡張できる
+print(list3)
+
+# 要素の削除
+list3.pop(1)        # インデックス指定して削除
+list3.remove('e')   # 指定した値と同じ要素を検索し、最初の要素を削除
+print(list3)
+
+# 多次元リスト
+list4 = [12, 2, [124, 5, 6], 5, [3, 5]]
+print(list4[2])
+print(list4[3])
+print(list4[3][2])
+
+# 3x3のリスト
+list5 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+list5.append([10, 11, 12])
+print(list5)
+
+# スライス・インサート
+print(list3[1:3])           # インデックス1～2番を取得
+print(list3[1:])            # インデックス1～末尾までを取得
+print(list3[1:-1])          # インデックス1～(末尾-1)までを取得
+print(list3[::2])           # 2おきに
+list3.insert(2, "a")        # インデックス2番に追加
+print(list3)
+list3[2:2] = ["A", "B"]     # インデックス2番と3番目に追加
+print(list3)
+</code>
+</pre>
+
+    <p>
+        「append()」と「extend()」の挙動の違いに注意せよ。
+        プラス演算子で末尾に要素を結合できることや生成で*演算子を使用できることから、
+        文字列型との類似性が分かるだろう。
+        文字列型もシーケンスであるから、リストと同様にスライスができたりする。
+        この仕様はプログラム言語で一般的なものではなく、Python独自のものである。
+        個人的には、Pythonはリスト関係の挙動が他言語と大きく異なる気がする。
+    </p>
+    <p>
+        要素の削除に「pop()」・「remove()」メソッドを挙げたが、
+        これらは1つの要素しか削除せず、複数個の要素を削除したい場合には繰り返し処理を行う必要がある。
+        Pythonの繰り返し処理は遅い。
+        実用的には要素の削除ではなく、「内包表記」（6.3節参照）で
+        新規に新しいリストを生成した方が高速である。
+    </p>
+
+<h4 id="4.3.2">4.3.2 タプル</h4>
+    <p>
+        要素の変更・追加・削除が不可（append、extend、insert、popなどが使えない）なだけでリストとほぼ変わらない。
+        Pythonはリストの使い勝手良い為、タプルの出番は多くはない。
+    </p>
+<pre class=line-numbers data-label="sample04_03_01_tuple.py">
+<code class="language-python">
+# タプルの生成
+tuple1 = (1, 2 , 3, "AS", 1.2)   # ()で挟みカンマで区切る
+print(tuple1[2])                 # インデックス2番目を表示
+print(tuple2[2:4])               # スライスは出来る
+
+# リストとタプルは相互変換できる
+list1  = list(tuple1)   # タプル -> リスト
+print(list1, type(list1))
+list2 = ["A", 12, 32.6, "FR"]
+tuple2 = tuple(list2)   # リスト -> タプル
+print(tuple2, type(tuple2))
+</code>
+</pre>
+
+<h4>よく使うメソッドや組み込み関数</h4>
+    <p>
+        リストやタプルとよく用いられるメソッドや組み込み関数について紹介する。
+    </p>
+<pre class=line-numbers data-label="sample04_03_02_builtInFunc.py">
+<code class="language-python">
+list1 = [2, 3, 5, 7, 11, 13, 17]
+list1_len = len(list1)  # 要素数取得
+list1_max = max(list1)  # 最大値取得
+list1_min = min(list1)  # 最小値取得
+list1_sum = sum(list1)  # 総和取得
+print(list1_len, list1_max, list1_min, list1_sum)
+
+list2 = [12, 56, 1, 79, 9]
+list2_sort = sorted(list2)  # 組み込み関数sorted()によるソート
+print(list2)
+print(list2_sort)
+
+list2.sort()                # リストクラスがもつsort()メソッドでソート
+print(list2)                # list2自体がソートされ、返り値はない
+
+list3 = ["A", "A", "B", "C", "C", "C", "C"]
+flag = "A" in list3     # in演算子。含まれいるかどうか
+idx = list3.index("C")  # 最初のインデックス
+cnt = list3.count("C")  # 要素のカウント
+print(flag, idx, cnt)
+</code>
+</pre>
+    <p>
+        タプルは要素の変更ができず行える処理が限られるが、
+        その分速度がリストよりも速いという利点もある。
+        しかし、相当に要素数が大きくないと差はでないため、
+        タプルという選択肢は取られにくい。
+    </p>
+
+<h3 id="4.4" class="underline">4.4 集合型</h3>
+    <p>
+        集合型（set型）には順序がなく、要素に重複を許さない。
+        コレクションの中ではほとんど出番がない型のような気がする。
+        使い道があるとすれば、重複があるリスト・タプルから重複を一括で消したいときなどに利用できる。
+    </p>
+<pre class=line-numbers data-label="sample04_04_00_set.py">
+<code class="language-python">
+set1 = {1, 2, 3, 4, 5, "Y"}     #生成には波括弧
+print(type(set1))
+set1.add("X")
+set1.add(2)
+print(set1)
+
+# 変換
+list1 = [1, 1, 3, 4, 5, 2, 5, 6, 7, 10, 15, 2]
+set_tmp = set(list1)
+print(set_tmp)
+list1_uni = list(set_tmp)
+print(list1_uni)
+
+# 削除
+set_tmp.discard(1)  # 要素「1」を削除
+set_tmp.discard(9)  # 要素「9」は存在しないが、エラーはでない
+print(set_tmp)
+set_tmp.remove(9)   # removeならエラー吐く
+set_tmp.pop()       # 要素を指定せず、1つ消す
+print(set_tmp)
+set_tmp.clear()     # 全要素を削除し、空集合を生成
+print(set_tmp)
+
+# 和集合
+set_A = {2, 4, 6}
+set_B = {3, 6, 9}
+set_C = {2, 3, 5}
+
+set_union = set_A | set_B                 # ビットOR演算子「|」
+#set_union = set_A.union(set_B, set_C)    # union()メソッドでも可能
+print(set_union)
+
+# 共通部分
+set_int = set_A & set_B                   # ビットAND演算子「&」
+#set_int = set_A.intersection(set_B, set_C)
+print(set_int)
+
+# その他
+print(set_A - set_B)            # 差集合。difference()メソッド
+print(set_A ^ set_B)            # 排他的理論和（XOR）。symmetric_difference()メソッド。
+print(set_int <= set_A)         # 部分集合判定「<=」
+print(set_int.issubset(set_A))  # 部分集合判定メソッド
+print(set_A.isdisjoint(set_B))  # 互いに素か判定
+
+</code>
+</pre>
+    <p>
+        集合に対する演算を行えるが、実用性はあまり…。
+        教育教材としては使えるかも。Venn図的な。
+    </p>
+
+<h3 id="4.5" class="underline">4.5 辞書型</h3>
+    <p>
+        辞書型は汎用性が高く、リスト型と同様に重要度が高い。
+        keyとそれに対応する値を格納するため連想配列とも呼ばれる。
+        また、keyは重複を許さない。
+        辞書型に対する処理は種類が多いためここではよく用いるであろうもののみ紹介する。
+    </p>
+<pre class=line-numbers data-label="sample04_05_00_dict.py">
+<code class="language-python">
+# 生成には波括弧。コロンでkeyとvalueを挟む
+dict1 = {"key1": 45, "key2": 23, "key3": "値3"}
+print(dict1, type(dict1))
+# 見やすく書くなら、改行とインデントも利用するとよい
+dict2 = {
+    8: "E",
+    2: "T",
+    100: "O"
+}
+
+# ネスト（入れ子構造）も可能
+info_dict = {
+    213: {
+        "name": "芥川",
+        "class": 1,
+        "grade": 9.0
+        "books": ["羅生門", "地獄変"]
+    }
+    214: {
+        "name": "夏目",
+        "class": 1,
+        "grade": 8.0
+    }
+    280: {
+        "name": "井伏",
+        "class": 2,
+        "grade": 8.5
+    }
+}
+
+print(dict1["key1"])        # keyが"key1"の値を表示
+print(dict1.get("key1"))    # get()メソッド
+print(dict.get("key0"))     # -> None
+print("key1" in dict1)      # keyの存在判定
+print(dict1.items())        # keyの一覧をリスト
+print(dict1.values())       # valueの一覧
+
+print(info_dict[214])
+print(info_dict[214]["name"])
+
+# dict()コンストラクタでの作成
+dict3 = dict(a=0, b=1, c=2, d=3)
+dict4 = dict([('E', 4), ('F', 5)])
+dict5 = {'G':None}
+dict_ = {}
+print(dict3, dict4, dict5, dict_)
+
+# 辞書の結合
+dict5.update(dict4)             # update()で結合
+dict_.update(**dict3, **dict4)  #「**」で辞書を展開して渡している
+print(dict5)
+print(dict_)
+
+dict34 = dict(**dict3, **dict4)
+#dict34 = {**dict3, **dict4}    # python3.5以降
+#dict34 = dict3 | dict4         # python3.9以降
+#dict3 |= dict4                 #「+=」と同様の書き方も可
+print(dict34)
+
+# 更新
+dict34.update([('a', -1), ('H', 300)])
+#dict34 |= [('a', -1), ('H', 300)]  #3.9以降
+print(dict34)
+
+# 削除
+print(dict_.pop('b'))
+del dict_['d'], dict_['F']
+print(dict_)
+
+</code>
+</pre>
+
+    <p>
+        実用上での辞書型は、if文やfor文を組み合わせて必要な情報を抽出することが多い。
+        近年のWeb APIは送受信のデータ形式としてJSON形式
+        (JavaScript Object Notationの略で、リストと辞書型を複合したもの)
+        を用いているものが多いため、
+        辞書型の必要性が高くなっている気がする。
+    </p>
+
+<h3 id="4.6" class="underline">4.6 参照渡しについて</h3>
+    <p>
+        リストなどのシーケンス型を格納した変数から変数への代入（コピー）する際には、
+        注意を払う必要がある。
+        セクション9.2でも少し触れているが、数値型とシーケンス型では振舞いに違いが感じられるかもしれない。
+    </p>
+<pre class=line-numbers data-label="sample04_06_00_reference.py">
+<code class="language-python">
+# 数値型
+x1 = 20
+x2 = x1
+print(x1, x2)       # -> 20, 20
+
+x2 = 10
+print(x1, x2)       # -> 20, 10
+
+# リスト
+list1 = [2, 3, 5]
+list2 = list1
+print(list1, list2) # -> [2, 3, 5] [2, 3, 5]
+
+list2[1] = 0
+print(list1, list2) # -> [2, 0, 5] [2, 0, 5]
+</code>
+</pre>
+    <p>
+        11行目でリストをコピーしているように見え、list2はlist1と同じ要素を持つリストに思える。
+        14行目でlist2の要素を変更したとき、list1の要素もつられて変更されているのが分かるだろう。
+        （数値型のx1とx2の振る舞いとは異なる。）
+        これは11行目で行っているのがコピーではなく「参照渡し」であるために起こる現象である。
+        （3行目で行っているのも参照渡しではある。）
+        同じ要素を持つリストを作りたいと思ったときに、単に代入するだけだと意図しない振る舞いが
+        起こるので注意した方がよい。
+    </p>
+    <p>
+        リストなどのシーケンス型をコピーしたいときは、
+        copy()メソッドを用いるかスライスで全てを抽出すると良い。
+    </p>
+<pre class=line-numbers data-label="sample04_06_01_copy.py">
+<code class="language-python">
+# リストのコピー
+list1 = [2, 3, 5]
+list2 = list1.copy()    # copy()メソッドの利用
+list3 = list1[:]        # スライス利用
+print(list1, list2, list3) # -> [2, 3, 5] [2, 3, 5] [2, 3, 5]
+
+list2[1] = 0
+list3[2] = 9
+print(list1, list2, list3) # -> [2, 3, 5] [2, 0, 5] [2, 0, 9]
+</code>
+</pre>
+</div>
+</div>
+</body>
+<script src="prism.js"></script>
+</html>

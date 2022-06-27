@@ -1,0 +1,455 @@
+﻿<html lang="ja">
+<head>
+    <title>ライブラリの利用 | Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" href="prism.js"></script>
+    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="main">
+
+<div class="section-11">
+<h2>11. ライブラリの利用</h2>
+    <p>
+        8章でファイル入出力を紹介したが、csv形式のファイルの読み込みは面倒であった。
+        実際、csvファイルを文字列として読み込んだ後に
+        2次元リストに変換するような処理をいちいち書くようなことはせず、
+        Pythonが標準でもつライブラリ（あるいはパッケージ）を使用して
+        ファイル読み込みを行うことが多い。
+        さらにPythonでは標準ライブラリでない、外部ライブラリの利用も非常に容易に行える。
+        この章では標準ライブラリの使用方法や前の章で作成した自作のクラス（モジュール）の利用方法と
+        外部ライブラリのインストール方法や使用方法について紹介する。
+    </p>
+    <h3 class="underline">11.1 標準ライブラリ</h3>
+    <p>
+        標準ライブラリはその名の通り、Pythonが標準でもつライブラリであり
+        「import ライブラリ名」で使用できる。
+    </p>
+<pre class=line-numbers data-label="sample11_01_00_importLib.py">
+<code class="language-python">
+import math
+import datetime as dt
+
+PI = math.pi
+print(PI)
+print(math.sin(PI/6))
+
+a = 60
+rad_a = math.radians(a)
+print(math.cos(rad_a))
+
+dt_now = dt.datetime.now()
+print(dt_now)
+print(dt_now.hour)
+</code>
+</pre>
+    <p>
+        importはスクリプトファイルの先頭にまとめて書くのが一般的である。
+        （どんなライブラリを使用しているかがすぐに分かるようにするため。）
+        mathライブラリは数学関係の処理を行える。
+        datetimeライブラリは日付を扱うことができる（detetime型を扱える）。
+        なお、上記例ではdatetimeだと長いのでasを用いてdtとおいている。
+    </p>
+    <p>
+        4行目ではmathライブラリ内にある変数piを呼び出し、
+        6行目ではmathライブラリ内にある関数sin()を呼び出している。
+        ドット"."を用いて下の階層にアクセスしているようなイメージを持つと良い。
+        （0章のパッケージ・モジュールなどの階層図参照。）
+        9行目のradians()は度をラジアンに変更する関数である。
+        12行目はdt（datetime）ライブラリ[パッケージ]内の
+        datetimeパッケージ[モジュール]内のnow()関数を呼び出している。
+        （パッケージ名・モジュール名がともにdatetimeであるため紛らわしいかもしれない。
+        import時にasを用いなければ「datetime.datetime.now()」と書くことになる。）
+    </p>
+    <p>
+        datetimeライブラリの中身をもう少し詳しくみていく。
+        <div class="tree">
+          <ul><i class="fa fa-folder-open"></i>datetime
+            <li><i class="fa fa-folder-open"></i>date: 年月日（xxxx/xx/xx）
+            <li><i class="fa fa-folder-open"></i>time: 時刻（xx:xx:xx.xx）
+            <li><i class="fa fa-folder-open"></i>datetime: 年月日 + 時刻
+            <li><i class="fa fa-folder-open"></i>timedelta: 日付の計算
+        </div>
+        さらにこれらの型（クラス）の中に関数や変数が入っている。
+    </p>
+<pre class=line-numbers data-label="sample11_01_01_datetime.py">
+<code class="language-python">
+import datetime
+
+print(datetime.date)                # -> &lt;class 'datetime.date'&gt;
+date_today = datetime.date.today()  # 今日の日付取得
+print(date_today.isoformat())       # ISOフォーマット（文字列）
+print(date_today.year, date_today.month, date_today.day)
+
+print(datetime.datetime)                         # -> &lt;class 'datetime.datetime'&gt;
+dt_now = datetime.datetime.now()                 # 現在時刻取得
+print(dt_now)                                    # datetimeクラス
+print(dt_now.isoformat())                        # ISOフォーマット（文字列）
+print(dt_now.strftime("%Y-%m-%D (%A) %H:%M:%S")) # 書式フォーマット指定（文字列）
+
+one_day = datetime.date(2021, 3, 5)              # 日付定義
+dlt_day = one_day + datetime.timedelta(days=50)  # 日付加算
+print(dlt_day, dlt_day.weekday())                # 月:0、火:1、…
+</code>
+</pre>
+    <p>
+        毎回「datetime.xxx」と書くのは手間である。
+        そこで「from ライブラリ名 import モジュール名」の書くと
+        「datetime.」を省略できる
+    </p>
+<pre class=line-numbers data-label="sample11_01_02_fromImport.py">
+<code class="language-python">
+from datetime import datetime, date, timedelta
+
+print(date)
+date_today = date.today()
+print(date_today.isoformat())
+print(date_today.year, date_today.month, date_today.day)
+
+print(datetime)
+dt_now = datetime.now()
+print(dt_now)
+print(dt_now.isoformat())
+print(dt_now.strftime("%Y-%m-%D (%A) %H:%M:%S"))
+
+one_day = date(2021, 3, 5)
+dlt_day = one_day + timedelta(days=50)
+print(dlt_day, dlt_day.weekday())
+</code>
+</pre>
+    <p>
+        「from ライブラリ名 import *」と書くとライブラリ内にある全てのモジュールがインポートされる。
+        しかし、このやり方だと実際に使われるモジュールが何かが分かりにくくなるため非推奨とされている（PEP8）。
+    </p>
+    <h4>よく用いる標準ライブラリ</h4>
+    <p>
+        <table border="1" style="border-collapse: collapse" align="center">
+            <tr>
+                <th>標準ライブラリ名</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>os</td>
+                <td>os関連</td>
+          </tr>
+          <tr>
+          <tr>
+                <td>datetime</td>
+                <td>日時および時間型</td>
+          </tr>
+          <tr>
+                <td>time</td>
+                <td>時刻データ</td>
+          </tr>
+                <td>re</td>
+                <td>正規表現</td>
+          </tr>
+          <tr>
+                <td>glob</td>
+                <td>パスの展開</td>
+          </tr>
+
+          <tr>
+                <td>math</td>
+                <td>数学関数</td>
+          </tr>
+          
+          <tr>
+                <td>random</td>
+                <td>疑似乱数生成</td>
+          </tr>
+          
+          <tr>
+                <td>shutil</td>
+                <td>高水準のファイル操作</td>
+          </tr>
+          <tr>
+                <td>urllib</td>
+                <td>ネット接続</td>
+          </tr>
+        </table>
+        この中でも「import os」はファイル操作やディレクトリ操作を扱えるので頻出する。
+        「shutil」モジュールはosモジュールの拡張版みたいなものでPython3.4から利用できる。
+        （osでは出来なくて、shutilでは出来る操作もあれば、
+        shutilでは出来なくて、osでは出来る操作もある。
+        ややこしいのでまとめて欲しいというのが主観である。）
+    </p>
+
+    <h3 class="underline">11.2 ユーザー定義クラスのimport</h3>
+    <p>
+        前章でmyclassinput.pyファイルを保存し、その中にInputNumberクラスを作成した。
+        このように自作したクラスやモジュールもimportすることでその別のpyファイルで利用できる。
+        （myclassinput.pyは同じディレクトリにある必要がある。）
+        書き方は「import 自作クラスのファイル名」、fromを用いる場合は「from 自作クラスのファイル名 import クラス名」である。
+    </p>
+<pre class=line-numbers data-label="sample11_02_00_importUsersClass.py">
+<code class="language-python">
+from datetime import date, timedelta
+from myclassinput import InputNumber
+
+WEEK_LIST = ['月', '火', '水', '木', '金', '土', '日']
+
+inputN = InputNumber()                     # InputNumberオブジェクト(クラス)を代入
+# InputNumber内のinput_between_int関数を利用
+input_year = inputN.input_int('year >')     # 入力:年
+input_month = inputN.input_int('month >')   # 入力:月
+input_day = inputN.input_int('day >')       # 入力:日
+
+# date型生成
+input_date = date(input_year, input_month, input_day)
+weeknum = input_date.weekday()                # 曜日番号取得
+date_str = input_date.strftime('%Y年%m月%d日') #3.6だとバグっぽい？
+print('{}は{}曜日です。'.format(date_str, WEEK_LIST[weeknum]))
+</code>
+</pre>
+<h4>ユーザーモジュールのimport</h3>
+    <p>
+        上記でInputNumberクラスをインポートしたが、
+        このInputNumberクラスはクラスである必要性があまりない。
+        （インスタンスを作らないのであればクラスにするのは良くない気がする。）
+        myclassinput.pyをクラス化せず、モジュール化したmymoduleinput.pyで十分である。
+        これを呼び出すには、「import 自作moduleのファイル名」で行える。
+<pre class=line-numbers data-label="sample11_02_01_importUsersModule.py">
+<code class="language-python">
+from datetime import date, timedelta
+import mymoduleinput as myinput
+
+WEEK_LIST = ['月', '火', '水', '木', '金', '土', '日']
+
+# InputNumber内のinput_between_int関数を利用
+input_year = myinput.input_int('year >')     # 入力:年
+input_month = myinput.input_int('month >')   # 入力:月
+input_day = myinput.input_int('day >')       # 入力:日
+
+# date型生成
+input_date = date(input_year, input_month, input_day)
+weeknum = input_date.weekday()                # 曜日番号取得
+date_str = input_date.strftime('%Y/%m/%d')
+print('{}は{}曜日です。'.format(date_str, WEEK_LIST[weeknum]))
+</code>
+</pre>
+    <p>
+        なお、mymoduleinput.pyファイルをフォルダ"mymodules"に入れたとすれば
+        importには「import mymodules.mymoduleinput」のように「import フォルダ名.ファイル名」
+        のように書く。
+        <div class="tree">
+          <ul>
+            <li><i class="fa fa-folder-open"></i> working_dir
+              <ul>
+                <li><i class="fa fa-folder-open"></i> usemymodule.py
+                <li><i class="fa fa-folder-open"></i> mymodules
+                  <ul>
+                    <li><i class="fa fa-folder-open"></i> mymoduleinput.py
+        </div>
+    </p>
+    <p>
+        自作したモジュールを（異なるディレクトリにある）複数のファイルから呼び出したいときに、
+        毎回その作業ディレクトリ内にモジュールファイルを配置するのは面倒である。
+        そこで、複数の実行ファイルで使いたいときには、
+        デフォルトのパッケージディレクトリに配置すると良い。
+        具体的な配置場所は場所は以下で確認できる。
+    </p>
+<pre data-label="デフォルトのパッケージディレクトリ">
+<code class="language-shell">
+>>>import sys
+>>>print(sys.path)
+</code>
+</pre>
+    <p>
+        "Lib"というフォルダが存在すると思うので、そこに"mymodules"フォルダを置く。
+        配置した"mymodules"フォルダ内に"mymoduleinput.py"とファイル名が"__init__.py"で
+        中身は空のファイルを作成しておく。
+        これで自作モジュールもPythonの標準ライブラリと同等に扱え、どこからでも呼び出せるようになる。
+    </p>
+<h3 class="underline">11.3 外部ライブラリ</h3>
+    <p>
+        ファイル入出力の際にみたcsv形式のデータの扱いは面倒だった。
+        このようにPython標準だと面倒であったり、処理が遅かったりする部分を解決するために
+        サードパーティーが作ってくれているライブラリがあり、
+        これらは個別にインストールすることで利用できる。
+        ここでは外部ライブラリのインストールから基本的な利用方法を説明する。
+    </p>
+    <h4>外部ライブラリのインストール</h4>
+    <p>
+        外部ライブラリのインストールする方法は大きく分けて3つある。
+        (1)「pypi」を用いる方法。
+        (2)「github」からインストールする方法。
+        (3)「whlファイル（ZIP形式のアーカイブファイル）」からインストールする方法。
+        実際のところ覚えておくべきは、3つではなく1つでよく、ほぼ(1)の方法しか用いない。
+        (2)はpypiに登録されていないようなマイナーなパッケージを入れたいときに使ったりする
+        （パッケージの最新バージョンのベータ版などはgithub上においてあったりする）。
+        (3)は本当に使わない。
+        オフラインでパッケージを渡すときに用いるのだが、
+        (1)でエラーがでた際の最終手段ぐらいの認識で良い。
+    </p>
+    <p>
+        「pypi」は「Python Package Index」の略であり、
+        「pipコマンド」を用いることでコマンドプロンプトでパッケージを管理できる
+        （Python Package Indexのネットからパッケージをダウンロード・インストールすることや
+        アップデート、アンインストールを容易に行える）。
+        pypiには35万以上のパッケージが登録されいる（2021/12時点）が、
+        取り敢えずここでは「numpy」と呼ばれる数値計算を高速に行えるパッケージをインストールする。
+    </p>
+    <p>
+        コマンドプロンプトを開き「pip install numpy」と入力する。
+        以上である。後はpipが自動でやってくれる。
+        さすがに味気なさすぎるので、他のコマンドも紹介しておく。
+        <table border="1" style="border-collapse: collapse" align="center">
+            <tr>
+                <th>コマンド</th>
+                <th>説明</th>
+            </tr>
+            <tr>
+                <td>pip install numpy</td>
+                <td>最新バージョンのインストール</td>
+          </tr>
+          <tr>
+          <tr>
+                <td>pip install numpy==1.20.1</td>
+                <td>バージョン指定してインストール</td>
+          </tr>
+          <tr>
+                <td>pip install -U numpy</td>
+                <td>インストール済みライブラリのアップデート</td>
+          </tr>
+                <td>pip uninstall numpy</td>
+                <td>アンインストール</td>
+          </tr>
+          <tr>
+                <td>pip list</td>
+                <td>インストール済みライブラリを表示</td>
+          </tr>
+
+          <tr>
+                <td>pip list -o</td>
+                <td>アップデート可能なライブラリを表示</td>
+          </tr>
+          
+          <tr>
+                <td>pip install -U pip</td>
+                <td>pip自体のアップデート</td>
+          </tr>
+        </table>
+        この他にも「freeze」など便利なコマンドが多数存在する。
+        また、「pip install -U pip」で定期的にpip自体をアップデートしないと
+        警告が表示される。
+        pipは新しいバージョンが短いスパンで出ているような気がする。
+    </p>
+    <p>
+        ※「venv」などで作った仮想環境でもpipは使える。
+        Pythonで何か開発し、さらに配布しようとするなら仮想環境の構築はやっておいた方が良い。
+        仮想環境をつくらないとインストールしたライブラリが
+        Pythonのメインシステムに大量に入って来ることになり、パッケージ間の
+        依存関係などが意味が分からなくなる。
+    </p>
+    <h4>外部ライブラリのimport</h4>
+    <p>
+        インストールさえしてしまえば、外部ライブラリも標準ライブラリと同様にimportして扱える。
+        以下はnumpyを利用したプログラムである。
+    </p>
+<pre class=line-numbers data-label="sample11_03_00_importExternalLibrary.py">
+<code class="language-python">
+import numpy as np      #npとして扱うことが多い
+
+print(np.pi)
+print(np.sin(np.pi/2))
+
+x = np.array([0, 1, 2, 3, 5, ,7 ,9, 3, ,5])
+print(x.var(), x.std())
+
+print(np.sin(np.pi/x))
+</code>
+</pre>
+    <p>
+        外部ライブラリの例としてnumpyを挙げたが、numpyは数値計算を行う際にはもはや必須である。
+        このライブラリがあるからPythonが解析プログラム言語として活躍できている。
+        numpy以外にも入れておいた方が良いライブラリがいくつかあるので紹介する。
+    </p>
+<h4>よく用いる外部ライブラリ（データ解析）</h4>
+    <p>
+        <table border="1" style="border-collapse: collapse" align="center">
+                <tr>
+                    <th width="120">外部ライブラリ</th>
+                    <th>説明</th>
+                </tr>
+                <tr>
+                    <td>NumPy</td>
+                    <td>
+                        行列計算を含めた数値計算を高速に行える。
+                        多くの関数が実装されており便利。むしろ、科学計算においてnumpyは必須。
+                    </td>
+              </tr>
+              <tr>
+              <tr>
+                    <td>SciPy</td>
+                    <td>
+                        numpyの拡張ライブラリ。
+                        特殊関数や物理定数（光速・プランク定数など）が実装されている。
+                        また方程式の数値解を求められる。
+                    </td>
+              </tr>
+              <tr>
+                    <td>matplotlib</td>
+                    <td>
+                        グラフ作成ライブラリ。
+                        2次元だけでなく3次元プロットも可能。
+                        アニメーションも作成できる。
+                        numpyと一緒に使うと関数のプロットとかができる。
+                        seabornという拡張ライブラリもある。
+                    </td>
+              </tr>
+              <tr>
+                    <td>pandas</td>
+                    <td>
+                        データ解析を高速で行える。データフレーム型を提供し、
+                        時系列データ解析・グループ化・pivotテーブルなどを扱える。
+                        データファイル（csvやtsvファイル）を読み込んで何か処理したいときはだいたいこれ使う。
+                        扱うのに少し慣れがいるが、慣れれば便利。
+                    </td>
+              </tr>
+              <tr>
+                    <td>SymPy</td>
+                    <td>
+                        数式処理システム（記号演算）を行える。
+                        numpy(scipy)が数値計算を行うのに対して、Sympyは理論計算を行う。
+                        微積分・方程式・行列なども扱える。
+                        Tex表記での出力も可能でJupyter(Google Colaboratory)と相性が良い。
+                    </td>
+              </tr>
+            </table>
+            「NumPy」、「matplotlib」、「pandas」は3種の神器である。
+            （+SciPyの4つのライブラリはデータ解析を行う際は最低でも入れておきたい。）
+        </p>
+        <p>
+            上記の例以外にも画像解析を行う「OpenCV」やスクレイピングが容易にできる「beautifulsoup4」
+            Excelを読み込む「xlrd」、ネット接続を容易にする「requests」、
+            オブジェクトをバイナリデータとして保存できる「pickle」など目的に応じて欲しいライブラリをインストールすればよい。
+            なお、流行しているAIの分野をみると、機会学習なら「scikit-learn」、
+            深層学習（ニューラルネットワーク）なら「Tensorflow」などが有名である。
+            これら2つとも開発元がGoogleである。
+            ときどき、「PythonはAIの分野で広く使われる」のような文を見かけるが、これは正確ではなく
+            「PythonはTensorflowなどのニューラルネットワークを提供するライブラリを手軽にインストールできる」と言う方が良いだろう。
+            （Tensorflow自体はCやjavaでも問題なく使える。それらはインストールなどの準備が面倒であるが、
+            pythonならpip tensorflowで完結する。）
+        </p>
+        <p>
+            Pythonの利点である豊富な外部ライブラリの存在は、Pythonの学習にとっては非常に不利である。
+            Pythonの標準装備だけでプログラムを書くだけであれば簡単なのだが、
+            外部ライブラリを利用しないとPythonの利点が活かせなくなる。
+            つまり、大量にあるライブラリの使い方をそれぞれ学ばないといけなくなる。
+            （ライブラリ使わないならCで書けばよいのでは？となる。その方が処理も速いので。）
+            ネット上に転がっているPythonのコードを見てみるとよい。
+            コード全体に対しての半分以上の行では、何かしらのライブラリを用いた処理をしていることであろう。
+        </p>
+        <p>
+            [私的メモ] numpyとmatplotlibについては書きたい。
+            pandasは余裕があれば書け。
+            一番pandasの書き方が特殊だろ。
+            numpyとmatplotlibさえどうにか書ければデータ解析はできるはず。
+        </p>
+</div>
+</div>
+</body>
+<script src="prism.js"></script>
+</html>

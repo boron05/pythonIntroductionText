@@ -1,0 +1,435 @@
+﻿<html lang="ja">
+<head>
+    <title>Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" href="prism.js"></script>
+    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="main">
+
+<div class="section-9">
+<h2>9. 関数</h2>
+    <p>
+        内容がまとまっている処理や反復する処理など、いくつかの処理を一つにまとめたものを「関数」と呼ぶ。
+        これまでに紹介した、input()やlen()、range()などはPythonが標準でもつ組み込み関数であるが、
+        ユーザーが独自に関数を定義することができる。
+        ここでは関数の定義の仕方や引数（パラメータ）、戻り値、変数のスコープなどについて紹介する。
+    </p>
+    <h3 class="underline">9.1 関数の基本</h3>
+    <p>
+        Pythonでは関数を「def 関数名(引数):」のように定義する。
+        また、返り値は「return 返り値」で記述する。
+        基本的な書き方を下記に記す。
+    </p>
+<pre class=line-numbers data-label="sample09_01_00_func.py">
+<code class="language-python">
+# 階乗を計算
+def factorial(n):
+    relust = n
+    for x in range(n-1, 0, -1):
+        relust *= x
+    return relust
+
+# 引数なしの関数
+def print_Hello():
+    print('Hello')
+    return 'Hello'
+
+# 引数と返り値なしの関数
+def print_Hello():
+    print('Hello')
+
+# 引数が2つの関数
+def abs_diff(a, b):
+    if a < b:
+        return b - a
+    elif a > b:
+        return a - b
+    else:
+        return 0
+
+# 引数にリスト
+def check_type(l):
+    results = []
+    for ele in l:
+        results.append(type(ele))
+    return results
+
+# 複数の返り値
+def multi_return():
+    return 1, 'TEST', [1, 6, 9]
+
+print(print_Hello())
+print(print_vHello())
+print(abs_diff(2**10, 3**7))
+print(check_type(['a', 1, ['s', 5]]))
+print(multi_return())
+</code>
+</pre>
+<h3 class="underline">9.2 変数のスコープ</h3>
+    <p>
+        関数を利用する際に注意すべきこととして「変数のスコープ」がある。
+        スコープとは「変数の有効範囲」を意味する。
+        関数の中で宣言した変数はその関数内でしか利用できないというルールがある。
+    </p>
+<pre class=line-numbers data-label="sample09_02_00_scope.py">
+<code class="language-python">
+def scope_test1():
+    a = 2
+    b = 3
+    c = 6
+    print(a, b, c, d)
+
+d = 10
+print(a)            # -> ERROR
+print(scope_test1)  # -> 2 3 6 10
+</code>
+</pre>
+    <p>
+        <div class="pic_frame">
+            <img src="fig_imgs/fig_09-00_scope.png" title="変数のスコープ" width="300">
+            <p>変数のスコープ</p> 
+        </div>
+    </p>
+    <p class="no-indent">
+        ※スコープとは少し違うのだが、引数の「値渡し」と「参照渡し」の違いが分かる例を挙げておく。
+        まともに学習するなら、データ型の「ミュータブル（mutable）」と「イミュータブル（immutable）」の差異に触れる必要がある。
+        結果だけ書いとくとPythonは全て参照を渡している。
+        値渡しを行うことはないのだが、「immutable」な型だと値の変更ができないため、見かけ上値渡しを行っているように見えてしまう。
+        （因みに公式ドキュメントの文章を読むとさらに混乱すること間違いなしである。）
+        <blockquote>
+            <p>
+                関数を呼び出す際の実際の引数 (実引数) は、関数が呼び出されるときに関数のローカルなシンボルテーブル内に取り込まれます。そうすることで、実引数は 値渡し (call by value) で関数に渡されることになります (ここでの 値 (value) とは常にオブジェクトへの 参照(reference) をいい、オブジェクトの値そのものではありません) [1]。ある関数がほかの関数を呼び出すときや、自身を再帰的に呼び出すときには、新たな呼び出しのためにローカルなシンボルテーブルが新たに作成されます。
+            </p>
+            <p class="no-indent">
+                [1] 実際には、オブジェクトへの参照渡し (call by object reference) と書けばよいのかもしれません。というのは、変更可能なオブジェクトが渡されると、関数の呼び出し側は、呼び出された側の関数がオブジェクトに行ったどんな変更 (例えばリストに挿入された要素) にも出くわすことになるからです。
+            </p>
+        </blockquote>
+
+    </p>
+<pre class=line-numbers data-label="sample09_02_01_callByObjectReference.py">
+<code class="language-python">
+def test1(x):
+    print('引数受取id:', id(x), 'value:', x)
+    x = 2
+    return x
+
+x = 1
+print('定義直後id:', id(x), 'value:', x)
+rtn_x = test1(x)
+print('戻り値　id:', id(rtn_x), 'value:', rtn_x)
+
+def test2(X):
+    print('引数受取id:', id(X), 'value:', X)
+    X.append(3)
+    return X
+
+X = [0, 1, 2]
+print('定義直後id:', id(X), 'value:', X)
+rtn_X = test2(X)
+print('戻り値　id:', id(rtn_X), 'value:', rtn_X)
+</code>
+</pre>
+
+<h3 class="underline">9.3 引数のデフォルト値とキーワード引数</h3>
+    <p>
+        関数の引数にデフォルト値を設定すると呼び出し時に引数を省略した場合、
+        デフォルト値が採用されるようになる。
+    </p>
+<pre class=line-numbers data-label="sample09_03_00_parameter.py">
+<code class="language-python">
+# リストの各要素をデフォルトで2乗にして返す
+def square(arglist, x=2):
+    return [ele**x for ele in arglist]
+
+
+print(square([1,2,3]))
+print(square([1,2,3], 4))
+</code>
+</pre>
+    <p>
+        デフォルト値を設定する際には、「def 関数名(引数1=デフォルト値1, 引数2=デフォルト値2)」のように
+        全ての引数にデフォルト値を与えることや
+        「def 関数名(引数1, 引数2=デフォルト2)」のようにデフォルト値が設定されている引数が
+        デフォルト値が設定されていない引数よりも後に定義されているように書くことが出来る。
+        つまり、逆に言うと「def 関数名(引数1=デフォルト値1, 引数2)」のような定義はエラーとなる。
+    </p>
+    <p>
+        関数呼び出しの際に代入する変数を指定する「キーワード引数」が使える。
+    </p>
+<pre class=line-numbers data-label="sample09_03_01_kwargs.py">
+<code class="language-python">
+def person(name, age):
+    print('name:', name)
+    print('age:', age)
+
+person(12, '太郎')            # 関数定義時の引数の順番通りに入る
+person(age=12, name='太郎')   # キーワード引数で指定
+</code>
+</pre>
+
+<h3 class="underline">9.4 可変長引数</h3>
+    <p>
+        関数定義時に受け取る引数を任意の個数にすることができる。
+        書き方は「*args」のようにアスタリスクを付けることで複数の引数をタプルとして受け取れる。
+    </p>
+<pre class=line-numbers data-label="sample09_04_00_variableArgs.py">
+<code class="language-python">
+def person(name, age, *info):
+    print('name:', name)
+    print('age:', age)
+    print('other info:', info)
+
+person('太郎', 12)
+person('太郎', 12, 'A')
+person('太郎', 12, 'A', 'Japan') 
+</code>
+</pre>
+    <p>
+        アスタリスクを2つ付け「**kwargs」とすると、任意の数のキーワード引数を指定できる。
+        関数内では辞書型となるので、キーワードの指定を強制することもできる。
+    </p>
+<pre class=line-numbers data-label="sample09_04_01_variableKwargs.py">
+<code class="language-python">
+# infoは辞書型
+def person(name, age, **info):
+    print('name:', name)
+    print('age:', age)
+    print('other info:', info)
+
+person('太郎', 12)
+person('太郎', 12)
+person('太郎', 12, blood_type='A', country='Japan')
+
+# 「,*」以降はキーワード指定が必須
+def person2(name, *, age=0, blood_type, country='Mars'):
+    print('name:', name)
+    print('age:', age)
+    print('blood_type:', blood_type)
+    print('country:', country)
+
+person2('太郎', age=12, blood_type='B')
+person2('太郎', age=12, blood_type='B', country='Japan')
+
+# 引数を展開して渡すことで可読性が上がるときもある
+para_list = ['Hanako', 17, ('A', 'Japan')]  # 引数を予めリストに代入しておく
+print('Not unpack:', para_list) # -> ['Hanako', 17, ('A', 'Japan')]
+print('Unpack:', *para_list)    # -> 'Hanako', 17, ('A', 'Japan')
+person(*para_list)              # リストは先頭に*を付けると展開される
+
+para_dict = {'name': 'Hanako', 'age':12, 'blood_type': 'B', 'country': 'Japan'}
+person2(**para_dict)            # 辞書は先頭に**を付けると展開される
+</code>
+</pre>
+
+<h3 class="underline">9.5 入力に関わる関数（応用）</h3>
+    <p>
+        実用上便利なので数値入力用の関数を定義しておく。
+    </p>
+<pre class=line-numbers data-label="sample09_05_00_inputFunc.py">
+<code class="language-python">
+# 浮動点少数が入力されるまでループ
+def input_float(print_str):
+    while True:
+        str = input(print_str)
+        try:
+            num = float(str)
+            break
+        except ValueError:
+            print ('Not a float')
+    return num
+
+# 整数が入力されるまでループ
+def input_int(print_str):
+    while True:
+        str = input(print_str)
+        try:
+            i = int(str)
+            break
+        except ValueError:
+            print ('Not a int')
+    return i
+
+# start～stopの範囲の整数が入力されるまでループ
+def input_between_int(print_str, start, stop):
+    while True:
+        i = input_int(print_str)
+        if i >= start and i <= stop:
+            break
+        else:
+            print ('Over Range')
+    return i
+</code>
+</pre>
+    <p>
+        折角なので上記の関数を用いて階乗を求めるプログラムを書いてみる
+    </p>
+<pre class=line-numbers data-label="sample09_05_01_inputFuncTest.py">
+<code class="language-python">
+# 整数が入力されるまでループ
+def input_int(print_str):
+    while True:
+        str = input(print_str)
+        try:
+            i = int(str)
+            break
+        except ValueError:
+            print ('Not a int')
+    return i
+
+# start～stopの範囲の整数が入力されるまでループ
+def input_between_int(print_str, start, stop):
+    while True:
+        i = input_int(print_str)
+        if i >= start and i <= stop:
+            break
+        else:
+            print ('Over Range')
+    return i
+
+# 階乗を計算
+def factorial(n):
+    if n == 0:
+        return 1
+    relust = n
+    for x in range(n-1, 0, -1):
+        relust *= x
+    return relust
+
+print('階乗を求めます。終了したい場合は-1を入力して下さい。')
+while True:
+    n = input_between_int('整数入力 n> ', -1, 100)
+    if n == -1:
+        break
+    print(f'{n}! = {factorial(n)}')
+
+print('--- FINISH ---')
+</code>
+</pre>
+    <p>
+        6章で紹介した素数判定プログラムを拡張し、素因数分解を行うプログラムにしてみる。
+    </p>
+<pre class=line-numbers data-label="sample09_05_02_primeFactorization.py">
+<code class="language-python">
+def check_prime(num):
+    flag = True
+    for x in range(2, num):
+        if num % x == 0:
+            flag = False
+            break
+    return flag
+    
+def get_primes(maxnum):
+    primes = []
+    for x in range(2, maxnum+1):
+        if check_prime(x):
+            primes.append(x)
+    return primes
+
+def get_factors(num):
+    primes = get_primes(num)
+    factors = []
+    for p in primes:
+        while True:
+            if num % p == 0:
+                num = num // p
+                factors.append(p)
+            else:
+                break
+    return factors
+
+print('IF FINISH -1')
+while True:
+    num = int(input('Natural Number >'))
+    if num == -1:
+        break
+    factors = get_factors(num)
+    if len(factors) == 1:
+        print('is Prime Number')
+        print(factors)
+    else:
+        print('Not Prime Number')
+        print(factors)
+</code>
+</pre>
+
+<h3 class="underline">※再帰関数の利用</h3>
+    <p>
+        入門の域ではないが、知っておくと便利な場合があるので紹介する。
+        また、この再帰関数を使いこなせると上級者という感じがする。
+    </p>
+    <p>
+        再帰関数とは関数内でその関数自身を呼び出す処理のことをいう。
+    </p>
+<pre class=line-numbers data-label="sample09_05_03_primeFactorization.py">
+<code class="language-python">
+import time
+import sys
+
+# nまでの和を返す（for利用）
+def mysum1(n):
+    result = 0
+    for x in range(n+1):
+        result += x
+    return result
+
+# nまでの和を返す再帰関数
+def mysum2(n):
+    if n < 1:
+        return n
+    return n + mysum2(n-1)
+
+#sys.setrecursionlimit(2000)
+at = time.perf_counter()
+print(mysum1(1000), time.perf_counter()-at)
+at = time.perf_counter()
+print(mysum2(1000), time.perf_counter()-at)
+</code>
+</pre>
+    <p>
+        上記コード例だと「mysum2」が再帰関数である。
+        非常に単純な例であり、再帰関数を使わない方が処理も早い。
+        実用的にはクイックソートなどを実装するときに使われたりする。
+    </p>
+
+<h3 class="underline">※無名関数（ラムダ式）</h3>
+    <p>
+        関数の定義方法は「def 関数名(引数):」であったが、記述をより簡潔にしたラムダ式というものがある。
+        「名前 = lambda 引数: 式」ように書く。
+    </p>
+<pre class=line-numbers data-label="sample09_05_03_primeFactorization.py">
+<code class="language-python">
+def myfunc1(a, b=1):
+    return a + b
+
+mylambda = lambda a, b=1: a + b
+
+print(myfunc(2, 6))
+print(mylambda(2, 6))
+</code>
+</pre>
+    <p>
+        上記の例ではlamnda式にも名前をつけたが、実際には名前をつけて使うことは少ない。
+        どのような場面で用いるかというと組み込み関数sorted()のkeyに適用したりして使う。
+    </p>
+<pre class=line-numbers data-label="sample09_05_03_primeFactorization.py">
+<code class="language-python">
+mylist = ['kind', 'artist', 'door', 'sky']
+
+mylist_sorted = sorted(mylist)
+print(mylist_sorted)
+
+mylist_sorted_len = sorted(mylist, key=len)
+print(mylist_sorted_len)
+
+mylist_sorted_last = sorted(mylist, key=lambda x: x[-1])
+print(mylist_sorted_last)
+</code>
+</pre>
+</div>
+</div>
+</body>
+<script src="prism.js"></script>
+</html>
