@@ -1,0 +1,248 @@
+﻿<html lang="ja">
+<head>
+    <title>文字列操作 | Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" href="prism.js"></script>
+    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="main">
+
+<div class="section-B">
+<h2>B. 文字列操作</h2>
+    <p>
+        文字列型（strクラス）には便利なメソッドが入っているので紹介する。
+    </p>
+<h3 id="B.1" class="underline">B.1 置換replace()</h3>
+    <p>
+        文字列の一部を他の文字列に置換するにはreplace()を用いる。
+        「str.replace(old, new[, count])」と書く。
+    </p>
+<pre class="line-numbers" data-label="sample03_type.py">
+<code class="language-python">
+str = 'x122345ts2x'
+print(str)
+
+new_str1 = str.replace('x', '+')
+print(new_str1)
+
+new_str2 = str.replace('x', '+', 1)
+print(new_str2)
+</code>
+</pre>
+    <p class="no-indent">
+        より細かく置換をしたいときや文字列の抽出を行いたいときは、「正規表現」を用いる。
+        Pythonでは「re」ライブラリで正規表現が扱える。
+    </p>
+<pre class="line-numbers" data-label="sample03_type.py">
+<code class="language-python">
+import re
+
+tel_str = '電話番号: 0120-123-456, e-mail: xxashah@as.sja'
+print(tel_str)
+
+m = re.findall(r'\d+', tel_str)
+print(m)
+</code>
+</pre>
+
+<h3 id="B.2" class="underline">B.2 文字列分割split()</h3>
+    <p>
+        文字列をリストに分割するときはsplit()メソッドを用いる。
+        「str.split(sep, [maxsplit])」と書く。
+    </p>
+<pre class="line-numbers" data-label="sampleB02_split.py">
+<code class="language-python">
+A = 'Think Blue, Count Two'
+
+B = '''
+吾輩は猫である。名前はまだ無い。
+どこで生れたかとんと見当がつかぬ。
+何でも薄暗いじめじめした所でニャーニャー泣いていた事だけは記憶している。
+'''
+
+listA_space = A.split(' ')  # スペースで区切る（単語ごとに分割）
+listA_comma = A.split(', ') # カンマで分割
+
+listB_kuten = B.split('。')  # 句点で分割
+listB_i = B.split('い', 2)   # 「い」で最大2回まで分割
+
+print(listA_space)
+print(listA_comma)
+print(listB_kuten)
+print(listB_i)
+</code>
+</pre>
+
+
+<h3 id="B.3" class="underline">B.3 文字列の両端の文字を削除strip()</h3>
+    <p>
+        文字列の両端（先頭、末尾）の指定した文字を削除するにはstrip()メソッドを用いる。
+        デフォルトだと連続した空白文字列を削除する。
+        改行「\n」やタブ「\t」も空白とみなされるため、末尾の改行コードを削除したいときによく利用される。
+    </p>
+    <p>
+        引数を渡した場合はその文字の組み合わせに一致したものが削除される。
+    </p>
+    <pre class="line-numbers" data-label="sampleB03_strip.py">
+<code class="language-python">
+A = ' \n \t The Lemontea\n'
+print(A)
+A_ = A.strip()
+print(A_)
+
+B1 = 'acb ABC aabcc'
+B2 = 'abcbababcabca ABC abqabba'
+print(B1.strip('abc'))   # a,b,cの組み合わせで作れる文字列を削除する
+print(B2.strip('cab'))   # 直観的な挙動ではないかもしれないので注意
+</code>
+</pre>
+
+<h3 id="B.4" class="underline">B.4 書式指定format()とf-string</h3>
+    <p>
+        Pythonでの文字列の書式設定の方法は3通りあり、
+        利用可能なPythonのバージョンは以下の通りである。
+        <ul>
+            <li>%書式: 少なくとも1.0以降</li>
+            <li>formatメソッド: 2.6以降</li>
+            <li>f-string: 3.6以降</li>
+        </ul>
+        %書式はPython3系でも問題なく使えるが、昔の記法であり、
+        現在利用が推奨されているのはformat()であるため、
+        ここではformat()と最新のf-stringについて紹介する。
+        というより、どれか1つの記法を覚えれば残り2つの記法も問題なく扱える。
+    </p>
+    
+<p>format()の例を記す。</p>
+<pre class=line-numbers data-label="format()">
+<code class="language-python">
+a = 12765.3
+b = 1267
+c = a / b
+str = 'aの値は{0:.2f}、bの値は{1:d}であり、a/bは{2:5.3f}'.format(a, b, c)
+print(str)
+</code>
+</pre>
+    <p>
+        波括弧に囲まれた部分以外は全て単純な文字として扱われ、
+        波括弧部分は「{番号:書式指定子}」という形式で書く。
+        コロン:より前の部分の番号は0から始まりformat(a, b, c, …)に対して、
+        0にaの値、1にbの値、2にcの値、…というように対応する。
+        コロン:より後ろの部分の書式指定子には、「s」・「ｄ」・「f」など
+        format()に渡した各引数に応じたものを指定する。
+        「s」は文字列を表し、省略が可能である。
+        「ｄ」は整数を、「f」はfloatを表す。
+        「{2:5.3f}」と書いた場合は全体を5桁（小数点"."を含めて）とし、小数点以下を3桁と指定している。
+    </p>
+    <p>
+        「{0:書式指定子}…{番号:書式指定子}」と書くのが基本だが、
+        format()の引数に渡した順番通りに波括弧が対応すれば番号は省略してもよい。
+    </p>
+<pre class=line-numbers data-label="format() 省略">
+<code class="language-python">
+base = '名前:{:6} 数学:{:d} 英語:{:d} 国語:{:d} 平均:{:.1f}'
+name = '太郎'
+math_score = 70
+eng_score = 73
+jpn_score = 69
+ave = (math_score + eng_score + jpn_score) / 3
+str1 = base.format(name, math_score, eng_score, jpn_score, ave)
+print(str1)
+base2 = '名前:{2:6} 数学:{0:d} 英語:{1:d} 国語:{4:d} 平均:{3:.1f}'
+str3 = base2.format(math_score, eng_score, name, jpn_score, ave)
+print(str2)
+</code>
+</pre>
+    <p>
+        「format()」の8文字が長く、順序指定するのが冗長だということなのか、
+        Python3.6から「f-string」記法が利用できる。
+        これはformat()と書式指定子部分は同じだが、番号の指定がいらない。
+        記法は文字列のシングルクォーテーションまたはダブルクォーテーション前に「f」を追加する
+        ことでf-stringとなり、「f'{値: 書式指定子}'」のように書く。
+    </p>
+<pre class=line-numbers data-label="f-string">
+<code class="language-python">
+name = '太郎'
+math_score = 70
+eng_score = 73
+ave = (math_score + eng_score) / 2
+str = f'名前:{name:6} 数学:{math_score:d} 英語:{eng_score:d} 平均:{ave:.1f}'
+print(str)
+</code>
+</pre>
+    <p>
+        f'数値:.0f'とした場合は小数点以下は桁数が0、すなわち整数に丸め込まれる。
+        例えばf'{12.4:.0f}'は'12'になり、f'{12.5:.0f}'の場合も'12'になる。
+        普通の四捨五入であれば12.5は13になりそうなものだが、
+        formatの場合は12になることに注意せよ（偶数への丸め）。
+        組み込み関数のround()も偶数への丸めを行う為、
+        安全に四捨五入したい場合は標準ライブラリのDecimalのquantizeを用いると良い。
+    </p>
+    <p>
+        あくまでここで紹介した書式指定子は一例にすぎない。
+        他の機能としてゼロ埋めや3桁ごとのカンマ区切り、右寄せ、指数表記なども存在する。
+    </p>
+    <p>
+        ネット上にある参考になりそうなサイト
+        <ul>
+            <li><a href="https://www.javadrive.jp/python/string/index24.html">
+                Python | formatメソッドを使った文字列の書式設定
+            </li></a>
+            <li><a href="https://hibiki-press.tech/python/format/1015">
+                【Python】formatを用いた書式設定の基本  |  Hbk project
+            </li></a>
+        </ul>
+    </p>
+    
+    
+    <p class="no-indent">
+        ※ここでf-string(フォーマット文字列)は文字列の先頭にfを書きf'xxxx'のように書くと紹介したが、
+        実は文字列の先頭には'f'以外にも'r'、'u'、'b'などを置くこともできる。
+        'r'は'raw'の略であり、「エスケープシーケンス」が無視される。
+        'u'はUnicode文字列を意味するが、Python3.xではデフォルトで文字列はUnicode文字列として認識されるので
+        付けても付けなくても何も変化はない（見かける機会も少ないだろう）。
+        'b'はByte文字列として認識されることを意味する（これも使うことはまずない）。
+        実用上、良く使うのは'r'である。
+        エスケープシーケンスとは特殊文字のことであり、例えば改行を表す「\n」やタブ「\t」、
+        シングルクォーテーション「\'」などのことを言う。
+        print("ABC\tD\'EF")はCとDの間にタブが存在し"ABC　　D'EF"のように表示される。
+        Pythonにおいてシングルクォーテーションは文字列を表す制御文字であるため、
+        シングルクォーテーション自体を表示させたいときにprint(' ' ')と書くとエラーになってしまう。
+        （print(" ' ")やprint(' " ')なら問題ない。）
+        そのような時に使うのがエスケープシーケンス「\'」であり、
+        バックスラッシュと共に書くことで単にシングルクォーテーションとしてPythonが解釈するようになる。
+        パスを書く時は、バックスラッシュ自体がエスケープシーケンスであるため、
+        raw文字列を用いない場合は、バックスラッシュを2つ重ねる必要がある。
+        （フォントの設定により上記文章だとバックスラッシュが円マークで表示されるかもしれない。）
+    </p>
+<pre class=line-numbers data-label="f-string">
+<code class="language-python">
+import os
+
+print('ABC\tD\'EF')     # エスケープシーケンス利用
+print(r'ABC\tD\'EF')    # そのまま表示する
+
+print(os.getcwd())
+
+# カレントディレクトリの移動
+os.chdir('C:\\XXX\\AAA\\BBB')   # escape sequence
+os.chdir(r'C:\XXX\AAA\BBB')     # raw文字列利用
+os.chdir('C:/XXX/AAA/BBB')      # スラッシュならそのまま使える
+
+print(os.getcwd())
+</code>
+</pre>
+<h3 id="B.5" class="underline">B.5 正規表現</h3>
+    <p>
+        言語学で用いる用語らしいが、プログラミングにおいて「正規表現」というのは
+        文字列のパターンマッチングを意味する。
+        WordなどのMSアプリでワイルドカード検索というのを見かけたことはないだろうか。
+        ワイルドカードは正規表現の一部である
+        （正規表現の?と*のみを利用するマッチングのことをワイルドカードと呼んでいるっぽい）。
+    </p>
+</div>
+</div>
+</body>
+<script src="prism.js"></script>
+</html>

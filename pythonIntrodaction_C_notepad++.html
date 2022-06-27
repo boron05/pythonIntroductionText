@@ -1,0 +1,247 @@
+﻿<html lang="ja">
+<head>
+    <title>テキストエディタ（Notepad++） | Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" href="prism.js"></script>
+    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<div class="main">
+
+<div class="section-C">
+<h2>C. テキストエディタ（Notepad++）</h2>
+    <p>
+        プログラミングをする際にはテキストエディタが必要になる。
+        windowsならメモ帳が標準で入っているが、流石にあれはソースコードを書くのには適さない。
+        （最低でも行数が分かる機能は欲しい。）
+        フリーのオープンソースで使えるテキストエディタはいくつかある。(大量にある)
+        <table border="1" style="border-collapse: collapse" align="center">
+                <tr>
+                    <th>テキストエディタ</th>
+                    <th>開発元</th>
+                    <th>初版</th>
+                    <th>対応OS</th>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <a href="https://azure.microsoft.com/ja-jp/products/visual-studio-code/">
+                            Visual Studio Code
+                        </a>
+                    </td>
+                    <td>マイクロソフト</td>
+                    <td>2015</td>
+                    <td>Windows 7以降、macOS 10.8以上、Linux、web</td>
+              </tr>
+              <tr>
+              <tr>
+                    <td align="center">
+                        <a href="https://atom.io/">
+                            Atom
+                        </a>
+                    </td>
+                    <td>GitHub</td>
+                    <td>2014</td>
+                    <td>Windows 7以降、macOS 10.8以上、Linux</td>
+              </tr>
+              <tr>
+                    <td align="center">
+                        <a href="https://www.vim.org/">
+                            Vim
+                        </a>
+                    </td>
+                    <td>Bram Moolenaar</td>
+                    <td>1987</td>
+                    <td>クロスプラットフォーム</td>
+              </tr>
+              <tr>
+                    <td align="center">
+                        <a href="https://www.gnu.org/software/emacs/">
+                            Emacs
+                        </a> 
+                    </td>
+                    <td>David A. Moon, Guy L. Steele Jr.</td>
+                    <td>1976</td>
+                    <td>クロスプラットフォーム、Unix系</td>
+              </tr>
+              <tr>
+                    <td align="center">
+                        <a href="https://notepad-plus-plus.org/">
+                            Notepad++
+                        </a>
+                    </td>
+                    <td>ドン・ホ</td>
+                    <td>2003</td>
+                    <td>Windows Vista 以降</td>
+              </tr>
+              <tr>
+                    <td align="center">TeraPad</td>
+                    <td>寺尾進</td>
+                    <td>1999</td>
+                    <td>Windows</td>
+              </tr>
+        </table>
+        おそらく、現在の流行はVisual Studio Codeだと思われる。
+        しかし、私はVisual Studio Codeを使ったことがないので、普段を私が使用しているNotepad++を紹介する。
+        （エディタ選びは重要かもしれない。
+        私はずっとNotepad++を使用しており、噂ではVisual Studio Codeが便利だと聞いてはいるが、新しく導入したり、
+        使い方を覚えるのが面倒だと感じてしまっているため、Notepad++を使い続けているという現状がある。
+        一番最初に覚えてしまったものを使い続けたくなるのはよくあることです…。）
+    </p>
+
+    <h3 class="underline">Notepad++のインストール</h3>
+    <p>
+        <a href="https://www.howtonote.jp/notepadplusplus/install/index1.html">
+            [参考]Notepad++の使い方 | ぼくらのハウツーノート
+        </a>
+    </p>
+    <p>
+        公式サイトのDownloadメニュー（https://notepad-plus-plus.org/downloads/）に移動する。
+        欲しいバージョンを選んでインストーラーをダウンロードする（2022/01時点だと8.2.1が最新）。
+        インストーラーを起動し、インストールする。
+        インストールオプションが選択できると思うので、Localization内の日本語を選択する。
+    </p>
+    <h3 class="underline">やっておきたいNotepad++の設定</h3>
+    <p>
+        <ul>
+            <li>日本語化</li>
+            <li>デフォルト文字コード設定（UTF-8 BOMなし）</li>
+            <li>制御文字の表示</li>
+            <li>タブをスペース4つに</li>
+            <li>python実行ショートカットキーの設定</li>
+        </ul>
+        上記4つは環境設定を適当にいじれば問題なくできるだろう。
+        少し面倒なのが、Python実行のシュートカットキーの作成である。
+
+    </p>
+    <h4>python実行ショートカットキーの設定</h4>
+    <p>
+        Pythonのスクリプトファイルを実行するにはコマンドプロンプトを開き、
+        作業ディレクトリまで移動した後（cd ディレクトリ）に
+        「python スクリプトファイル名.py」を入力することで実行できた。
+        作業ディレクトリまでの移動は一度行ってしまえば、その後は行う必要はないが、
+        「python スクリプトファイル名.py」の入力は面倒だと感じるだろう。
+        （コマンドプロンプトの入力補助機能として、矢印キーの上↑を押せば前の入力を呼び出せる為、
+        スクリプトファイル名をいちいち入力する必要はない。
+        しかし、アクティブなウィンドウをテキストエディタからコマンドプロンプトに変えるのが
+        面倒なのだ。NotePad++からPythonを直接実行できれば、
+        それはもう統合開発環境に等しい機能を有することになるだろう。）
+    </p>
+    <p>
+        やり方としてbatファイルを作成し、それをNotepad++に読み込ませるか、
+        batファイルに書く処理をそのままショートカットキーに登録するかの2つがある。
+        （他にもあるかも。）
+        ここでは後者を紹介する。
+    </p>
+    <p>
+        「実行」メニュー内の「ファイル名を指定して実行」をクリック。
+        実行するファイルの箇所に入力欄があると思うので、
+        予め入っていたものは削除に下記の<u>どちらか</u>をコピペでもして入力する。
+        <ol>
+            <li>cmd /k cd /d $(CURRENT_DIRECTORY) &  python $(FULL_CURRENT_PATH) & ECHO. & PAUSE & EXIT</li>
+            <li>cmd /k cd /d $(CURRENT_DIRECTORY) &  python $(FULL_CURRENT_PATH) & ECHO. & TIMEOUT 30 & EXIT</li>
+        </ol>
+        その後「登録」ボタンをクリックする。ショートカットの登録ウィンドウが出ると思うので、
+        ショートカット名とそれに対応するショートカットキーを指定する。以上。
+    </p>
+    <p>
+        入力するコマンドを2種類紹介したがそれぞれの挙動を説明する。
+        （私も把握していないのでコマンドについての詳細は説明しない。
+        詳しく学びたいなら
+        <a href="https://www.javadrive.jp/command/#section_ini">
+        コマンドプロンプトの使い方 | Let'sプログラミング
+        </a>
+        ）
+        <ol>
+            <li>
+                スクリプト実行後、何かしらのキー入力が行われるまでコマンドプロンプトを開いたままにする。
+            </li>
+            <li>
+                スクリプト実行後、30秒後に自動的にコマンドプロンプトを閉じる。
+                あるいは何かしらのキー入力が行われるても閉じる。
+            </li>
+        </ol>
+        コマンドプロンプト上にprint()で何かしら表示させるときは[1]の方が良いだろう。
+        一方の[2]は自動でウィンドウが閉じられるので、コマンドプロンプトが大量に開いたままという状況がなくなる。
+        （[1]の方法で手動で毎回閉じればよいのだが、意外と面倒で忘れがちになる。
+        プログラムのデバッグを行う際は頻繁にコードを書き直しtry&errorを繰り返すため、
+        大量のウィンドウが生成されがちである。）
+        なお、実行するPythonのバージョンを指定したいときは、上記コマンドの「python」部分を「py -3.x」などと変えればよい。
+    </p>
+    <h4>[参考] 各種設定画面</h4>
+        <p>
+            「設定」ツールバー内の「環境設定」をクリックする。
+        </p>
+        <p>
+            <img src="fig_imgs/fig_C-00_notepadenvsetting.png" title="Installer画面" width="400">
+        </p>
+        <p>
+            環境設定ウィンドウが開くので、その左側のメニューから「新規文章」を選択する。
+            ここでは、改行コードを"Unix (LF)"とし、エンコードを"UTF-8"に指定する。
+            なお、改行コードは"windows (CR LF)"でも問題ない。
+        </p>
+        <p>
+            <img src="fig_imgs/fig_C-01_notepadenvnewtext.png" title="Installer画面" width="400">
+        </p>
+        <p>
+            次に「言語メニュー」内でタブをスペース4つに指定する。
+        </p>
+        <p>
+            <img src="fig_imgs/fig_C-02_notepadenvlangmenu.png" title="Installer画面" width="400">
+        </p>
+        <p>
+            設定が終了したら環境設定ウィンドウを閉じる。
+            次に、Pythonをショートカットキーで実行できるように設定する。
+            「実行」ツールバー内の「ファイルを指定して実行」をクリックする
+        </p>
+        <p>
+            <img src="fig_imgs/fig_C-03_notepadrun.png" title="Installer画面" width="400">
+        </p>
+        <p>
+            入力欄に前述した"cmd …"コマンドをコピペし「登録」をクリックする。
+        </p>
+        <p>
+            <img src="fig_imgs/fig_C-04_notepadrunfile.png" title="Installer画面" width="400">
+        </p>
+        <p>
+            ショートカットキーを登録する。
+            「項目」はショートカットの名称を入力する。
+            （例えば"run_python"とか。何でもよい。）
+            シュートカットキーを選択し「OK」をクリックすれば設定は終了である。
+            （"F5"キーで実行させているのをよく見かけるが、自身が分かりやすいキーで良いだろう。
+            私の場合は【Ctrl】+【Shift】+【9】でpython3.9が実行されるようにしてある。）
+            なお、「実行」ツールバーをクリックした際にデフォルトで登録されているショートカットキーの一覧が
+            表示される（【Alt】+【F1】でGet PHP helpなど）が、自作のショートカットキーを登録するときは
+            これらのデフォルトのショートカットキーとの重複は避けた方が良いだろう。
+        </p>
+        <p>
+            <img src="fig_imgs/fig_C-05_notepadrunshortcut.png" title="Installer画面" width="400">
+        </p>
+        <p>
+            ショートカットキーが正常に動作するか確認しておく。
+            「言語」ツールバーをクリックし、"Python"を選択する。
+            これにより単語の強調表示が行われるようになり、
+            スクリプトファイルの保存時に拡張子が自動的に".py"となる。
+            print('SHORT CUT KEY TEST')とか書いて、ファイルを保存する。
+            ファイル保存は【Ctrl】+【s】で行える。
+            （windowsで一般的なショートカットキーはこれ以外にも使える。）
+            初回保存なら「名前を付けて保存」というウィンドウが開くと思うので、適当に名前を付ける。
+            なお、この際に拡張子がpy（ファイルの種類がPython file）になっていることを
+            確認しておくとよい。
+            ファイルを保存したら、先ほど登録したショートカットキーを押す。
+            コマンドプロンプトが自動的に開き、文字列'SHORT CUT KEY TEST'が表示されていれば成功である。
+            なお、スクリプトファイルを実行するときは
+            ファイル保存した後でないとコードの変更が適用されない為、毎回【Ctrl】+【s】をした後
+            ショートカットキーでPython実行という流れで行うと良い。
+        </p>
+    <h3 class="underline">シュートカットキーが正常に動作しない問題について（2022/06/02）</h3>
+        <ol>
+            <li>cmd /K cd "$(CURRENT_DIRECTORY)" && python "$(FULL_CURRENT_PATH)" </li>
+            <li>C:XXX\python.exe -i "$(FULL_CURRENT_PATH)</li>
+        </ol>
+        <p>XXXはpython.exeの保存ディレクトリ。コマンドプロンプトに「where python」で探せる。</p>
+</div>
+</div>
+</body>
+<script src="prism.js"></script>
+</html>

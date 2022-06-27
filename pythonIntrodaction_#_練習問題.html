@@ -1,0 +1,329 @@
+﻿<html lang="ja">
+<head>
+    <title>練習問題 | Python入門</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+
+<div class="main">
+<h1 class="top">Python 入門 練習問題</h1>
+
+<h2 id="0.">[1] 条件分岐</h2>
+    <h3 id="0.1" class="underline">Q1. 入園料計算</h3>
+    <p>
+        あるテーマパークの入場料は原則、大学生以上:1,500円、小学生～高校生:1,200円、未就学児:無料（2人まで）となっている。
+        未就学児が3人以上の場合は3人目から一人あたり1,000円が追加される。
+        しかし、団体割引として6人以上（未就学児も含む）での申込みの場合は合計額が1割引きとなる。
+    </p>
+    <p>
+        上記の設定で、大学生以上の人数、小学生～高校生の人数、未就学児の人数を入力すると
+        入場料の合計が表示されるプログラム。
+        スクリプトファイル名は「clac_entry.py」とする。
+        コマンドプロンプトでの動作例は下記に記す。
+    </p>
+<pre data-label="clac_entry.py">
+<code class="language-shell">
+C:\XXX>python clac_entry.py
+大学生以上の人数>2
+小～高校生の人数>1
+未就学児の人数>1
+入場料(円): 4200
+
+C:\XXX>python clac_entry.py
+大学生以上の人数>2
+小～高校生の人数>0
+未就学児の人数>3
+入場料(円): 4000
+
+C:\XXX>python clac_entry.py
+大学生以上の人数>2
+小～高校生の人数>1
+未就学児の人数>3
+入場料(円): 4680 (団体割引適用)
+</code>
+</pre>
+    <p>
+        [発展] 上記のプログラムだと未就学児だけでの入場も可能となっているが、これを禁止したい。
+        未就学児が入場する場合には必ず大学生以上の同伴が1人以上必要とし、これを出力に反映させたい。
+    </p>
+<pre data-label="clac_entry.py">
+<code class="language-shell">
+C:\XXX>python clac_entry.py
+大学生以上の人数>0
+小～高校生の人数>1
+未就学児の人数>3
+入場不可。大学生以上の同伴者が必要です。
+</code>
+</pre>
+    <br>
+    <h3 id="0.1" class="underline">Q2. 和暦<->西暦変換プログラム</h3>
+    <h4 id="0.1" class="underline">Q2.1 西暦 -> 和暦変換プログラム仕様</h3>
+    <p>
+        西暦を入力すると、それに対応した和暦が出力されるプログラム。
+        サポートする元号は「令和」、「平成」、「昭和」の3つでよい。
+        令和1年は西暦2019年、平成1年は西暦1989年、昭和1年は西暦1926年からとなるが、
+        "1年"の場合は"元年"と出力させる。
+        スクリプトファイル名は「changeYear_western2japan.py」とする。
+        コマンドプロンプトでの動作例は下記に記す。
+    </p>
+<pre data-label="changeYear_western2japan.py">
+<code class="language-shell">
+C:\XXX>python changeYear_western2japan.py
+西暦入力 >2020
+令和2年
+
+C:\XXX>python changeYear_western2japan.py
+西暦入力 >2000
+平成12年
+
+C:\XXX>python changeYear_western2japan.py
+西暦入力 >2019
+令和元年
+</code>
+</pre>
+
+<h4 id="0.1" class="underline">Q2.2 和暦 -> 西暦変換プログラム仕様</h3>
+    <p>
+        和暦を入力すると、それに対応した西暦が出力されるプログラム。
+        受け付ける入力は"R02"、"H13"のような頭文字の大文字アルファベットが元号を表し、
+        その後に0埋めした年数が続くものとする。
+        元号を示すアルファベットは令和なら"R"、平成なら"H"、昭和なら"S"とする。
+        スクリプトファイル名は「changeYear_japan2western.py」とする。
+        動作例は下記に記す。
+    </p>
+<pre data-label="changeYear_japan2western.py">
+<code class="language-shell">
+C:\XXX>changeYear_japan2western.py
+和暦入力 >S40
+1965
+
+C:\XXX>changeYear_japan2western.py
+和暦入力 >H15
+2003
+
+C:\XXX>changeYear_japan2western.py
+和暦入力 >R01
+2019
+</code>
+</pre>
+
+<h4 id="0.1" class="underline">Q2.3 入学・卒業年度計算プログラム仕様</h3>
+    <p>
+        生年月を入力すると、高等学校と大学の各入学・卒業年度が出力されるプログラム。
+        入力は西暦表示とし、"2000/06"などの"YYYY/MM"形式の入力を受け付けるものとする。
+        小学校には4月1日の時点で満6歳になっている子どもが入学するとし、その後は小学校には6年間、中学校には3年間、高等学校には3年間在籍する。大学は4年制のものとし、浪人や留年は考えない。出力は西暦と和暦の両方で表示させる。
+        スクリプトファイル名は「calc_admission_graduate_year.py」とする。動作例は下記に記す。
+    </p>
+<pre data-label="calc_admission_graduate_year.py">
+<code class="language-shell">
+C:\XXX>python calc_admission_graduate_year.py
+生年月入力 >1998/06
+      西暦      和暦
+生年月:1998年6月 平成10年6月
+高等学校
+入学: 2014年4月 平成26年4月
+卒業: 2017年3月 平成29年3月
+大学
+入学: 2017年4月 平成29年4月
+卒業: 2021年3月 令和3年3月
+</code>
+</pre>
+    <p>
+        [発展] 大学受験時に浪人した場合と大学で留年した場合も考慮したい。
+        受け付ける入力を生年月だけでなく、浪人年数と留年年数も追加し、
+        大学入学年度と卒業年度を計算するようにせよ。
+        下記動作例は浪人はしなかったが、大学時代に1年間留年した場合のもの。
+    </p>
+<pre data-label="calc_admission_graduate_year.py">
+<code class="language-shell">
+C:\XXX>python calc_admission_graduate_year.py
+生年月入力 >1998/06
+大学受験時の浪人年数>0
+大学時代の留年年数>1
+      西暦      和暦
+生年月:1998年6月 平成10年6月
+高等学校
+入学: 2014年4月 平成26年4月
+卒業: 2017年3月 平成29年3月
+大学
+入学: 2017年4月 平成29年4月
+卒業: 2022年3月 令和4年3月
+</code>
+</pre>
+
+<h2 id="0.">[2] 繰り返し</h2>
+    <h3 id="0.1" class="underline">Q1. 相関係数計算プログラム</h3>
+    <h4 id="0.1" class="underline">Q1.1 相関係数計算プログラム仕様</h4>
+    <p>
+        2つのリストAとBがあり、それぞれに格納されている値は以下の通りである。
+        <ul>
+            <li>A = [64, 54, 89, 76, 55, 80, 79, 95, 69, 72]</li>
+            <li>B = [76, 89, 92, 69, 84, 79, 84, 83, 91, 75]</li>
+        </ul>
+        AとBそれぞれの総和、平均、分散、標準偏差とAとBの共分散を出力せよ。
+        また、相関係数も計算し出力せよ。スクリプトファイル名は「calc_correl.py」とする。動作例は下記に記す。
+    </p>
+    <p>
+        ※Pythonには組み込み関数sum(リスト)で総和が求まり、len(リスト)でリストの要素数が求まる為、
+        sum(リスト)/len(リスト)で平均が求まるが、ここでは学習の為これらの組み込み関数は用いずに
+        上記プログラムを実装してみよ。
+        なお、分散\({\sigma_A}^2,{\sigma_B}^2\)、共分散\({\sigma_{AB}}^2\)、相関係数\(R\)は以下で定義される。
+        \begin{align*}
+            {\sigma_A}^2=\frac{1}{n}\sum_{i=1}^{n}(A_i-\langle A \rangle)^2,\quad
+            {\sigma_{AB}}^2=\frac{1}{n}\sum_{i=1}^{n}(A_i-\langle A \rangle)(B_i-\langle B \rangle),\quad
+            R = \frac{{\sigma_{AB}}^2}{\sigma_A\sigma_B}
+        \end{align*}
+        ここで\(\langle X \rangle\)は平均を表す。
+    </p>
+<pre data-label="calc_correl.py">
+<code class="language-shell">
+C:\XXX>python calc_correl.py
+A
+総和: 733
+平均: 73.3
+分散: 161.60999999999999
+標準偏差: 12.712592182556632
+B
+総和: 822
+平均: 82.2
+分散: 50.160000000000004
+標準偏差: 7.0823724838503095
+A-B
+共分散: -1.05999999999999
+相関係数: -0.011773158373432542
+</code>
+</pre>
+
+<h3 id="0.1" class="underline">Q2. 数列計算プログラム</h3>
+<h4 id="0.1" class="underline">Q2.1 群数列プログラム仕様</h4>
+    <p>
+        「1, 2, 2, 3, 3, 3, 4, …」という数列を実装したい。
+        この数列のn番目の項とそこまでの総和を表示するプログラムを書け。
+        nはinput()関数で入力するものとする。
+        スクリプトファイル名は「calc_sequence.py」とする。動作例は下記に記す。
+    </p>
+<pre data-label="calc_sequence.py">
+<code class="language-shell">
+C:\XXX>python calc_sequence.py
+項数n>5
+[1, 2, 2, 3, 3]
+11
+
+C:\XXX>python calc_sequence.py
+項数n>10
+[1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
+30
+</code>
+</pre>
+
+<h3 id="0.1" class="underline">Q3. 最大公約数・最小公倍数計算プログラム</h3>
+    <h4 id="0.1" class="underline">Q3.1 最大公約数プログラム仕様</h4>
+    <p>
+        入力として2つの整数を受け取り、その2数の最大公約数(GCD:greatest common divisor)を出力するプログラム。
+        スクリプトファイル名は「calc_gcd.py」とする。動作例は下記に記す。
+    </p>
+    <h4 id="0.1" class="underline">Q3.2 最小公倍数プログラム仕様</h4>
+    <p>
+        入力として2つの整数を受け取り、その2数の最小公倍数(LCM:leastcommon multiple)を出力するプログラム。
+        スクリプトファイル名は「calc_lcm.py」とする。動作例は下記に記す。
+    </p>
+<pre data-label="calc_lcm.py">
+<code class="language-shell">
+C:\XXX>python calc_gcd.py
+a入力 >54
+b入力 >126
+18
+
+C:\XXX>python calc_gcd.py
+a入力 >365664
+b入力 >25116
+156
+</code>
+</pre>
+
+<h4 id="0.1" class="underline">Q2.2 最小公倍数プログラム仕様</h4>
+    <p>
+        入力として2つの整数を受け取り、その2数の最大公約数(LCM:least common multiple)を出力するプログラム。
+        スクリプトファイル名は「calc_lcm.py」とする。動作例は下記に記す。
+    </p>
+<pre data-label="sample04_02_00_type.py">
+<code class="language-shell">
+C:\XXX>python calc_lcm.py
+a入力 >14
+b入力 >66
+462
+
+C:\XXX>python calc_lcm.py
+a入力 >2022
+b入力 >614
+620754
+</code>
+</pre>
+    <p>
+        [発展]GCD・LCMのプログラムはともに2つの入力しか考えなかったが、
+        入力を1つ増やし3つの数のGCD・LCMを求めるにはどうすれば良いか。
+        さらに任意個の整数を入力に受け取りそれらのGCD・LCMを求めるプログラムを書け。
+    </p>
+</div>
+    <h3 id="0.1" class="underline">Q3. 素数判定プログラム</h3>
+    <h4 id="0.1" class="underline">Q3.1 素数判定プログラム仕様</h4>
+        <p>
+            入力された数値が素数ならTrueを出力し、そうでないならFalseを出力するプログラム。
+            素数は1とその数以外で割り切れない自然数であり、2,3,5,7,11,…などである。
+            スクリプトファイル名は「check_prime.py」とする。動作例は下記に記す。
+        </p>
+<pre data-label="sample04_02_00_type.py">
+<code class="language-shell">
+C:\XXX>python check_prime.py
+整数入力 > 123
+False
+
+C:\XXX>python check_prime.py
+整数入力 > 127
+True
+</code>
+</pre>
+
+<h4 id="0.1" class="underline">Q3.2 素因数分解プログラム仕様</h4>
+        <p>
+            入力された整数を素因数分解するプログラム。
+            例えば、126を素因数分解すると\(126=2\times3^2\times7\)となるが、
+            このような処理を行うプログラムを作りたい。
+        </p>
+        <p>
+            入力として整数を受け取り、それの素因数が格納されたリストを表示せよ。
+            126の例なら、出力されるリストは[2, 3, 3, 7]となる。
+            スクリプトファイル名は「prime_factorization.py」とする。動作例は下記に記す。
+        </p>
+<pre data-label="prime_factorization.py">
+<code class="language-shell">
+C:\XXX>python prime_factorization.py
+整数入力 >126
+[2, 3, 3, 7]
+
+C:\XXX>python prime_factorization.py
+整数入力 >3120
+[2, 2, 2, 2, 3, 5, 13]
+</code>
+</pre>
+    <p>
+        [発展]出力するリストの形式を[(素数1, 指数1), (素数2, 指数2), …]としたい。
+        入力が3120ならその結果は[(2, 4), (3, 1), (5, 1), (13, 1)]となるようにせよ。
+        また、出力として"3120 = 2^4 x 3 x 5 x 13"が表示されるとなおよい。
+    </p>
+
+<h3 id="0.1" class="underline">Q4. ソートプログラム</h3>
+    <h4 id="0.1" class="underline">Q4.1 バブルソートプログラム仕様</h4>
+    <p>
+        <div class="pic_frame">
+            <img src="fig_imgs/fig_exam_00_bubblesort.png" title="バブルソート" width="600">
+            <p>バブルソート</p>
+        </div>
+    </p>
+
+<script src="prism.js"></script>
+<script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</body>
+
+</html>
