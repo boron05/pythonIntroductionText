@@ -1,4 +1,4 @@
-﻿<html lang="ja">
+<html lang="ja">
 <head>
     <title>条件分岐 | Python入門</title>
     <link rel="stylesheet" href="prism.css">
@@ -30,8 +30,8 @@
 str_a = input('a >')    # 文字列'a >'を表示し、入力を待つ
 str_b = input('b >')    # 入力した型は文字列型となる
 
-a = float(a)    # 数値に変換
-b = float(b)
+a = float(str_a)    # 数値に変換
+b = float(str_b)
 
 print(a, b)
 if a > b:
@@ -56,8 +56,8 @@ print('---END---')
 str_a = input('a >')    
 str_b = input('b >')    
 
-a = float(a)    # 数値に変換
-b = float(b)
+a = float(str_a)    # 数値に変換
+b = float(str_b)
 
 if a > b:
     print('a > b')
@@ -245,5 +245,4 @@ print(judg)
 </div>
 </div>
 </body>
-<script src="prism.js"></script>
 </html>
