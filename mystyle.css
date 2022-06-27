@@ -1,0 +1,104 @@
+p{
+    text-indent: 1rem;
+}
+.indent{
+    padding-left: 3em;
+}
+p.block{
+    padding-left: 3em;
+    text-indent: 0rem;
+}
+p.no-indent{
+    text-indent: 0rem;
+}
+h3.underline {
+    border-bottom: 1px solid gray;
+}
+.main{
+    padding-left: 1em;
+}
+.font-red{
+    color: red;
+}
+table td {/*table内のtdに対して*/
+  padding: 3px 10px;/*上下3pxで左右10px*/
+}
+h2{
+    padding-top: 3em;
+}
+
+span.bs{
+    font-family: Arial;
+}
+
+.pic_frame {
+  display: inline-block;
+  text-align: center;
+}
+.pic_float {
+      display: inline-block;
+      float: right;
+      text-align: center;
+}
+
+div.foldertree{
+    margin-left: 20px;
+}
+
+blockquote {
+        border-left: 5px solid #ddd;
+        color: #777;
+        padding: 1em;
+        padding-right: 0;
+        margin: 1.5em 0;
+}
+
+.tree {/*親要素*/
+  position: relative;
+  background: white;
+  margin-top: 0px;
+  padding: 0px;
+  font-size: 1.0rem;
+  font-weight: 400;
+  line-height: 1.0;
+  color: #212529;
+}
+ 
+.tree ul {/*親フォルダ*/
+  padding-left: 5px;
+  list-style: none;
+}
+.tree ul li {/*ファイル名部分*/
+  position: relative;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 15px;
+  box-sizing: border-box;
+}
+.tree ul li:before {/*横線*/
+  position: absolute;
+  top: 15px;
+  left: 0;
+  width: 10px;
+  height: 1px;
+  margin: auto;
+  content: '';
+  background-color: #666;
+}
+.tree ul li:after {/*縦線*/
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  content: '';
+  background-color: #666;
+}
+.tree ul li:last-child:after {/*これ以下は別フォルダになる事を明示する為、少しだけ離す*/
+  height: 15px;
+}
+
+a:visited{
+  color: #0000EE;
+}
