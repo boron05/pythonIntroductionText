@@ -193,7 +193,12 @@ if(a > b){
 int a=9;int b=10;System.out.println(a,b);if(a>b){System.out.println("a大なりb");}else if(a< b){System.out.println("a小なりb");}else{System.out.println("aとbは等しいです");}
 </code>
 </pre>
-
+    <p>
+        Pythonに限った話ではないが、コードを書いた後、プログラムが正常に動くかどうかを確認するには
+        print()でこまめに動作をチェックした方が良い。
+        テスト段階ではコードの要所要所にprint()を書き変数に何が代入されているかを表示させておくとデバッグが効率よく行える。
+        プログラムテストが終わり正常に動作するようであれば、print()の部分を#でコメントアウトしてしまえば良い。
+    </p>
 </div>
 </div>
 </body>
