@@ -325,7 +325,7 @@ C:\XXX>python prime_factorization.py
         </div>
     </p>
 <h2 id="0.">[3] ファイル入出力</h2>
-<h3 id="0.1" class="underline">Q1. 合計・平均計算およびその保存</h3>
+<h3 id="0.1" class="underline">Q1. csv(Comma Separated Value)形式ファイルの解析</h3>
     <p>
         30名の数学、英語、理科、社会、国語の得点が保存された
         テキストファイル「<a href="sample_data1.txt" target="_blank" rel="noopener noreferrer">sample_data1.txt</a>」について
@@ -333,9 +333,19 @@ C:\XXX>python prime_factorization.py
     </p>
     <h4 id="0.1" class="underline">Q1.1 優秀得点者検索プログラム仕様</h4>
     <p>
-        得点が90点を超える科目が3つ以上ある生徒の一覧を取得し、その結果を「excellent_student_list.txt」に保存したい。
+        得点が90点を超える科目が3つ以上ある生徒の一覧を取得し、その結果を「excellent_students_list.txt」に保存したい。
         また、プログラム実行時にはコマンドプロンプトに上記に該当する生徒の人数を表示させるものとする。
+        スクリプトファイル名は「write_excellent_students.py」とする。動作例は下記に記す。
     </p>
+<pre data-label="write_excellent_students.py">
+<code class="language-shell">
+C:\XXX>python write_excellent_students.py
+ファイル読み込み成功 sample_data1.txt
+処理中
+ファイル書込み成功 excellent_students_list.txt
+該当者数: 5
+</code>
+</pre>
     
     <h4 id="0.1" class="underline">Q1.2 合計・平均計算プログラム仕様</h4>
     <p>
