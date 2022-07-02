@@ -6,7 +6,26 @@
 </head>
 <body>
 
-<div class="main">
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <a href="#">Index</a>
+  <a href="#">0. はじめに</a>
+  <a href="#">1. インストール</a>
+  <a href="#">2. 対話型</a>
+  <a href="#">3. Scriptファイルの実行</a>
+  <a href="#">4. 変数の型</a>
+  <a href="#">5. 条件分岐</a>
+  <a href="#">6. 繰り返し処理</a>
+  <a href="#">7. 例外処理</a>
+  <a href="#">8. ファイル入出力</a>
+  <a href="#">9. 関数</a>
+  <a href="#">10. クラス</a>
+  <a href="#">11. ライブラリの利用</a>
+  <a href="#">練習問題</a>
+</div>
+ 
+<div id="main "class="main">
+<button class="openbtn" onclick="openNav()">☰ Open Index</button> 
 <h2 id="0.">0. はじめに</h2>
     <p>
         本テキストの目標として「ローカル環境でとりあえずPythonを動かせるようにする」を設定しておく。
@@ -208,6 +227,17 @@
     </div>
 </div>
 
+<script>
+function openNav() {
+  document.getElementById("mySidebar").style.width = "200px";
+  document.getElementById("main").style.marginLeft = "200px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
 <script src="prism.js"></script>
 <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </body>
