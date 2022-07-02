@@ -5,8 +5,27 @@
     <link rel="stylesheet" href="mystyle.css">
 </head>
 <body>
-<div class="main">
 
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+  <a href="https://boron05.github.io/pythonIntroductionText/">Index</a>
+  <a href="./pythonIntrodaction_00_はじめに.html">0. はじめに</a>
+  <a href="./pythonIntrodaction_01_インストール.html">1. インストール</a>
+  <a href="./pythonIntrodaction_02_対話型.html">2. 対話型</a>
+  <a href="./pythonIntrodaction_03_スクリプトファイルでの実行.html">3. Scriptファイルの実行</a>
+  <a href="./pythonIntrodaction_04_変数と型.html">4. 変数の型</a>
+  <a href="./pythonIntrodaction_05_条件分岐.html">5. 条件分岐</a>
+  <a href="./pythonIntrodaction_06_繰り返し処理.html">6. 繰り返し処理</a>
+  <a href="./pythonIntrodaction_07_例外処理.html">7. 例外処理</a>
+  <a href="./pythonIntrodaction_08_ファイル入出力.html">8. ファイル入出力</a>
+  <a href="./pythonIntrodaction_09_関数.html">9. 関数</a>
+  <a href="./pythonIntrodaction_10_クラス.html">10. クラス</a>
+  <a href="./pythonIntrodaction_11_ライブラリの利用.html">11. ライブラリの利用</a>
+  <a href="./pythonIntrodaction___練習問題.html">練習問題</a>
+</div>
+
+<div id="main" class="main">
+<button class="openbtn" onclick="openNav()">☰ Open Index</button> 
 <div class="section-6">
 <h2>6. 繰り返し処理</h2>
     <p>
@@ -440,6 +459,17 @@ while True:
 </div>
 </div>
 
+<script>
+function openNav() {
+  document.getElementById("mySidebar").style.width = "200px";
+  document.getElementById("main").style.marginLeft = "200px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
 <script src="prism.js"></script>
 <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </body>
