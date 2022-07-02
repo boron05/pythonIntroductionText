@@ -160,7 +160,3 @@ blockquote {
 .tree ul li:last-child:after {/*これ以下は別フォルダになる事を明示する為、少しだけ離す*/
   height: 15px;
 }
-
-a:visited{
-  color: #0000EE;
-}
