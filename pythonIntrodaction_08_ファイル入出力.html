@@ -30,8 +30,14 @@
 <h2>8. ファイル入出力</h2>
     <p>
         これまではコマンドプロンプトにprint()で結果を表示したり、input()で入力してきた。
-        しかし、テキストファイル(.txt)やcsvファイルを読み込みデータ解析したい場面も多いだろう。
+        しかし、テキストファイル(.txt)やcsvファイルを読み込みデータ解析したい場面も多いだろう。        
         あるいは、計算結果を別ファイルに保存したときに用いるのがファイルの入出力処理である。
+    </p>
+    <p>
+        なお、csvとはComma Separated Valuesの略でカンマで値を区切ったデータ形式のことを言う。
+        カンマではなくタブを区切り文字としたデータ形式tsv(Tab Separated Values)も存在する。
+        ファイルの拡張子として.csvや.tsvを使用することが出来るが、
+        本テキストではcsv形式やtsv形式であってもファイル拡張子は.txtを用いている。
     </p>
 <h3 class="underline">8.1 ファイル読み込み</h3>
     <p>
@@ -55,7 +61,7 @@ print(txt)
         2行目がファイルを開く処理である。
         「open(ファイルのパス [, mode, encoding])」のように記述する。
         引数のmodeとencodingは省略が可能で、その場合は「mode='r'」の読み込みモード、
-        encodingのデフォルトはosに依存するが、windowsならCP932が指定される。
+        encodingのデフォルトはosに依存するが、WindowsならCP932が指定される。
     </p>
     <p>
         ファイルのパスは絶対パスか相対パスで指定する。
@@ -74,7 +80,7 @@ print(txt)
 └─ File_4
 </pre>
 </div>
-        例えば上記のようなフォルダ構造であったとき、py Script FileからFile_1またはFile_2を読み込むときは
+        例えば上記のようなフォルダ構造であったとき、Python Script FileからFile_1またはFile_2を読み込むときは
         単に「open('File_1')」でよい。
         カレントディレクトリ内にあるサブフォルダ内のファイル（File_3）を読み込むときは
         「open('Folder_C/File_3')」で読める。また、自身よりも上の階層にあるファイル（File_4）を読むときは
@@ -135,7 +141,7 @@ print(txt)
 <pre class=line-numbers data-label="sample08_01_01_withOpenRead.py">
 <code class="language-python">
 path = 'sample_data1.txt'
-with open(path, mode='r', encoding='utf-8') as f
+with open(path, mode='r', encoding='utf-8') as f:
     txt = f.read()
 print(txt)
 </code>
@@ -174,7 +180,7 @@ print(txt)
 <pre class=line-numbers data-label="sample08_01_03_readlines.py">
 <code class="language-python">
 path = 'sample_data1.txt'
-with open(path, mode='r', encoding='utf-8') as f
+with open(path, mode='r', encoding='utf-8') as f:
     list_data = f.readlines()
 print(list_data)
 </code>
