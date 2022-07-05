@@ -139,6 +139,39 @@ print(dlt_day, dlt_day.weekday())
         「from ライブラリ名 import *」と書くとライブラリ内にある全てのモジュールがインポートされる。
         しかし、このやり方だと実際に使われるモジュールが何かが分かりにくくなるため非推奨とされている（PEP8）。
     </p>
+    <p>
+        第8章ファイル入出力の学習の際にcsv形式のファイルを読み込んだ。
+        この際にカンマを区切り文字としsplit(',')で文字列を分割するという面倒な手法を紹介したが、
+        Pythonには「csv」という標準ライブラリが存在し、これを用いることで簡単に2次元リストを作ることができる。
+    </p>
+<pre class=line-numbers data-label="sample11_01_03_csv.py">
+<code class="language-python">
+import csv
+
+with open('sample_data1.txt', encoding='UTF-8') as f:
+    r = csv.reader(f)
+    for row in r:
+        print(row)
+
+# 2次元リストに格納する（内包表記利用）
+with open('sample_data1.txt', encoding='UTF-8') as f:
+    r = csv.reader(f, delimiter=',')
+    data = [row for row in r:]
+print(data)
+</code>
+</pre>
+    <p>
+        delimiterでは区切り文字を指定できる。
+        delimiterはデフォルトで','が設定されている為、csv形式のファイルの読み込みの際は省略しても問題ない。
+        一方でtsv形式を読み込みたいときは「delimiter='\t'」としてタブを区切り文字に指定する必要がある。
+    </p>
+    <p>
+        csvライブラリを用いずに読み込んだ際(第8章参照)は、
+        split(',')での分割や改行コードの削除などをいちいち書く必要があったがライブラリを用いることで
+        非常に簡単に読み込めることが分かるだろう。
+        このcsvライブラリのように処理を簡単に行ってくれるライブラリは多種多様に存在する為、
+        上手く利用してやると良いだろう。
+    </p>
     <h4>よく用いる標準ライブラリ</h4>
     <p>
         <table border="1" style="border-collapse: collapse" align="center">
