@@ -164,60 +164,113 @@ print(data)
         delimiterでは区切り文字を指定できる。
         delimiterはデフォルトで','が設定されている為、csv形式のファイルの読み込みの際は省略しても問題ない。
         一方でtsv形式を読み込みたいときは「delimiter='\t'」としてタブを区切り文字に指定する必要がある。
-    </p>
-    <p>
         csvライブラリを用いずに読み込んだ際(第8章参照)は、
         split(',')での分割や改行コードの削除などをいちいち書く必要があったがライブラリを用いることで
         非常に簡単に読み込めることが分かるだろう。
         このcsvライブラリのように処理を簡単に行ってくれるライブラリは多種多様に存在する為、
         上手く利用してやると良いだろう。
     </p>
+    <p>
+        csvライブラリにはwrite関数も実装されており、2次元リストを容易に保存することもできる。
+        csvファイルは人間にも読める形式ではあるが、コンピュータ(Python)で読み込むには型の変換であったり、
+        文字コードなどを気にする必要がある。
+        その面倒さを解決するためにPythonではオブジェクトそのものを保存できる「pickle」という標準ライブラリが存在する。
+        pickleはオブジェクトをバイナリデータとして保存することで、
+        データを再利用する際に型変換が必要なくなるので読み込みが高速化されるという利点がある。
+    </p>
+<pre class=line-numbers data-label="sample11_01_04_pkl.py">
+<code class="language-python">
+import csv
+import pickle as pkl
+
+def str2int(s):
+    try:
+        return int(s)
+    except:
+        return s
+
+# csv.readerで読み込み2次元リスト化
+with open('sample_data1.txt', encoding='UTF-8') as f:
+    reader = csv.reader(f, delimiter=',')
+    data = [r for r in reader]
+
+#print(data)
+
+# 辞書データひな形
+dict_data = {
+    'id': [], '氏名': [], 'class': [], '数学': [], 
+    '英語': [], '理科': [], '社会': [],  '国語': []
+}
+
+# 辞書型のデータに書き換え(ヘッダー名: 列データリスト)
+for row in data[1:]:
+    idx = 0
+    for k in dict_data:
+        dict_data[k].append(str2int(row[idx]))
+        idx += 1
+
+# print(dict_data)
+# print(sum(dict_data['数学'])/len(dict_data['数学']))
+
+with open('pkl_test.pkl', mode='wb') as f:
+    pkl.dump(dict_data, f)
+
+'''
+with open('pkl_test.pkl', mode='rb') as f:
+    data = pkl.load(f)
+print(data)
+'''
+</code>
+</pre>
+    <p>
+        上記例にあるように保存はpickle.dump(オブジェクト, ファイル)で行える。
+        open()の際にはmode='wb'でwは書き込み、bはバイナリを表している。
+        コメントアウトしてあるが、読み込みはpickle.dump(ファイル)で行える。
+        (pickleは外部ライブラリpandasを扱う際に用いるかもしれないのでここで紹介しておいた。)
+    </p>
     <h4>よく用いる標準ライブラリ</h4>
     <p>
         <table border="1" style="border-collapse: collapse" align="center">
             <tr>
                 <th>標準ライブラリ名</th>
-                <th>説明</th>
+                <th>用途</th>
+            </tr>
+            <tr>
+                <td>datetime</td>
+                <td>基本的な日付型および時間型</td>
+            </tr>
+            <tr>
+                <td>glob</td>
+                <td>Unix 形式のパス名のパターン展開</td>
+            </tr>
+            <tr>
+                <td>math</td>
+                <td>数学関数</td>
             </tr>
             <tr>
                 <td>os</td>
-                <td>os関連</td>
-          </tr>
-          <tr>
-          <tr>
-                <td>datetime</td>
-                <td>日時および時間型</td>
-          </tr>
-          <tr>
-                <td>time</td>
-                <td>時刻データ</td>
-          </tr>
-                <td>re</td>
-                <td>正規表現</td>
-          </tr>
-          <tr>
-                <td>glob</td>
-                <td>パスの展開</td>
-          </tr>
-
-          <tr>
-                <td>math</td>
-                <td>数学関数</td>
-          </tr>
-          
-          <tr>
+                <td>雑多なオペレーティングシステムインターフェース</td>
+            </tr>
+            <tr>
                 <td>random</td>
-                <td>疑似乱数生成</td>
-          </tr>
-          
-          <tr>
+                <td>擬似乱数を生成する</td>
+            </tr>
+            <tr>
+                <td>re</td>
+                <td>正規表現操作</td>
+            </tr>
+            <tr>
                 <td>shutil</td>
                 <td>高水準のファイル操作</td>
-          </tr>
-          <tr>
+            </tr>
+            <tr>
+                <td>time</td>
+                <td>時刻データへのアクセスと変換</td>
+            </tr>            
+            <tr>
                 <td>urllib</td>
-                <td>ネット接続</td>
-          </tr>
+                <td>URLを扱うモジュール群</td>
+            </tr>
         </table>
         この中でも「import os」はファイル操作やディレクトリ操作を扱えるので頻出する。
         「shutil」モジュールはosモジュールの拡張版みたいなものでPython3.4から利用できる。
@@ -476,14 +529,14 @@ print(np.sin(np.pi/x))
         <p>
             上記の例以外にも画像解析を行う「OpenCV」やスクレイピングが容易にできる「beautifulsoup4」
             Excelを読み込む「xlrd」、ネット接続を容易にする「requests」、
-            オブジェクトをバイナリデータとして保存できる「pickle」など目的に応じて欲しいライブラリをインストールすればよい。
+            対話型インタプリタを拡張した「ipython」など目的に応じて欲しいライブラリをインストールすればよい。
             なお、流行しているAIの分野をみると、機会学習なら「scikit-learn」、
             深層学習（ニューラルネットワーク）なら「Tensorflow」などが有名である。
             これら2つとも開発元がGoogleである。
             ときどき、「PythonはAIの分野で広く使われる」のような文を見かけるが、これは正確ではなく
             「PythonはTensorflowなどのニューラルネットワークを提供するライブラリを手軽にインストールできる」と言う方が良いだろう。
             （Tensorflow自体はCやJavaでも問題なく使える。それらはインストールなどの準備が面倒であるが、
-            pythonならpip tensorflowで完結する。）
+            Pythonならpip tensorflowで完結する。）
         </p>
         <p>
             Pythonの利点である豊富な外部ライブラリの存在は、Pythonの学習にとっては非常に不利である。
