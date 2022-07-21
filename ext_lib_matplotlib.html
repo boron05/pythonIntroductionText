@@ -823,14 +823,14 @@ plt.show()
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
 from matplotlib.animation import FuncAnimation
-import psutil       # CPUやメモリ、通信状態取得用
-import numpy as np  # キュー作成用
+import numpy as np
+import psutil                   # CPUやメモリ、通信状態取得用
+from collections import deque   # キュー作成用
 
-# キュー機能関数
-def queue(src, a):
-    dst = np.roll(src, -1)
-    dst[-1] = a
-    return dst
+def queue_push(que, x):
+    que.append(x)
+    que.popleft()
+    return que
 
 # テキストplot関数(中心配置)
 def txtplot_center(ax, text, size=20):
@@ -869,14 +869,14 @@ ax40.set_xlim(-60, 0)
 ax40.set_ylim(0, 100)
 
 x2 = np.arange(-60, 0, 1)
-y2 = [0]*60
-y3 = [0]*60
-y4 = [0]*60
+y2 = deque([0]*60)
+y3 = deque([0]*60)
+y4 = deque([0]*60)
 
 my_line2, = ax2.plot([], [], c='b')
 my_line3, = ax3.plot([], [], c='k')
 my_line40, = ax40.plot([], [], c='r')
-kbps_q = [0] * 2
+kbps_q = deque([0] * 2)
 kbps = psutil.net_io_counters().bytes_recv/1024
 kbps_q[0] = kbps
 
@@ -884,17 +884,17 @@ def update(i):
     global x2, y2, y3, y4, kbps_q
     cpu = psutil.cpu_percent()
     memory = psutil.virtual_memory().percent
-    y2 = queue(y2, cpu)
-    y4 = queue(y4, memory)
+    y2 = queue_push(y2, cpu)
+    y4 = queue_push(y4, memory)
     my_line2.set_data(x2, y2)
-    kbps_q = queue(kbps_q, psutil.net_io_counters().bytes_recv/1024)
+    kbps_q = queue_push(kbps_q, psutil.net_io_counters().bytes_recv/1024)
     if kbps_q[1]-kbps_q[0] > 1024:
         ax3.set_ylabel('Mbps')
         mbsp = (kbps_q[1]-kbps_q[0]) /1024
-        y3 = queue(y3, mbsp)
+        y3 = queue_push(y3, mbsp)
     else:
         ax3.set_ylabel('Kbps')
-        y3 = queue(y3, kbps_q[1]-kbps_q[0])
+        y3 = queue_push(y3, kbps_q[1]-kbps_q[0])
 
     my_line3.set_data(x2, y3)
     my_line40.set_data(x2, y4)
