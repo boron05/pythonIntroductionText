@@ -687,7 +687,7 @@ plt.show()
     <p>
         matplotlibを拡張したseabornパッケージには便利なものがいろいろ入っているが、
         私的にはseaborn否定派なので頑張ってmatplotlibだけで書く。
-        やりたいのは、"sample_data2.txt"の可視化である。
+        やりたいのは、「<a href="sample_data2.txt" target="_blank" rel="noopener noreferrer">sample_data2.txt</a>」の可視化である。
         なお、下記コードでは日本語化はmatplotlibrcファイルですでに行っているものとする。
     </p>
 <pre class=line-numbers data-label="matplot_analyzescore.py">
@@ -696,7 +696,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 path = 'sample_data2.txt'
-data = np.loadtxt(path, delimiter = '\t', dtype = 'object', encoding = 'utf8')
+data = np.loadtxt(path, delimiter='\t', dtype='object', encoding='utf8')
 
 subject_names = list(data[0, 3:])
 subject_data_list = [data[1:, col_idx].astype(np.int32) for col_idx in range(3, 8)]
