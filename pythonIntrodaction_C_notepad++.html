@@ -1,14 +1,31 @@
-﻿<html lang="ja">
+<html lang="ja">
 <head>
     <title>テキストエディタ（Notepad++） | Python入門</title>
-    <link rel="stylesheet" href="prism.css">
+     <link rel="stylesheet" href="prism.css">
     <link rel="stylesheet" href="mystyle.css">
-    <script type="text/javascript" href="prism.js"></script>
-    <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
-<div class="main">
-
+    
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+    <a href="https://boron05.github.io/pythonIntroductionText/">Index</a>
+    <a href="./pythonIntrodaction_00_はじめに.html">0. はじめに</a>
+    <a href="./pythonIntrodaction_01_インストール.html">1. インストール</a>
+    <a href="./pythonIntrodaction_02_対話型.html">2. 対話型</a>
+    <a href="./pythonIntrodaction_03_スクリプトファイルでの実行.html">3. Scriptファイルの実行</a>
+    <a href="./pythonIntrodaction_04_変数と型.html">4. 変数の型</a>
+    <a href="./pythonIntrodaction_05_条件分岐.html">5. 条件分岐</a>
+    <a href="./pythonIntrodaction_06_繰り返し処理.html">6. 繰り返し処理</a>
+    <a href="./pythonIntrodaction_07_例外処理.html">7. 例外処理</a>
+    <a href="./pythonIntrodaction_08_ファイル入出力.html">8. ファイル入出力</a>
+    <a href="./pythonIntrodaction_09_関数.html">9. 関数</a>
+    <a href="./pythonIntrodaction_10_クラス.html">10. クラス</a>
+    <a href="./pythonIntrodaction_11_ライブラリの利用.html">11. ライブラリの利用</a>
+    <a href="./pythonIntrodaction___練習問題.html">練習問題</a>
+</div>
+    
+<div id="main" class="main">
+<button class="openbtn" onclick="openNav()">☰ Open Index</button> 
 <div class="section-C">
 <h2>C. テキストエディタ（Notepad++）</h2>
     <p>
@@ -112,7 +129,6 @@
         </ul>
         上記4つは環境設定を適当にいじれば問題なくできるだろう。
         少し面倒なのが、Python実行のシュートカットキーの作成である。
-
     </p>
     <h4>python実行ショートカットキーの設定</h4>
     <p>
@@ -173,7 +189,7 @@
             「設定」ツールバー内の「環境設定」をクリックする。
         </p>
         <p>
-            <img src="fig_imgs/fig_C-00_notepadenvsetting.png" title="Installer画面" width="400">
+            <img src="fig_imgs/fig_C-00_notepadenvsetting.webp" title="Installer画面" width="400">
         </p>
         <p>
             環境設定ウィンドウが開くので、その左側のメニューから「新規文章」を選択する。
@@ -181,13 +197,13 @@
             なお、改行コードは"windows (CR LF)"でも問題ない。
         </p>
         <p>
-            <img src="fig_imgs/fig_C-01_notepadenvnewtext.png" title="Installer画面" width="400">
+            <img src="fig_imgs/fig_C-01_notepadenvnewtext.webp" title="Installer画面" width="400">
         </p>
         <p>
             次に「言語メニュー」内でタブをスペース4つに指定する。
         </p>
         <p>
-            <img src="fig_imgs/fig_C-02_notepadenvlangmenu.png" title="Installer画面" width="400">
+            <img src="fig_imgs/fig_C-02_notepadenvlangmenu.webp" title="Installer画面" width="400">
         </p>
         <p>
             設定が終了したら環境設定ウィンドウを閉じる。
@@ -195,13 +211,13 @@
             「実行」ツールバー内の「ファイルを指定して実行」をクリックする
         </p>
         <p>
-            <img src="fig_imgs/fig_C-03_notepadrun.png" title="Installer画面" width="400">
+            <img src="fig_imgs/fig_C-03_notepadrun.webp" title="Installer画面" width="400">
         </p>
         <p>
             入力欄に前述した"cmd …"コマンドをコピペし「登録」をクリックする。
         </p>
         <p>
-            <img src="fig_imgs/fig_C-04_notepadrunfile.png" title="Installer画面" width="400">
+            <img src="fig_imgs/fig_C-04_notepadrunfile.webp" title="Installer画面" width="400">
         </p>
         <p>
             ショートカットキーを登録する。
@@ -215,7 +231,7 @@
             これらのデフォルトのショートカットキーとの重複は避けた方が良いだろう。
         </p>
         <p>
-            <img src="fig_imgs/fig_C-05_notepadrunshortcut.png" title="Installer画面" width="400">
+            <img src="fig_imgs/fig_C-05_notepadrunshortcut.webp" title="Installer画面" width="400">
         </p>
         <p>
             ショートカットキーが正常に動作するか確認しておく。
@@ -242,6 +258,19 @@
         <p>XXXはpython.exeの保存ディレクトリ。コマンドプロンプトに「where python」で探せる。</p>
 </div>
 </div>
-</body>
+
+<script>
+function openNav() {
+  document.getElementById("mySidebar").style.width = "200px";
+  document.getElementById("main").style.marginLeft = "200px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
 <script src="prism.js"></script>
+<script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</body>
 </html>
