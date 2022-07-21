@@ -101,7 +101,7 @@
 import matplotlib.pyplot as plt # pltが慣例
 
 xlist = [1, 2, 3, 4, 5]
-ylist = [3, 5, 7 ,10,14]
+ylist = [3, 5, 7, 10, 14]
 
 plt.plot(xlist, ylist)  # 線グラフのプロット
 plt.show()              # 表示
@@ -122,8 +122,8 @@ plt.show()              # 表示
 import matplotlib.pyplot as plt # pltが慣例
 
 xlist = [1, 2, 3, 4, 5]
-ylist1 = [3, 5, 7 ,10,14]
-ylist2 = [4, 12, 9 ,1, 2]
+ylist1 = [3, 5, 7, 10, 14]
+ylist2 = [4, 12, 9, 1, 2]
 
 # 線グラフのプロット
 plt.plot(xlist, ylist1, label='data1')
@@ -394,7 +394,7 @@ print('使用可能なフォント一覧')
 print(matplotlib.font_manager.findSystemFonts())
 
 xlist = [1, 2, 3, 4, 5]
-ylist1 = [3, 5, 7 ,10,14]
+ylist1 = [3, 5, 7, 10, 14]
 
 # フォント読み込み
 plt.rcParams['font.family'] = 'IPAexGothic' # 注
@@ -433,7 +433,7 @@ plt.show()
 import matplotlib.pyplot as plt
 
 xlist = [1, 2, 3, 4, 5]
-ylist = [3, 5, 7 ,10,14]
+ylist = [3, 5, 7, 10, 14]
 
 # 散布図
 plt.scatter(xlist, ylist)
@@ -464,10 +464,10 @@ plt.show()
 import matplotlib.pyplot as plt
 
 x0 = [1, 2, 3, 4, 5]
-y0 = [3, 5, 7 ,10,14]
+y0 = [3, 5, 7, 10, 14]
 
 x1 = [1, 2, 3, 4, 5]
-y1 = [2, 4, 6 ,8,10]
+y1 = [2, 4, 6, 8, 10]
 
 fig = plt.figure()      # figureオブジェクト作成
 ax = fig.add_subplot()  # figureオブジェクト内にaxオブジェクトを追加
@@ -505,7 +505,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 x1 = np.linspace(0, 10, 100)
-x2 = np.linspace(-10,0, 100)
+x2 = np.linspace(-10, 0, 100)
 x3 = np.linspace(-5, 5, 100)
 
 y1 = 2*np.sin(x1)
@@ -580,7 +580,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 x1 = np.linspace(0, 10, 100)
-x2 = np.linspace(-10,0, 100)
+x2 = np.linspace(-10, 0, 100)
 x3 = np.linspace(-5, 5, 100)
 
 y1 = 2*np.sin(x1)
@@ -619,7 +619,7 @@ fig = plt.figure()              # figure生成し変数figに格納
 ax = fig.add_subplot(111)       # figにaxを追加
 ax_ = ax.twinx()                # 右側の軸がy軸となるaxesオブジェクト生成
 ax.plot(x1, y4, color="blue")
-ax_.plot(x1, y1,color="red")
+ax_.plot(x1, y1, color="red")
 ax.set_yscale("log")
 ax.tick_params(direction="in")
 
@@ -760,7 +760,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
 
-fig, ax = plt.subplots(subplot_kw={'projection' : '3d'})
+fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
 
 t = np.linspace(0, 20, 200) # パラメータ
 x = np.sin(t) + t
