@@ -48,9 +48,7 @@
         Windowsならメモ帳が標準装備されているはずである。
     </p>
 <pre class=line-numbers data-label="sample03_01_00_hello.py">
-<code class="language-python">
-print("HELLO WORK!")
-</code>
+<code class="language-python">print("HELLO WORK!")</code>
 </pre>
     <p>
         テキストエディタに上記のコードを書き、
@@ -68,13 +66,11 @@ print("HELLO WORK!")
         「HELLO WORK!」と表示されば成功である。
     </p>
 <pre data-label="スクリプトファイルの実行">
-<code class="language-shell">
-C:\Users\XXX\>
+<code class="language-shell">C:\Users\XXX\>
 C:\Users\XXX\>cd C:\User\XXX\Uni\PythonIntroduction
 C:\Users\XXX\Uni\PythonIntroduction>
 C:\Users\XXX\Uni\PythonIntroduction>python sample030100_hello.py
-HELLO WORK!
-</code>
+HELLO WORK!</code>
 </pre>
     <p>
         なお、「python スクリプトファイル名.py」でなく「py スクリプトファイル名.py」でも良い。
@@ -119,13 +115,11 @@ HELLO WORK!
         cの値を表示せよ<br></b>
     </p>
 <pre class="line-numbers" data-label="sample03_02_00_codeRule.py">
-<code class="language-python">
-# 足し算
+<code class="language-python"># 足し算
 a = 2
 b =       7     # 文頭以外のスペースは無視
 c = a + c
-print(c)  # print()で表示
-</code>
+print(c)  # print()で表示</code>
 </pre>
     <p>
         文頭のスペース、すなわち「インデント」は「ブロック」を表す。
@@ -148,8 +142,7 @@ print(c)  # print()で表示
         （正しくは複数行にわたる文字列であるが、役割的には同じである。）
     </p>
 <pre class="line-numbers" data-label="sample03_02_01_offsideRule.py">
-<code class="language-python">
-a = 9
+<code class="language-python">a = 9
 b = 10
 print(a, b) # カンマ,で区切るとまとめて表示できる
 if a > b:
@@ -173,8 +166,7 @@ d2 = (1 + 2 + 3 + 4 + 5
     + 6 + 7 + 8
     + 9 + 11)
 
-print(d1, d2)
-</code>
+print(d1, d2)</code>
 </pre>
 
     <p>
@@ -184,8 +176,7 @@ print(d1, d2)
         逆にいうと、Javaではこのルールさえ守ればいくらでも読みにくいコードが書ける。
     </p>
 <pre class="line-numbers" data-label="sample03_02_02_codeExample.java">
-<code class="language-java">
-int a = 9;
+<code class="language-java">int a = 9;
 int b = 10;
 System.out.println(a, b);
 if(a > b){
@@ -194,8 +185,7 @@ if(a > b){
     System.out.println("a小なりb");
 }else{
     System.out.println("aとbは等しいです");
-}
-</code>
+}</code>
 </pre>
     <p>
         上記の例ではPythonのifブロックとの比較のためif文の箇所は綺麗に書いたが、
@@ -205,9 +195,7 @@ if(a > b){
         コンパイル言語はセミコロンで書いている印象がある。
     </p>
 <pre class="line-numbers" data-label="sample03_02_03_oneLineCodeExample.java">
-<code class="language-java">
-int a=9;int b=10;System.out.println(a,b);if(a>b){System.out.println("a大なりb");}else if(a< b){System.out.println("a小なりb");}else{System.out.println("aとbは等しいです");}
-</code>
+<code class="language-java">int a=9;int b=10;System.out.println(a,b);if(a>b){System.out.println("a大なりb");}else if(a< b){System.out.println("a小なりb");}else{System.out.println("aとbは等しいです");}</code>
 </pre>
     <p>
         Pythonに限った話ではないが、コードを書いた後、プログラムが正常に動くかどうかを確認するには
