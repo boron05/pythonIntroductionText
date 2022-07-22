@@ -43,8 +43,7 @@
         これはコマンドプロンプトから入力を受ける組み込み関数である。
     </p>
 <pre class=line-numbers data-label="sample05_01_00_if.py">
-<code class="language-python">
-str_a = input('a >')    # 文字列'a >'を表示し、入力を待つ
+<code class="language-python">str_a = input('a >')    # 文字列'a >'を表示し、入力を待つ
 str_b = input('b >')    # 入力した型は文字列型となる
 
 a = float(str_a)    # 数値に変換
@@ -54,8 +53,7 @@ print(a, b)
 if a > b:
     print('a大なりb')
 
-print('---END---')
-</code>
+print('---END---')</code>
 </pre>
     <p>
         基本的な文法は上記の例のように「if 条件:」で書く。
@@ -69,8 +67,7 @@ print('---END---')
         「else」はifでもelifでもFalseだった場合に最後に実行される部分となる。
     </p>
 <pre class=line-numbers data-label="sample05_01_01_elif.py">
-<code class="language-python">
-str_a = input('a >')    
+<code class="language-python">str_a = input('a >')    
 str_b = input('b >')    
 
 a = float(str_a)    # 数値に変換
@@ -86,8 +83,7 @@ elif a < b:
     print('|a - b|=', c)
 else:
     print('a = b')
-    print('|a - b|=', 0)
-</code>
+    print('|a - b|=', 0)</code>
 </pre>
     <p>
         <div class="pic_frame">
@@ -135,8 +131,7 @@ else:
         「is」は生成されたオブジェクト自体を比較する。
     </p>
 <pre class=line-numbers data-label="sample05_01_02_is.py">
-<code class="language-python">
-a = [0, 2, 4]
+<code class="language-python">a = [0, 2, 4]
 b = [0, 2, 4]
 c = a
 
@@ -145,8 +140,7 @@ print(id(a), id(b))
 
 print(a == b)   # -> True
 print(a is b)   # -> False
-print(a is c)   # -> True
-</code>
+print(a is c)   # -> True</code>
 </pre>
     <p>
         上記の例では「a == b」でリストに格納された値が順番も含め等しいためTrueを返すが、
@@ -157,8 +151,7 @@ print(a is c)   # -> True
         複合条件を表現したいときは「and」、「or」、「not」を用いる。
     </p>
 <pre class=line-numbers data-label="sample05_01_03_booleanOperations.py">
-<code class="language-python">
-str_a = input('a >')
+<code class="language-python">str_a = input('a >')
 a = float(a)
 
 print(a % 2 == 0)
@@ -169,16 +162,14 @@ if (a % 2 == 0) and (a % 3 == 0):
     print('2と3の倍数です')
 
 if (a % 3 == 0) and (a % 6 != 0):
-    print('3の倍数ではありますが、6の倍数ではありません')
-</code>
+    print('3の倍数ではありますが、6の倍数ではありません')</code>
 </pre>
 <h4>入れ子（ネスト、nesting）</h4>
     <p>
         ifブロックの中にifブロックを入れるネスト構造も作れる。
     </p>
 <pre class=line-numbers data-label="sample05_01_04_nesting.py">
-<code class="language-python">
-score = int(input('SCORE >'))
+<code class="language-python">score = int(input('SCORE >'))
 grade = “不可”
 if score >= 60:
     grade = “可”
@@ -189,15 +180,13 @@ if score >= 60:
             if score >= 90:
                 grade = “秀”
 
-print(score, grade)
-</code>
+print(score, grade)</code>
 </pre>
     <p>
         elifで書くなら
     </p>
 <pre class=line-numbers data-label="sample05_01_05_elifgrade.py">
-<code class="language-python">
-score = int(input('SCORE >'))
+<code class="language-python">score = int(input('SCORE >'))
 if score >= 90:
     grade = '秀'
 elif score >= 80:
@@ -209,8 +198,7 @@ elif score >= 60:
 else:
     grade = '不可'
 
-print(score, grade)
-</code>
+print(score, grade)</code>
 </pre>
     <p>
         <div class="pic_frame">
@@ -225,8 +213,7 @@ print(score, grade)
         数値型を条件式に書いた場合は、0はFalseを意味し、それ以外の数値はTrueとみなされる。
     </p>
 <pre class=line-numbers data-label="sample05_01_06_ifnumber.py">
-<code class="language-python">
-a = float(input('a >'))
+<code class="language-python">a = float(input('a >'))
 b = float(input('b >'))
 
 if a:
@@ -239,8 +226,7 @@ if a != 0:
     print('Not Zero')
     print('b / a = ', b/a)
 else:
-    print('Is Zero')
-</code>
+    print('Is Zero')</code>
 </pre>
 <h3 class="underline">5.2 三項間演算子（1行のif文）</h3>
     <p>
@@ -250,14 +236,12 @@ else:
         「真のときに返す値 if 条件 else 偽のときに返す値」と記述する。
     </p>
 <pre class=line-numbers data-label="sample05_02_00_oneLineIf.py">
-<code class="language-python">
-score = int(input('SCORE >'))
+<code class="language-python">score = int(input('SCORE >'))
 
 if score >= 60: print(score, '合格')
 
 judg = '合格' if score >= 60 else '不合格'
-print(judg)
-</code>
+print(judg)</code>
 </pre>
 </div>
 </div>
