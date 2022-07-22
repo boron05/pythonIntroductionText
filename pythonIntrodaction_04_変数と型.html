@@ -109,8 +109,7 @@
         type()以外にも「print()」や「range()」、「len()」、「input()」など数多くのものが実装されている。
     </p>
 <pre class="line-numbers" data-label="sample04_02_00_type.py">
-<code class="language-python">
-a = False
+<code class="language-python">a = False
 b = 2
 c = 2.7
 d = 3 + 4j
@@ -122,8 +121,7 @@ print(type(c))
 print(type(d))
 print(type(e))
 print(type('13'))
-print(type(type(a)))
-</code>
+print(type(type(a)))</code>
 </pre>
     <p>
         Pythonでは数値型であるbool、int、float、complexは相互変換を自動で行うため、
@@ -140,8 +138,7 @@ print(type(type(a)))
         一方で、「文字列型 + 整数型」などはエラーとなる。
     </p>
 <pre class="line-numbers" data-start="15" data-label="sample04_02_00_type.py">
-<code class="language-python">
-print(a + b)
+<code class="language-python">print(a + b)
 print(b + c)
 print(c + d)
 print(((c + d) ** (b + a) + c ) / b + a)
@@ -151,8 +148,7 @@ str2 = '日曜日'
 print(str1 + str2)
 print(str1 * b + str2)
 # print(d + e)                    # コメントアウトを外して実行するとエラー
-# print('bの値は' + b + 'です。')  # 以降結果を「-> Error」のように書く
-</code>
+# print('bの値は' + b + 'です。')  # 以降結果を「-> Error」のように書く</code>
 </pre>
 <h4>型の変換</h4>
     <p>
@@ -173,8 +169,7 @@ print(str1 * b + str2)
         complexへの変換には「complex()」で行える。
     </p>
 <pre class="line-numbers" data-label="sample04_02_01_casting.py">
-<code class="language-python">
-a = 21.3
+<code class="language-python">a = 21.3
 print(type(a))                      # -> &lt;class 'int'>
 str_a = str(a)
 print(type(str_a))                  # -> &lt;class 'str'>
@@ -189,13 +184,10 @@ complex_d = complex(str_d)
 print(int_b)
 print(float_c)
 print(complex_d)
-print(float_c * complex_d)
-</code>
+print(float_c * complex_d)</code>
 </pre>
 
-
 <h3 id="4.3" class="underline">4.3 シーケンス型</h3>
-
 <h4 id="4.3.1">4.3.1 リスト</h4>
     <p>
         Pythonのコレクションの中でも最も使用頻度が多いと思われるのが「リスト」である。
@@ -205,8 +197,7 @@ print(float_c * complex_d)
     </p>
     
 <pre class=line-numbers data-label="sample04_03_00_list.py">
-<code class="language-python">
-# リストの生成
+<code class="language-python"># リストの生成
 list1 = [1, 2 , 3, "AS", 1.2]   # []で挟みカンマで区切る
 
 print(list1)            # 全体表示
@@ -260,8 +251,7 @@ print(list3[::2])           # 2おきに
 list3.insert(2, "a")        # インデックス2番に追加
 print(list3)
 list3[2:2] = ["A", "B"]     # インデックス2番と3番目に追加
-print(list3)
-</code>
+print(list3)</code>
 </pre>
 
     <p>
@@ -286,8 +276,7 @@ print(list3)
         Pythonはリストの使い勝手良い為、タプルの出番は多くはない。
     </p>
 <pre class=line-numbers data-label="sample04_03_01_tuple.py">
-<code class="language-python">
-# タプルの生成
+<code class="language-python"># タプルの生成
 tuple1 = (1, 2 , 3, "AS", 1.2)   # ()で挟みカンマで区切る
 print(tuple1[2])                 # インデックス2番目を表示
 print(tuple2[2:4])               # スライスは出来る
@@ -297,8 +286,7 @@ list1  = list(tuple1)   # タプル -> リスト
 print(list1, type(list1))
 list2 = ["A", 12, 32.6, "FR"]
 tuple2 = tuple(list2)   # リスト -> タプル
-print(tuple2, type(tuple2))
-</code>
+print(tuple2, type(tuple2))</code>
 </pre>
 
 <h4>よく使うメソッドや組み込み関数</h4>
@@ -306,8 +294,7 @@ print(tuple2, type(tuple2))
         リストやタプルとよく用いられるメソッドや組み込み関数について紹介する。
     </p>
 <pre class=line-numbers data-label="sample04_03_02_builtInFunc.py">
-<code class="language-python">
-list1 = [2, 3, 5, 7, 11, 13, 17]
+<code class="language-python">list1 = [2, 3, 5, 7, 11, 13, 17]
 list1_len = len(list1)  # 要素数取得
 list1_max = max(list1)  # 最大値取得
 list1_min = min(list1)  # 最小値取得
@@ -326,8 +313,7 @@ list3 = ["A", "A", "B", "C", "C", "C", "C"]
 flag = "A" in list3     # in演算子。含まれいるかどうか
 idx = list3.index("C")  # 最初のインデックス
 cnt = list3.count("C")  # 要素のカウント
-print(flag, idx, cnt)
-</code>
+print(flag, idx, cnt)</code>
 </pre>
     <p>
         タプルは要素の変更ができず行える処理が限られるが、
@@ -343,8 +329,7 @@ print(flag, idx, cnt)
         使い道があるとすれば、重複があるリスト・タプルから重複を一括で消したいときなどに利用できる。
     </p>
 <pre class=line-numbers data-label="sample04_04_00_set.py">
-<code class="language-python">
-set1 = {1, 2, 3, 4, 5, "Y"}     #生成には波括弧
+<code class="language-python">set1 = {1, 2, 3, 4, 5, "Y"}     #生成には波括弧
 print(type(set1))
 set1.add("X")
 set1.add(2)
@@ -386,9 +371,7 @@ print(set_A - set_B)            # 差集合。difference()メソッド
 print(set_A ^ set_B)            # 排他的理論和（XOR）。symmetric_difference()メソッド。
 print(set_int <= set_A)         # 部分集合判定「<=」
 print(set_int.issubset(set_A))  # 部分集合判定メソッド
-print(set_A.isdisjoint(set_B))  # 互いに素か判定
-
-</code>
+print(set_A.isdisjoint(set_B))  # 互いに素か判定</code>
 </pre>
     <p>
         集合に対する演算を行えるが、実用性はあまり…。
@@ -403,8 +386,7 @@ print(set_A.isdisjoint(set_B))  # 互いに素か判定
         辞書型に対する処理は種類が多いためここではよく用いるであろうもののみ紹介する。
     </p>
 <pre class=line-numbers data-label="sample04_05_00_dict.py">
-<code class="language-python">
-# 生成には波括弧。コロンでkeyとvalueを挟む
+<code class="language-python"># 生成には波括弧。コロンでkeyとvalueを挟む
 dict1 = {"key1": 45, "key2": 23, "key3": "値3"}
 print(dict1, type(dict1))
 # 見やすく書くなら、改行とインデントも利用するとよい
@@ -471,9 +453,7 @@ print(dict34)
 # 削除
 print(dict_.pop('b'))
 del dict_['d'], dict_['F']
-print(dict_)
-
-</code>
+print(dict_)</code>
 </pre>
 
     <p>
@@ -491,8 +471,7 @@ print(dict_)
         セクション9.2でも少し触れているが、数値型とシーケンス型では振舞いに違いが感じられるかもしれない。
     </p>
 <pre class=line-numbers data-label="sample04_06_00_reference.py">
-<code class="language-python">
-# 数値型
+<code class="language-python"># 数値型
 x1 = 20
 x2 = x1
 print(x1, x2)       # -> 20, 20
@@ -506,8 +485,7 @@ list2 = list1
 print(list1, list2) # -> [2, 3, 5] [2, 3, 5]
 
 list2[1] = 0
-print(list1, list2) # -> [2, 0, 5] [2, 0, 5]
-</code>
+print(list1, list2) # -> [2, 0, 5] [2, 0, 5]</code>
 </pre>
     <p>
         11行目でリストをコピーしているように見え、list2はlist1と同じ要素を持つリストに思える。
@@ -523,8 +501,7 @@ print(list1, list2) # -> [2, 0, 5] [2, 0, 5]
         copy()メソッドを用いるかスライスで全てを抽出すると良い。
     </p>
 <pre class=line-numbers data-label="sample04_06_01_copy.py">
-<code class="language-python">
-# リストのコピー
+<code class="language-python"># リストのコピー
 list1 = [2, 3, 5]
 list2 = list1.copy()    # copy()メソッドの利用
 list3 = list1[:]        # スライス利用
@@ -532,8 +509,7 @@ print(list1, list2, list3) # -> [2, 3, 5] [2, 3, 5] [2, 3, 5]
 
 list2[1] = 0
 list3[2] = 9
-print(list1, list2, list3) # -> [2, 3, 5] [2, 0, 5] [2, 0, 9]
-</code>
+print(list1, list2, list3) # -> [2, 3, 5] [2, 0, 5] [2, 0, 9]</code>
 </pre>
 </div>
 </div>
