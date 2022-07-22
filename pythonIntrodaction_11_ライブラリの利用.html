@@ -292,8 +292,7 @@ input_day = inputN.input_int('day >')       # 入力:日
 input_date = date(input_year, input_month, input_day)
 weeknum = input_date.weekday()                # 曜日番号取得
 date_str = input_date.strftime('%Y年%m月%d日') #3.6だとバグっぽい？
-print('{}は{}曜日です。'.format(date_str, WEEK_LIST[weeknum]))
-</code>
+print('{}は{}曜日です。'.format(date_str, WEEK_LIST[weeknum]))</code>
 </pre>
 <h4>ユーザーモジュールのimport</h3>
     <p>
@@ -303,8 +302,7 @@ print('{}は{}曜日です。'.format(date_str, WEEK_LIST[weeknum]))
         myclassinput.pyをクラス化せず、モジュール化したmymoduleinput.pyで十分である。
         これを呼び出すには、「import 自作moduleのファイル名」で行える。
 <pre class=line-numbers data-label="sample11_02_01_importUsersModule.py">
-<code class="language-python">
-from datetime import date, timedelta
+<code class="language-python">from datetime import date, timedelta
 import mymoduleinput as myinput
 
 WEEK_LIST = ['月', '火', '水', '木', '金', '土', '日']
