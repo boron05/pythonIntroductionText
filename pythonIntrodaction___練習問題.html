@@ -51,8 +51,7 @@
         コマンドプロンプトでの動作例は下記に記す。
     </p>
 <pre data-label="clac_entry.py">
-<code class="language-shell">
-C:\XXX>python clac_entry.py
+<code class="language-shell">C:\XXX>python clac_entry.py
 大学生以上の人数>2
 小～高校生の人数>1
 未就学児の人数>1
@@ -68,21 +67,18 @@ C:\XXX>python clac_entry.py
 大学生以上の人数>2
 小～高校生の人数>1
 未就学児の人数>3
-入場料(円): 4680 (団体割引適用)
-</code>
+入場料(円): 4680 (団体割引適用)</code>
 </pre>
     <p>
         [発展] 上記のプログラムだと未就学児だけでの入場も可能となっているが、これを禁止したい。
         未就学児が入場する場合には必ず大学生以上の同伴が1人以上必要とし、これを出力に反映させたい。
     </p>
 <pre data-label="clac_entry.py">
-<code class="language-shell">
-C:\XXX>python clac_entry.py
+<code class="language-shell">C:\XXX>python clac_entry.py
 大学生以上の人数>0
 小～高校生の人数>1
 未就学児の人数>3
-入場不可。大学生以上の同伴者が必要です。
-</code>
+入場不可。大学生以上の同伴者が必要です。</code>
 </pre>
     <br>
     <h3 id="0.1" class="underline">Q2. 和暦<->西暦変換プログラム</h3>
@@ -96,8 +92,7 @@ C:\XXX>python clac_entry.py
         コマンドプロンプトでの動作例は下記に記す。
     </p>
 <pre data-label="changeYear_western2japan.py">
-<code class="language-shell">
-C:\XXX>python changeYear_western2japan.py
+<code class="language-shell">C:\XXX>python changeYear_western2japan.py
 西暦入力 >2020
 令和2年
 
@@ -107,8 +102,7 @@ C:\XXX>python changeYear_western2japan.py
 
 C:\XXX>python changeYear_western2japan.py
 西暦入力 >2019
-令和元年
-</code>
+令和元年</code>
 </pre>
 
 <h4 id="0.1" class="underline">Q2.2 和暦 -> 西暦変換プログラム仕様</h4>
@@ -121,8 +115,7 @@ C:\XXX>python changeYear_western2japan.py
         動作例は下記に記す。
     </p>
 <pre data-label="changeYear_japan2western.py">
-<code class="language-shell">
-C:\XXX>changeYear_japan2western.py
+<code class="language-shell">C:\XXX>changeYear_japan2western.py
 和暦入力 >S40
 1965
 
@@ -132,8 +125,7 @@ C:\XXX>changeYear_japan2western.py
 
 C:\XXX>changeYear_japan2western.py
 和暦入力 >R01
-2019
-</code>
+2019</code>
 </pre>
 
 <h4 id="0.1" class="underline">Q2.3 入学・卒業年度計算プログラム仕様</h4>
@@ -144,8 +136,7 @@ C:\XXX>changeYear_japan2western.py
         スクリプトファイル名は「calc_admission_graduate_year.py」とする。動作例は下記に記す。
     </p>
 <pre data-label="calc_admission_graduate_year.py">
-<code class="language-shell">
-C:\XXX>python calc_admission_graduate_year.py
+<code class="language-shell">C:\XXX>python calc_admission_graduate_year.py
 生年月入力 >1998/06
       西暦      和暦
 生年月:1998年6月 平成10年6月
@@ -154,8 +145,7 @@ C:\XXX>python calc_admission_graduate_year.py
 卒業: 2017年3月 平成29年3月
 大学
 入学: 2017年4月 平成29年4月
-卒業: 2021年3月 令和3年3月
-</code>
+卒業: 2021年3月 令和3年3月</code>
 </pre>
     <p>
         [発展] 大学受験時に浪人した場合と大学で留年した場合も考慮したい。
@@ -164,8 +154,7 @@ C:\XXX>python calc_admission_graduate_year.py
         下記動作例は浪人はしなかったが、大学時代に1年間留年した場合のもの。
     </p>
 <pre data-label="calc_admission_graduate_year.py">
-<code class="language-shell">
-C:\XXX>python calc_admission_graduate_year.py
+<code class="language-shell">C:\XXX>python calc_admission_graduate_year.py
 生年月入力 >1998/06
 大学受験時の浪人年数>0
 大学時代の留年年数>1
@@ -176,8 +165,7 @@ C:\XXX>python calc_admission_graduate_year.py
 卒業: 2017年3月 平成29年3月
 大学
 入学: 2017年4月 平成29年4月
-卒業: 2022年3月 令和4年3月
-</code>
+卒業: 2022年3月 令和4年3月</code>
 </pre>
 
 <h2 id="0.">[2] 繰り返し</h2>
@@ -205,8 +193,7 @@ C:\XXX>python calc_admission_graduate_year.py
         ここで\(\langle X \rangle\)は平均を表す。
     </p>
 <pre data-label="calc_correl.py">
-<code class="language-shell">
-C:\XXX>python calc_correl.py
+<code class="language-shell">C:\XXX>python calc_correl.py
 A
 総和: 733
 平均: 73.3
@@ -219,8 +206,7 @@ B
 標準偏差: 7.0823724838503095
 A-B
 共分散: -1.05999999999999
-相関係数: -0.011773158373432542
-</code>
+相関係数: -0.011773158373432542</code>
 </pre>
 
 <h3 id="0.1" class="underline">Q2. 数列計算プログラム</h3>
@@ -232,8 +218,7 @@ A-B
         スクリプトファイル名は「calc_sequence.py」とする。動作例は下記に記す。
     </p>
 <pre data-label="calc_sequence.py">
-<code class="language-shell">
-C:\XXX>python calc_sequence.py
+<code class="language-shell">C:\XXX>python calc_sequence.py
 項数n>5
 [1, 2, 2, 3, 3]
 11
@@ -241,8 +226,7 @@ C:\XXX>python calc_sequence.py
 C:\XXX>python calc_sequence.py
 項数n>10
 [1, 2, 2, 3, 3, 3, 4, 4, 4, 4]
-30
-</code>
+30</code>
 </pre>
 
 <h3 id="0.1" class="underline">Q3. 最大公約数・最小公倍数計算プログラム</h3>
@@ -252,8 +236,7 @@ C:\XXX>python calc_sequence.py
         スクリプトファイル名は「calc_gcd.py」とする。動作例は下記に記す。
     </p>
 <pre data-label="calc_gcd.py">
-<code class="language-shell">
-C:\XXX>python calc_gcd.py
+<code class="language-shell">C:\XXX>python calc_gcd.py
 a入力 >54
 b入力 >126
 18
@@ -261,8 +244,7 @@ b入力 >126
 C:\XXX>python calc_gcd.py
 a入力 >365664
 b入力 >25116
-156
-</code>
+156</code>
 </pre>
     <h4 id="0.1" class="underline">Q3.2 最小公倍数プログラム仕様</h4>
     <p>
@@ -270,8 +252,7 @@ b入力 >25116
         スクリプトファイル名は「calc_lcm.py」とする。動作例は下記に記す。
     </p>
 <pre data-label="calc_lcm.py">
-<code class="language-shell">
-C:\XXX>python calc_lcm.py
+<code class="language-shell">C:\XXX>python calc_lcm.py
 a入力 >14
 b入力 >66
 462
@@ -279,8 +260,7 @@ b入力 >66
 C:\XXX>python calc_lcm.py
 a入力 >2022
 b入力 >614
-620754
-</code>
+620754</code>
 </pre>
     <p>
         [発展]GCD・LCMのプログラムはともに2つの入力しか考えなかったが、
@@ -296,15 +276,13 @@ b入力 >614
             スクリプトファイル名は「check_prime.py」とする。動作例は下記に記す。
         </p>
 <pre data-label="sample04_02_00_type.py">
-<code class="language-shell">
-C:\XXX>python check_prime.py
+<code class="language-shell">C:\XXX>python check_prime.py
 整数入力 > 123
 False
 
 C:\XXX>python check_prime.py
 整数入力 > 127
-True
-</code>
+True</code>
 </pre>
 
 <h4 id="0.1" class="underline">Q3.2 素因数分解プログラム仕様</h4>
@@ -319,15 +297,13 @@ True
             スクリプトファイル名は「prime_factorization.py」とする。動作例は下記に記す。
         </p>
 <pre data-label="prime_factorization.py">
-<code class="language-shell">
-C:\XXX>python prime_factorization.py
+<code class="language-shell">C:\XXX>python prime_factorization.py
 整数入力 >126
 [2, 3, 3, 7]
 
 C:\XXX>python prime_factorization.py
 整数入力 >3120
-[2, 2, 2, 2, 3, 5, 13]
-</code>
+[2, 2, 2, 2, 3, 5, 13]</code>
 </pre>
     <p>
         [発展]出力するリストの形式を[(素数1, 指数1), (素数2, 指数2), …]としたい。
@@ -516,8 +492,7 @@ C:\XXX>python prime_factorization.py
         2x2桁の暗算力を鍛えるゲームとして、以下コードで動くゲームを作成した。
     </p>
 <pre class="line-numbers" data-label="mental_arithmetic_game.py">
-<code class="language-python">
-import random   # ランダムな数値取得用
+<code class="language-python">import random   # ランダムな数値取得用
 import time     # 時間計測用
 
 print('2桁x2桁の暗算を3問正解するまでの時間を計測')
@@ -538,8 +513,7 @@ while cnt < 3:
 
 # クリアタイム計算
 clear_time = time.perf_counter() - now_time
-print('クリア時間:{:.2f}'.format(clear_time))
-</code>
+print('クリア時間:{:.2f}'.format(clear_time))</code>
 </pre>
     <p>
         上記コードを改良し、機能を追加したいきたい。
@@ -614,8 +588,6 @@ print('クリア時間:{:.2f}'.format(clear_time))
     </p>
     
 </div>
-
-
 
 <script>
 function openNav() {
