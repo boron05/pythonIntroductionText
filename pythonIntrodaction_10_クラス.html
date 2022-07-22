@@ -1,4 +1,4 @@
-﻿<html lang="ja">
+<html lang="ja">
 <head>
     <title>クラス | Python入門</title>
     <link rel="stylesheet" href="prism.css">
@@ -24,10 +24,9 @@
   <a href="./pythonIntrodaction___練習問題.html">練習問題</a>
 </div>
 
-<div class="main">
-
 <div id="main" class="main">
 <button class="openbtn" onclick="openNav()">☰ Open Index</button> 
+<div class="section-10">
 <h2>10. クラス</h2>
     <p>
         「関数」はいくつかの処理を一つにまとめたものであるが、さらにこれらをまとめてクラスを定義できる。
@@ -43,8 +42,7 @@
         前セクションで紹介した入力を行う関数を拡張しつつクラスにまとめる。
     </p>
 <pre class=line-numbers data-label="myclassinput.py">
-<code class="language-python">
-# キー入力に関する処理をまとめたクラスとして
+<code class="language-python"># キー入力に関する処理をまとめたクラスとして
 # Input_Numberを作ってみる
 # コンストラクタいらないな…例が悪いかも
 class InputNumber:
@@ -117,8 +115,7 @@ class InputNumber:
 
 if __name__ == '__main__':
     inputN = InputNumber()
-    inputN.input_between_int(5, 9)
-</code>
+    inputN.input_between_int(5, 9)</code>
 </pre>
     <p>
         1~70行目までがInputNumber()クラスである。
@@ -142,8 +139,7 @@ if __name__ == '__main__':
         これも次の章で利用するため、ファイル名「mymoduleinput.py」として保存しておくことを勧める。
     </p>
 <pre class=line-numbers data-label="mymoduleinput.py">
-<code class="language-python">
-# 数値入力
+<code class="language-python"># 数値入力
 def input_num(str='数値入力>'):
     while True:
         x = input(str)
@@ -207,10 +203,8 @@ def input_nums_N(N, str='数値入力>', delimiter=','):
         if len(nums) == N:
             return nums
         else:
-            print('入力個数が正しくありません')
-</code>
+            print('入力個数が正しくありません')</code>
 </pre>
-
 
 <h3 class="underline">10.2 メソッドと関数</h3>
     <p>
@@ -234,8 +228,7 @@ def input_nums_N(N, str='数値入力>', delimiter=','):
         オブジェクト指向にも関わってくるため読み飛ばしてしまっても問題ない。
     </p>
 <pre class=line-numbers data-label="sample10_02_00_bankAccountClass.py">
-<code class="language-python">
-class BankAccount:
+<code class="language-python">class BankAccount:
 
     users = []
 
@@ -298,8 +291,7 @@ itr1 = calc_interest(b1, 1.0003)
 
 print('金利')
 print(f'氏名: {account0.name:6} 利息:{itr0:3,.0f}円')
-print(f'氏名: {account1.name:6} 利息:{itr1:3,.0f}円')
-</code>
+print(f'氏名: {account1.name:6} 利息:{itr1:3,.0f}円')</code>
 </pre>
 
 <h3 class="underline">10.3 if __name__ == '__main__':</h3>
@@ -336,9 +328,7 @@ print(f'氏名: {account1.name:6} 利息:{itr1:3,.0f}円')
         下記のコードはエラーにならないことが分かるだろう。
     </p>
 <pre class=line-numbers data-label="sample10_03_00___name__.py">
-<code class="language-python">
-print(__name__)
-</code>
+<code class="language-python">print(__name__)</code>
 </pre>
     <p>
         下記の説明は第11章を読んだ後の方が分かりやすいだろう。
