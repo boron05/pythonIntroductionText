@@ -44,8 +44,7 @@
         「import ライブラリ名」で使用できる。
     </p>
 <pre class=line-numbers data-label="sample11_01_00_importLib.py">
-<code class="language-python">
-import math
+<code class="language-python">import math
 import datetime as dt
 
 PI = math.pi
@@ -58,8 +57,7 @@ print(math.cos(rad_a))
 
 dt_now = dt.datetime.now()
 print(dt_now)
-print(dt_now.hour)
-</code>
+print(dt_now.hour)</code>
 </pre>
     <p>
         importはスクリプトファイルの先頭にまとめて書くのが一般的である。
@@ -91,8 +89,7 @@ print(dt_now.hour)
         さらにこれらの型（クラス）の中に関数や変数が入っている。
     </p>
 <pre class=line-numbers data-label="sample11_01_01_datetime.py">
-<code class="language-python">
-import datetime
+<code class="language-python">import datetime
 
 print(datetime.date)                # -> &lt;class 'datetime.date'&gt;
 date_today = datetime.date.today()  # 今日の日付取得
@@ -107,8 +104,7 @@ print(dt_now.strftime("%Y-%m-%D (%A) %H:%M:%S")) # 書式フォーマット指�
 
 one_day = datetime.date(2021, 3, 5)              # 日付定義
 dlt_day = one_day + datetime.timedelta(days=50)  # 日付加算
-print(dlt_day, dlt_day.weekday())                # 月:0、火:1、…
-</code>
+print(dlt_day, dlt_day.weekday())                # 月:0、火:1、…</code>
 </pre>
     <p>
         毎回「datetime.xxx」と書くのは手間である。
@@ -116,8 +112,7 @@ print(dlt_day, dlt_day.weekday())                # 月:0、火:1、…
         「datetime.」を省略できる
     </p>
 <pre class=line-numbers data-label="sample11_01_02_fromImport.py">
-<code class="language-python">
-from datetime import datetime, date, timedelta
+<code class="language-python">from datetime import datetime, date, timedelta
 
 print(date)
 date_today = date.today()
@@ -132,8 +127,7 @@ print(dt_now.strftime("%Y-%m-%D (%A) %H:%M:%S"))
 
 one_day = date(2021, 3, 5)
 dlt_day = one_day + timedelta(days=50)
-print(dlt_day, dlt_day.weekday())
-</code>
+print(dlt_day, dlt_day.weekday())</code>
 </pre>
     <p>
         「from ライブラリ名 import *」と書くとライブラリ内にある全てのモジュールがインポートされる。
@@ -145,8 +139,7 @@ print(dlt_day, dlt_day.weekday())
         Pythonには「csv」という標準ライブラリが存在し、これを用いることで簡単に2次元リストを作ることができる。
     </p>
 <pre class=line-numbers data-label="sample11_01_03_csv.py">
-<code class="language-python">
-import csv
+<code class="language-python">import csv
 
 with open('sample_data1.txt', encoding='UTF-8') as f:
     r = csv.reader(f)
@@ -157,8 +150,7 @@ with open('sample_data1.txt', encoding='UTF-8') as f:
 with open('sample_data1.txt', encoding='UTF-8') as f:
     r = csv.reader(f, delimiter=',')
     data = [row for row in r]
-print(data)
-</code>
+print(data)</code>
 </pre>
     <p>
         delimiterでは区切り文字を指定できる。
@@ -179,8 +171,7 @@ print(data)
         データを再利用する際に型変換が必要なくなるので読み込みが高速化されるという利点がある。
     </p>
 <pre class=line-numbers data-label="sample11_01_04_pkl.py">
-<code class="language-python">
-import csv
+<code class="language-python">import csv
 import pickle as pkl
 
 def str2int(s):
@@ -219,8 +210,7 @@ with open('pkl_test.pkl', mode='wb') as f:
 with open('pkl_test.pkl', mode='rb') as f:
     data = pkl.load(f)
 print(data)
-'''
-</code>
+'''</code>
 </pre>
     <p>
         上記例にあるように保存はpickle.dump(オブジェクト, ファイル)で行える。
@@ -287,8 +277,7 @@ print(data)
         書き方は「import 自作クラスのファイル名」、fromを用いる場合は「from 自作クラスのファイル名 import クラス名」である。
     </p>
 <pre class=line-numbers data-label="sample11_02_00_importUsersClass.py">
-<code class="language-python">
-from datetime import date, timedelta
+<code class="language-python">from datetime import date, timedelta
 from myclassinput import InputNumber
 
 WEEK_LIST = ['月', '火', '水', '木', '金', '土', '日']
@@ -329,8 +318,7 @@ input_day = myinput.input_int('day >')       # 入力:日
 input_date = date(input_year, input_month, input_day)
 weeknum = input_date.weekday()                # 曜日番号取得
 date_str = input_date.strftime('%Y/%m/%d')
-print('{}は{}曜日です。'.format(date_str, WEEK_LIST[weeknum]))
-</code>
+print('{}は{}曜日です。'.format(date_str, WEEK_LIST[weeknum]))</code>
 </pre>
     <p>
         なお、mymoduleinput.pyファイルをフォルダ"mymodules"に入れたとすれば
@@ -354,10 +342,8 @@ print('{}は{}曜日です。'.format(date_str, WEEK_LIST[weeknum]))
         具体的な配置場所は場所は以下で確認できる。
     </p>
 <pre data-label="デフォルトのパッケージディレクトリ">
-<code class="language-shell">
->>>import sys
->>>print(sys.path)
-</code>
+<code class="language-shell">>>>import sys
+>>>print(sys.path)</code>
 </pre>
     <p>
         "Lib"というフォルダが存在すると思うので、そこに"mymodules"フォルダを置く。
@@ -454,8 +440,7 @@ print('{}は{}曜日です。'.format(date_str, WEEK_LIST[weeknum]))
         以下はnumpyを利用したプログラムである。
     </p>
 <pre class=line-numbers data-label="sample11_03_00_importExternalLibrary.py">
-<code class="language-python">
-import numpy as np      #npとして扱うことが多い
+<code class="language-python">import numpy as np      #npとして扱うことが多い
 
 print(np.pi)
 print(np.sin(np.pi/2))
@@ -463,8 +448,7 @@ print(np.sin(np.pi/2))
 x = np.array([0, 1, 2, 3, 5, ,7 ,9, 3, ,5])
 print(x.var(), x.std())
 
-print(np.sin(np.pi/x))
-</code>
+print(np.sin(np.pi/x))</code>
 </pre>
     <p>
         外部ライブラリの例としてnumpyを挙げたが、numpyは数値計算を行う際にはもはや必須である。
