@@ -107,15 +107,13 @@
         まずは、plt.plot()でグラフを書いてみる。
     </p>
 <pre class=line-numbers data-label="matplot_pltplot.py">
-<code class="language-python">
-import matplotlib.pyplot as plt # pltが慣例
+<code class="language-python">import matplotlib.pyplot as plt # pltが慣例
 
 xlist = [1, 2, 3, 4, 5]
 ylist = [3, 5, 7, 10, 14]
 
 plt.plot(xlist, ylist)  # 線グラフのプロット
-plt.show()              # 表示
-</code>
+plt.show()              # 表示</code>
 </pre>
     <p>
         これだけで簡素なグラフであれば書ける。
@@ -128,8 +126,7 @@ plt.show()              # 表示
         これにいろいろ付け足してみよう。
     </p>
 <pre class=line-numbers data-label="matplot_pltplot2.py">
-<code class="language-python">
-import matplotlib.pyplot as plt # pltが慣例
+<code class="language-python">import matplotlib.pyplot as plt # pltが慣例
 
 xlist = [1, 2, 3, 4, 5]
 ylist1 = [3, 5, 7, 10, 14]
@@ -146,8 +143,7 @@ plt.title('matplot sample plot')    # タイトル
 plt.xlabel('x label')               # x軸ラベル
 plt.ylabel('y label')               # y軸ラベル
 plt.show()                          # 表示
-plt.savefig('output.png')           # 保存
-</code>
+#plt.savefig('output.png')          # 保存</code>
 </pre>
     <p>
         もう少し詳しく見ていく。
@@ -159,8 +155,7 @@ plt.savefig('output.png')           # 保存
             [ ]は別名でどちらを使っても良い。
         </p>
 <pre class=line-numbers data-label="">
-<code class="language-python">
-plt.plot(
+<code class="language-python">plt.plot(
     xdata,
     ydata,
     color[c],       # 線の色
@@ -169,8 +164,7 @@ plt.plot(
     marker,         # マーカーの種類
     markersize[ms], # マーカーのサイズ
     label           # 凡例の名前（legend()で表示される）
-    )
-</code>
+    )</code>
 </pre>
     <p>
         "color[c]"で使える色の名前は'b'、'g'、'r'、'k'などいろいろある。詳しくは下記のリンク先を参照せよ。
@@ -185,8 +179,7 @@ plt.plot(
         （GridSpecについては後述する。）
     </p>
 <pre class=line-numbers data-label="matplot_color_name.py">
-<code class="language-python">
-import matplotlib.pyplot as plt
+<code class="language-python">import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import matplotlib.patches as patches
 from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
@@ -250,8 +243,7 @@ ax3.set_title('CSS COLOR, (COLOR CODE)')
 plt.subplots_adjust(left=0.02, right=0.98, bottom=0.02, top=0.90)
 
 #plt.savefig('matplotlib_colors.png')
-plt.show()
-</code>
+plt.show()</code>
 </pre>
     <p>
         色を名前で指定する以外にも、RGBもしくはRGBA形式で色を指定することができる。
@@ -273,8 +265,7 @@ plt.show()
         </a>
     </p>
 <pre class=line-numbers data-label="matplot_linestyle.py">
-<code class="language-python">
-import matplotlib.pyplot as plt
+<code class="language-python">import matplotlib.pyplot as plt
 
 STD_LINESTYLES = {
     'solid': '-',
@@ -302,8 +293,7 @@ for my_ls in MY_LINESTYLES:
     cnt += 1
 
 plt.axis('off')
-plt.show()
-</code>
+plt.show()</code>
 </pre>
     <p>
         "marker"で使えるのは'o'、'.'、'v'、'+'などがある。
@@ -353,14 +343,12 @@ plt.show()
         </a>
     </p>
 <pre class=line-numbers data-label="">
-<code class="language-python">
-plt.grid(
+<code class="language-python">plt.grid(
     visible=None,   # Trueで表示、Falseで非表示
     which='major',  # 'major' or 'minor' or 'both'
     axis='both',    # 'x' or 'y' or 'both'
     **kwargs        # colorやlinestyle、linewidthなどが設定可能
-    )
-</code>
+    )</code>
 </pre>
 
     <h4>グラフの保存</h4>
@@ -395,8 +383,7 @@ plt.grid(
         
     </p>
 <pre class=line-numbers data-label="matplot_japanese.py">
-<code class="language-python">
-import matplotlib.font_manager
+<code class="language-python">import matplotlib.font_manager
 import matplotlib.pyplot as plt
 
 print('デフォルトのフォント', plt.rcParams['font.family'])
@@ -417,8 +404,7 @@ plt.grid()
 plt.title('matplotlib 日本語テスト')
 plt.xlabel('x軸')
 plt.ylabel('yじく')
-plt.show()
-</code>
+plt.show()</code>
 </pre>
     <p>
         12行目でフォントを読み込んでいる。
@@ -439,8 +425,7 @@ plt.show()
         matplotlibではTex記法で数式を書くことができる。
     </p>
 <pre class=line-numbers data-label="matplot_latex.py">
-<code class="language-python">
-import matplotlib.pyplot as plt
+<code class="language-python">import matplotlib.pyplot as plt
 
 xlist = [1, 2, 3, 4, 5]
 ylist = [3, 5, 7, 10, 14]
@@ -453,8 +438,7 @@ plt.grid()
 plt.title(r'Tex Test $\Omega$')
 plt.xlabel(r'$x$')
 plt.ylabel(r'$\sin(x)$')
-plt.show()
-</code>
+plt.show()</code>
 </pre>
     <p>
        ドルマーク$で囲むと数式環境となり、Tex記法が使える。
@@ -470,8 +454,7 @@ plt.show()
         （plt.xlabel('x-axis')がax.set_xlabel('x-axis')に変わったりする。）
     </p>
 <pre class=line-numbers data-label="matplot_axobject.py">
-<code class="language-python">
-import matplotlib.pyplot as plt
+<code class="language-python">import matplotlib.pyplot as plt
 
 x0 = [1, 2, 3, 4, 5]
 y0 = [3, 5, 7, 10, 14]
@@ -484,16 +467,13 @@ ax = fig.add_subplot()  # figureオブジェクト内にaxオブジェクトを�
 
 ax.plot(x0, y0)         # axにplot
 ax.plot(x1, y1)         # axにplot
-plt.show()
-</code>
+plt.show()</code>
 </pre>
     <p>
         上記の9～10行目は別の書き方もできて（1行で書くと）
     </p>
 <pre class=line-numbers data-label="numpy_loadtext.py" data-start="9">
-<code class="language-python">
-fig, ax = plt.subplots()
-</code>
+<code class="language-python">fig, ax = plt.subplots()</code>
 </pre>
     <p>
         matplotlibのオブジェクトの階層は下の図のようになっている。
@@ -510,8 +490,7 @@ fig, ax = plt.subplots()
         ここからはNumPyも用いつつ、上記のサンプルのように複数のグラフを並べて書く方法を紹介する。
     </p>
 <pre class=line-numbers data-label="matplot_addsubplot.py">
-<code class="language-python">
-import matplotlib.pyplot as plt
+<code class="language-python">import matplotlib.pyplot as plt
 import numpy as np
 
 x1 = np.linspace(0, 10, 100)
@@ -552,8 +531,7 @@ ax3.tick_params(
     grid_color='r',
     grid_alpha=0.5)
 
-plt.show()
-</code>
+plt.show()</code>
 </pre>
     <p>
         グラフ作成に関連するのは13行目からである。
@@ -585,8 +563,7 @@ plt.show()
         13～16行目の処理はsubplots()を使って別の書き方もできる。
     </p>
 <pre class=line-numbers data-label="matplot_subplot.py">
-<code class="language-python">
-import matplotlib.pyplot as plt
+<code class="language-python">import matplotlib.pyplot as plt
 import numpy as np
 
 x1 = np.linspace(0, 10, 100)
@@ -607,8 +584,7 @@ axes[1, 0].plot(x3, y3)
 ax3_inset = axes[1,0].inset_axes([0.1, 0.1, 0.3, 0.3])
 ax3_inset.plot(x1, y1)
 
-plt.show()
-</code>
+plt.show()</code>
 </pre>
 
     <h4>2軸グラフ</h4>
@@ -616,8 +592,7 @@ plt.show()
         2軸グラフの例も紹介しておく。使うのは「ax.twinx()」である。
     </p>
 <pre class=line-numbers data-label="matplot_twinx.py">
-<code class="language-python">
-import matplotlib.pyplot as plt
+<code class="language-python">import matplotlib.pyplot as plt
 import numpy as np
 
 x1 = np.linspace(0, 10, 100)
@@ -633,16 +608,14 @@ ax_.plot(x1, y1, color="red")
 ax.set_yscale("log")
 ax.tick_params(direction="in")
 
-plt.show()
-</code>
+plt.show()</code>
 </pre>
     <h4>レイアウト GridSpec</h4>
     <p>
         「GridSpec」を用いると複雑なレイアウトも表現できる。
     </p>
 <pre class=line-numbers data-label="matplot_gridspec.py">
-<code class="language-python">
-import matplotlib.pyplot as plt
+<code class="language-python">import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
 
 # テキストplot関数(中心配置)
@@ -681,8 +654,7 @@ txtplot_center(ax3, 'subPlot3')
 txtplot_center(ax40, 'subPlot4-0')
 txtplot_center(ax41, 'subPlot4-1')
 
-plt.show()
-</code>
+plt.show()</code>
 </pre>
     <p>
     <div class="pic_frame">
@@ -699,8 +671,7 @@ plt.show()
         なお、下記コードでは日本語化はmatplotlibrcファイルですでに行っているものとする。
     </p>
 <pre class=line-numbers data-label="matplot_analyzescore.py">
-<code class="language-python">
-import matplotlib.pyplot as plt
+<code class="language-python">import matplotlib.pyplot as plt
 import numpy as np
 
 path = 'sample_data2.txt'
@@ -739,8 +710,7 @@ for row_i, row_subject_data in enumerate(subject_data_list):
 fig_ = plt.figure('boxplot')
 ax_ = fig_.add_subplot(111)
 ax_.boxplot(subject_data_list, labels=subject_names)
-plt.show()
-</code>
+plt.show()</code>
 </pre>
 
 <h3 class='underline'>3次元グラフ</h3>
@@ -750,23 +720,20 @@ plt.show()
         （matplotlibが新しいバージョンだと「from mpl_toolkits.mplot3d import Axes3D」いらないかも。）
     </p>
 <pre class=line-numbers data-label="matplot_3d.py">
-<code class="language-python">
-from mpl_toolkits.mplot3d import Axes3D #省略可能かもしれないが、不安なので書いておく。
+<code class="language-python">from mpl_toolkits.mplot3d import Axes3D #省略可能かもしれないが、不安なので書いておく。
 import matplotlib.pyplot as plt
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 #fig, ax = plt.subplots(subplot_kw={'projection' : '3d'})
 
-plt.show()
-</code>
+plt.show()</code>
 </pre>
     <p>
         「plot(x, y, z)」で3次元曲線を描ける。
     </p>
 <pre class=line-numbers data-label="matplot_3dsurface.py">
-<code class="language-python">
-from mpl_toolkits.mplot3d import Axes3D
+<code class="language-python">from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -778,15 +745,13 @@ y = np.cos(t)
 z = t
 
 ax.plot(x, y, z)
-plt.show()
-</code>
+plt.show()</code>
 </pre>
     <p>
         曲面を描くには格子点を生成する必要があり、それには「np.meshgrid(x, y)」を用いる。
     </p>
 <pre class=line-numbers data-label="matplot_3dsurface.py">
-<code class="language-python">
-from mpl_toolkits.mplot3d import Axes3D
+<code class="language-python">from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -808,8 +773,7 @@ ax1.plot_wireframe(X, Y, Z, lw=0.4, color='g')          # ワイヤーフレー�
 
 ax2.plot_surface(X, Y, Z, cmap='plasma', facecolor='w') # 曲面
 
-plt.show()
-</code>
+plt.show()</code>
 </pre>
 
 <h3 class='underline'>アニメーション</h3>
@@ -829,8 +793,7 @@ plt.show()
         CPUの使用率とメモリ使用率・インターネット受信速度をリアルタイム表示するプログラムである。
     </p>
 <pre class=line-numbers data-label="matplot_funcanimation.py">
-<code class="language-python">
-import matplotlib.pyplot as plt
+<code class="language-python">import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
 from matplotlib.animation import FuncAnimation
 import numpy as np
@@ -911,8 +874,7 @@ def update(i):
     #print(i, cpu, kbps_, memory)
 
 anim = FuncAnimation(figure, update, interval=500)
-plt.show()
-</code>
+plt.show()</code>
 </pre>
     <p>
         上記コードでは前述したGridSpecのレイアウトを用いた。
