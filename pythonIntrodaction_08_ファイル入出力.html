@@ -50,13 +50,11 @@
        なお、以降は「<a href="sample_data1.txt" target="_blank" rel="noopener noreferrer">sample_data1.txt</a>」を扱っていく。
     </p>
 <pre class=line-numbers data-label="sample08_01_00_openReadClose.py">
-<code class="language-python">
-path = 'sample_data1.txt'
+<code class="language-python">path = 'sample_data1.txt'
 f = open(path, mode='r', encoding='utf-8')
 txt = f.read()
 f.close()
-print(txt)
-</code>
+print(txt)</code>
 </pre>
     <p>
         2行目がファイルを開く処理である。
@@ -140,12 +138,10 @@ print(txt)
         close()忘れを防ぐため、Pythonでは「with文」が用いられることが多い。
     </p>
 <pre class=line-numbers data-label="sample08_01_01_withOpenRead.py">
-<code class="language-python">
-path = 'sample_data1.txt'
+<code class="language-python">path = 'sample_data1.txt'
 with open(path, mode='r', encoding='utf-8') as f:
     txt = f.read()
-print(txt)
-</code>
+print(txt)</code>
 </pre>
     <p>
         この書き方の方が安全かつ少ない記述で済む。
@@ -154,8 +150,7 @@ print(txt)
         （他言語であればファイル入出力は必ずtryの中に記述せよなどのルールがある言語もある）
     </p>
 <pre class=line-numbers data-label="sample08_01_02_tryOpenRead.py">
-<code class="language-python">
-path = 'sample_data1.txt'
+<code class="language-python">path = 'sample_data1.txt'
 f = None
 try:
     f = open(path, 'r', encoding='utf-8')
@@ -166,8 +161,7 @@ try:
 finally:
     if f:
         f.close()
-print(txt)
-</code>
+print(txt)</code>
 </pre>
     <p>
         読み込みには「read()」の他にも「readlines()」と「readline()」が存在する。
@@ -179,12 +173,10 @@ print(txt)
         readlines()はcsv形式で書かれたデータを読み込みたいときには有用ではある。
     </p>
 <pre class=line-numbers data-label="sample08_01_03_readlines.py">
-<code class="language-python">
-path = 'sample_data1.txt'
+<code class="language-python">path = 'sample_data1.txt'
 with open(path, mode='r', encoding='utf-8') as f:
     list_data = f.readlines()
-print(list_data)
-</code>
+print(list_data)</code>
 </pre>
     <p>
         上記コードだと「['id,氏名,class,数学,英語,理科,社会,国語\n', '1,相川,A,89,85,72,75,90\n',…」のように表示される。
@@ -203,8 +195,7 @@ print(list_data)
         下記コードでは2次元リスト化および、改行コードの削除と数値型に変換の処理を行ったものである。
     </p>
 <pre class=line-numbers data-label="sample08_01_04_arrangeCsv.py">
-<code class="language-python">
-path = "sample_data1.txt"               # ファイル名
+<code class="language-python">path = "sample_data1.txt"               # ファイル名
 with open(path, encoding="UTF-8") as f: # ファイルオープン
     list_data = f.readlines()           # ファイル読み込み
 
@@ -253,8 +244,7 @@ max_mat = max(mats)
 print('数学の最高点:', max_mat)
 for i, mat in enumerate(mats):
     if mat == max_mat:
-        print('最高得点者:', names[i])
-</code>
+        print('最高得点者:', names[i])</code>
 </pre>
     <p>
         長いコードのように感じるかもしれないが、可読性を高めるためにfor文で書いた箇所は
@@ -271,8 +261,7 @@ for i, mat in enumerate(mats):
         初学者には読みにくいと思うが、出来る限りコードを減らした例も書いておく。
     </p>
 <pre class=line-numbers data-label="sample08_01_05_arrangeCsvShort.py">
-<code class="language-python">
-path = "sample_data1.txt"               # ファイル名
+<code class="language-python">path = "sample_data1.txt"               # ファイル名
 with open(path, encoding="UTF-8") as f: # ファイルオープン
     txt = f.read()                      # ファイル読み込み
 
@@ -299,8 +288,7 @@ for i, col_1d_data_int in enumerate(col_2d_data_int):
     print(header[i+3], 'の最高点', max_scores[i])
     for row_idx, score in enumerate(col_1d_data_int):
         if score == max_scores[i]:
-            print('  ',name_col[row_idx])
-</code>
+            print('  ',name_col[row_idx])</code>
 </pre>
     <p>
         10行目に2重の内包表記で2次元リストを作成している。
@@ -314,8 +302,7 @@ for i, col_1d_data_int in enumerate(col_2d_data_int):
         'a'は既存のファイルに追記を行う（ファイルが存在しない場合は'w'と同じ処理）。
     </p>
 <pre class=line-numbers data-label="sample08_02_00_write.py">
-<code class="language-python">
-output_txt1 = '書き込みテスト文字列\n改行コードも書ける'
+<code class="language-python">output_txt1 = '書き込みテスト文字列\n改行コードも書ける'
 
 path = 'output_sample.txt'
 with open(path, mode='w', encoding='utf8', newline='\n') as f:
@@ -328,8 +315,7 @@ with open(path, mode='a', encoding='utf8', newline='\n') as f:
 
 output_txts = ['A\n', 'BB', 'CCC']
 with open(path, mode='a', encoding='utf8', newline='\n') as f:
-    f.writelines(output_txts)
-</code>
+    f.writelines(output_txts)</code>
 </pre>
     <p>
         write()は引数に単一の文字列を受け、writelines()はリストをまとめて書き込める。
