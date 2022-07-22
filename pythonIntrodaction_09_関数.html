@@ -41,8 +41,7 @@
         基本的な書き方を下記に記す。
     </p>
 <pre class=line-numbers data-label="sample09_01_00_func.py">
-<code class="language-python">
-# 階乗を計算
+<code class="language-python"># 階乗を計算
 def factorial(n):
     relust = n
     for x in range(n-1, 0, -1):
@@ -82,8 +81,7 @@ print(print_Hello())
 print(print_vHello())
 print(abs_diff(2**10, 3**7))
 print(check_type(['a', 1, ['s', 5]]))
-print(multi_return())
-</code>
+print(multi_return())</code>
 </pre>
     <p>
         関数ではreturnが実行された段階でその関数の処理は終了する。
@@ -97,8 +95,7 @@ print(multi_return())
         関数の中で宣言した変数はその関数内でしか利用できないというルールがある。
     </p>
 <pre class=line-numbers data-label="sample09_02_00_scope.py">
-<code class="language-python">
-def scope_test1():
+<code class="language-python">def scope_test1():
     a = 2
     b = 3
     c = 6
@@ -106,8 +103,7 @@ def scope_test1():
 
 d = 10
 print(a)            # -> ERROR
-print(scope_test1)  # -> 2 3 6 10
-</code>
+print(scope_test1)  # -> 2 3 6 10</code>
 </pre>
     <p>
         <div class="pic_frame">
@@ -132,8 +128,7 @@ print(scope_test1)  # -> 2 3 6 10
 
     </p>
 <pre class=line-numbers data-label="sample09_02_01_callByObjectReference.py">
-<code class="language-python">
-def test1(x):
+<code class="language-python">def test1(x):
     print('引数受取id:', id(x), 'value:', x)
     x = 2
     return x
@@ -151,8 +146,7 @@ def test2(X):
 X = [0, 1, 2]
 print('定義直後id:', id(X), 'value:', X)
 rtn_X = test2(X)
-print('戻り値　id:', id(rtn_X), 'value:', rtn_X)
-</code>
+print('戻り値　id:', id(rtn_X), 'value:', rtn_X)</code>
 </pre>
 
 <h3 class="underline">9.3 引数のデフォルト値とキーワード引数</h3>
@@ -161,15 +155,13 @@ print('戻り値　id:', id(rtn_X), 'value:', rtn_X)
         デフォルト値が採用されるようになる。
     </p>
 <pre class=line-numbers data-label="sample09_03_00_parameter.py">
-<code class="language-python">
-# リストの各要素をデフォルトで2乗にして返す
+<code class="language-python"># リストの各要素をデフォルトで2乗にして返す
 def square(arglist, x=2):
     return [ele**x for ele in arglist]
 
 
 print(square([1,2,3]))
-print(square([1,2,3], 4))
-</code>
+print(square([1,2,3], 4))</code>
 </pre>
     <p>
         デフォルト値を設定する際には、「def 関数名(引数1=デフォルト値1, 引数2=デフォルト値2)」のように
@@ -182,14 +174,12 @@ print(square([1,2,3], 4))
         関数呼び出しの際に代入する変数を指定する「キーワード引数」が使える。
     </p>
 <pre class=line-numbers data-label="sample09_03_01_kwargs.py">
-<code class="language-python">
-def person(name, age):
+<code class="language-python">def person(name, age):
     print('name:', name)
     print('age:', age)
 
 person(12, '太郎')            # 関数定義時の引数の順番通りに入る
-person(age=12, name='太郎')   # キーワード引数で指定
-</code>
+person(age=12, name='太郎')   # キーワード引数で指定</code>
 </pre>
 
 <h3 class="underline">9.4 可変長引数</h3>
@@ -198,24 +188,21 @@ person(age=12, name='太郎')   # キーワード引数で指定
         書き方は「*args」のようにアスタリスクを付けることで複数の引数をタプルとして受け取れる。
     </p>
 <pre class=line-numbers data-label="sample09_04_00_variableArgs.py">
-<code class="language-python">
-def person(name, age, *info):
+<code class="language-python">def person(name, age, *info):
     print('name:', name)
     print('age:', age)
     print('other info:', info)
 
 person('太郎', 12)
 person('太郎', 12, 'A')
-person('太郎', 12, 'A', 'Japan') 
-</code>
+person('太郎', 12, 'A', 'Japan')</code>
 </pre>
     <p>
         アスタリスクを2つ付け「**kwargs」とすると、任意の数のキーワード引数を指定できる。
         関数内では辞書型となるので、キーワードの指定を強制することもできる。
     </p>
 <pre class=line-numbers data-label="sample09_04_01_variableKwargs.py">
-<code class="language-python">
-# infoは辞書型
+<code class="language-python"># infoは辞書型
 def person(name, age, **info):
     print('name:', name)
     print('age:', age)
@@ -242,8 +229,7 @@ print('Unpack:', *para_list)    # -> 'Hanako', 17, ('A', 'Japan')
 person(*para_list)              # リストは先頭に*を付けると展開される
 
 para_dict = {'name': 'Hanako', 'age':12, 'blood_type': 'B', 'country': 'Japan'}
-person2(**para_dict)            # 辞書は先頭に**を付けると展開される
-</code>
+person2(**para_dict)            # 辞書は先頭に**を付けると展開される</code>
 </pre>
 
 <h3 class="underline">9.5 入力に関わる関数（応用）</h3>
@@ -251,8 +237,7 @@ person2(**para_dict)            # 辞書は先頭に**を付けると展開さ�
         実用上便利なので数値入力用の関数を定義しておく。
     </p>
 <pre class=line-numbers data-label="sample09_05_00_inputFunc.py">
-<code class="language-python">
-# 浮動点少数が入力されるまでループ
+<code class="language-python"># 浮動点少数が入力されるまでループ
 def input_float(print_str):
     while True:
         str = input(print_str)
@@ -282,15 +267,13 @@ def input_between_int(print_str, start, stop):
             break
         else:
             print ('Over Range')
-    return i
-</code>
+    return i</code>
 </pre>
     <p>
         折角なので上記の関数を用いて階乗を求めるプログラムを書いてみる
     </p>
 <pre class=line-numbers data-label="sample09_05_01_inputFuncTest.py">
-<code class="language-python">
-# 整数が入力されるまでループ
+<code class="language-python"># 整数が入力されるまでループ
 def input_int(print_str):
     while True:
         str = input(print_str)
@@ -327,15 +310,13 @@ while True:
         break
     print(f'{n}! = {factorial(n)}')
 
-print('--- FINISH ---')
-</code>
+print('--- FINISH ---')</code>
 </pre>
     <p>
         6章で紹介した素数判定プログラムを拡張し、素因数分解を行うプログラムにしてみる。
     </p>
 <pre class=line-numbers data-label="sample09_05_02_primeFactorization.py">
-<code class="language-python">
-def check_prime(num):
+<code class="language-python">def check_prime(num):
     flag = True
     for x in range(2, num):
         if num % x == 0:
@@ -373,8 +354,7 @@ while True:
         print(factors)
     else:
         print('Not Prime Number')
-        print(factors)
-</code>
+        print(factors)</code>
 </pre>
 
 <h3 class="underline">※再帰関数の利用</h3>
@@ -386,8 +366,7 @@ while True:
         再帰関数とは関数内でその関数自身を呼び出す処理のことをいう。
     </p>
 <pre class=line-numbers data-label="sample09_05_03_primeFactorization.py">
-<code class="language-python">
-import time
+<code class="language-python">import time
 import sys
 
 # nまでの和を返す（for利用）
@@ -407,8 +386,7 @@ def mysum2(n):
 at = time.perf_counter()
 print(mysum1(1000), time.perf_counter()-at)
 at = time.perf_counter()
-print(mysum2(1000), time.perf_counter()-at)
-</code>
+print(mysum2(1000), time.perf_counter()-at)</code>
 </pre>
     <p>
         上記コード例だと「mysum2」が再帰関数である。
@@ -422,23 +400,20 @@ print(mysum2(1000), time.perf_counter()-at)
         「名前 = lambda 引数: 式」ように書く。
     </p>
 <pre class=line-numbers data-label="sample09_05_03_primeFactorization.py">
-<code class="language-python">
-def myfunc1(a, b=1):
+<code class="language-python">def myfunc1(a, b=1):
     return a + b
 
 mylambda = lambda a, b=1: a + b
 
 print(myfunc(2, 6))
-print(mylambda(2, 6))
-</code>
+print(mylambda(2, 6))</code>
 </pre>
     <p>
         上記の例ではlamnda式にも名前をつけたが、実際には名前をつけて使うことは少ない。
         どのような場面で用いるかというと組み込み関数sorted()のkeyに適用したりして使う。
     </p>
 <pre class=line-numbers data-label="sample09_05_03_primeFactorization.py">
-<code class="language-python">
-mylist = ['kind', 'artist', 'door', 'sky']
+<code class="language-python">mylist = ['kind', 'artist', 'door', 'sky']
 
 mylist_sorted = sorted(mylist)
 print(mylist_sorted)
@@ -447,8 +422,7 @@ mylist_sorted_len = sorted(mylist, key=len)
 print(mylist_sorted_len)
 
 mylist_sorted_last = sorted(mylist, key=lambda x: x[-1])
-print(mylist_sorted_last)
-</code>
+print(mylist_sorted_last)</code>
 </pre>
 </div>
 </div>
