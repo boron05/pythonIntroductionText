@@ -1,4 +1,4 @@
-﻿<html lang="ja">
+<html lang="ja">
 <head>
     <title>Numpy | Python Library</title>
     <link rel="stylesheet" href="prism.css">
@@ -64,8 +64,7 @@
         （数値型なら省略可能。というより数値型しか格納させない。）
     </p>
 <pre class=line-numbers data-label="numpy_ndarray_generate.py">
-<code class="language-python">
-import numpy as np
+<code class="language-python">import numpy as np
 
 # np.array(リスト)で生成
 a0 = np.array([1, 2, 3])        # 1次元配列生成
@@ -87,8 +86,7 @@ print(np.linspace(0,5,100)) # 0～5までの間に等間隔に100個の要素
 
 # 要素を取得するにはインデックスを指定する
 print(a0[1])
-print(a1[1, 0])     # a1[1][0]でも可(リストではa1[1, 0]は不可である)
-</code>
+print(a1[1, 0])     # a1[1][0]でも可(リストではa1[1, 0]は不可である)</code>
 </pre>
     <h3 class="underline">ndarray配列の演算</h3>
     <p>
@@ -96,8 +94,7 @@ print(a1[1, 0])     # a1[1][0]でも可(リストではa1[1, 0]は不可であ�
         ndarrayは行列だと思っておくと良い。
     </p>
 <pre class=line-numbers data-label="numpy_ndarray_operate.py">
-<code class="language-python">
-import numpy as np
+<code class="language-python">import numpy as np
 
 list0 = [1, 3, 5, 7, 9, 11]
 list1 = [0, 2, 4, 6, 8, 10]
@@ -127,8 +124,7 @@ arr4 = np.array(list4)
 print(array2 + 5)       # 全要素に+5
 print(array2 * 5)       # 全要素に*5
 print(arr4 + arr3)      # 各行に+ arr3
-print(arr4 * arr3)      # 各行に* arr3
-</code>
+print(arr4 * arr3)      # 各行に* arr3</code>
 </pre>
     <p>
         16、17行目はshape(6, )とshape(5, )の演算なのでエラーとなるが、
@@ -146,8 +142,7 @@ print(arr4 * arr3)      # 各行に* arr3
         （sample_data2.txtはsample_data1.txtの生徒数を増やしたもの。）
     </p>
 <pre class=line-numbers data-label="numpy_loadtext.py">
-<code class="language-python">
-import numpy as np
+<code class="language-python">import numpy as np
 
 path = 'sample_data2.txt'
 data = np.loadtxt(              # loadtxt()でファイル読み込み
@@ -172,8 +167,7 @@ print(f'数学の平均点:{mats.mean():.2f} +- {mats.std():5.2f}')
 print(f'英語の平均点:{engs.mean():.2f} +- {engs.std():5.2f}')
 print(f'理科の平均点:{scis.mean():.2f} +- {scis.std():5.2f}')
 print(f'社会の平均点:{socs.mean():.2f} +- {socs.std():5.2f}')
-print(f'国語の平均点:{jpns.mean():.2f} +- {jpns.std():5.2f}')
-</code>
+print(f'国語の平均点:{jpns.mean():.2f} +- {jpns.std():5.2f}')</code>
 </pre>
     <p>
         4行目でファイルを読み込んでいる。
@@ -191,8 +185,7 @@ print(f'国語の平均点:{jpns.mean():.2f} +- {jpns.std():5.2f}')
         ndarrayには他にもmax()やmin()はもちろん、分散や最頻値などの統計量を求める関数がある。
     </p>
 <pre class=line-numbers data-label="numpy_slice.py">
-<code class="language-python">
-import numpy as np
+<code class="language-python">import numpy as np
 
 list0 = [
     [11, 12, 13, 14, 15],
@@ -211,8 +204,7 @@ print(arr4[ : , 1:3])   # 全行、1～2列目を取得 -> 5x2行列
 print(arr4[0:2, 3])     # 0～1行目、3列目を取得 -> 1次元配列(要素数2)
 print(arr4[4, 1:4])     # 4行目、1～3列目を取得 -> 1次元配列(要素数3)
 print(arr4[:, 3])       # 4行目を取得 -> 1次元配列(要素数5)
-print(arr4[4, :])       # 4行目を取得 -> 1次元配列(要素数5)
-</code>
+print(arr4[4, :])       # 4行目を取得 -> 1次元配列(要素数5)</code>
 </pre>
     <p>
         numpy_loadtext.pyではファイル読み込みの際に用いる行と列を指定したが、
@@ -223,8 +215,7 @@ print(arr4[4, :])       # 4行目を取得 -> 1次元配列(要素数5)
         以下その例である。
     </p>
 <pre class=line-numbers data-label="numpy_loadtext2.py">
-<code class="language-python">
-import numpy as np
+<code class="language-python">import numpy as np
 
 path = 'sample_data2.txt'
 data = np.loadtxt(path, delimiter = '\t', dtype = 'object', encoding = 'utf8')
@@ -237,8 +228,7 @@ for subject_name, subject_data in zip(subject_names, subject_data_list):
 
 # 折角なので相関係数計算
 print('相関係数計算\n 英,数,国,理,社')
-print(np.corrcoef(subject_data_list))
-</code>
+print(np.corrcoef(subject_data_list))</code>
 </pre>
     <p>
         上記コードではnumpy_loadtext.pyに追加して、相関係数を「np.corrcoef()」で求めている。
@@ -271,8 +261,7 @@ print(np.corrcoef(subject_data_list))
         例えば、「np.sin()」の引数にはndarrayを渡せるし、数値型を格納したリスト型を渡すこともできる。
     </p>
 <pre class=line-numbers data-label="numpy_function.py">
-<code class="language-python">
-import numpy as np
+<code class="language-python">import numpy as np
 
 x = np.linspace(-5, 5, 100)
 y0 = np.sin(x)
@@ -280,8 +269,7 @@ y1 = np.sin(x) + x
 y2 = x**2 + 2*x -4 
 
 l = [1, 2, 3, 4, 5, 6, 7, 8, 10]
-print(np.sin(l))
-</code>
+print(np.sin(l))</code>
 </pre>
     <p>
         もし、Pythonのリストだけで実装しようとするなら、
@@ -295,8 +283,7 @@ print(np.sin(l))
         （lambda式という選択肢もある。）
     </p>
 <pre class=line-numbers data-label="numpy_frompyfunc.py">
-<code class="language-python">
-import numpy as np
+<code class="language-python">import numpy as np
 
 def myfunc(x):
     if x < 0:
@@ -310,8 +297,7 @@ new_func = np.frompyfunc(myfunc, 1, 1)
 
 x = np.linspace(-2, 5, 100)
 y  = new_func(x)
-print(y)
-</code>
+print(y)</code>
 </pre>
     <h3 class="underline">行列計算</h3>
     <p>
@@ -319,8 +305,7 @@ print(y)
         以下のコードはその例である。
     </p>
 <pre class=line-numbers data-label="numpy_matrix.py">
-<code class="language-python">
-import numpy as np
+<code class="language-python">import numpy as np
 
 A = np.array([
     [1, 2, 3],
@@ -345,8 +330,7 @@ print(A_det)
 # 逆行列
 A_inv = np.linalg.inv(A)
 print(A_inv)
-print(A.dot(A_inv))
-</code>
+print(A.dot(A_inv))</code>
 </pre>
     <p>
         逆行列が求まるということは、連立方程式が解けることに等しい。
@@ -384,8 +368,7 @@ print(A.dot(A_inv))
         で解が求まる。
     </p>
 <pre class=line-numbers data-label="numpy_simultaneous.py">
-<code class="language-python">
-import numpy as np
+<code class="language-python">import numpy as np
 from mymoduleinput import InputNumber
 
 print('3元連立方程式を求める AX = B')
@@ -411,8 +394,7 @@ while True:
         if inputN.input_int('終了する場合は-1を入力> ') == -1:
             break
 
-print('---Finish---')
-</code>
+print('---Finish---')</code>
 </pre>
 
     <h3 class="underline">行の抽出（付録）</h3>
@@ -424,8 +406,7 @@ print('---Finish---')
     </p>
 
 <pre class=line-numbers data-label="numpy_grouped.py">
-<code class="language-python">
-import time
+<code class="language-python">import time
 import numpy as np
 ut_np = time.perf_counter()
 
@@ -508,8 +489,7 @@ time_py = time.perf_counter() - ut_py
 
 print('###############\n処理速度')
 print(f'{Numpy利用:10}:{time_np:5.4f}')
-print(f'Python標準:\t{time_py:5.4f}')
-</code>
+print(f'Python標準:\t{time_py:5.4f}')</code>
 </pre>
     <p>
         2～23行目までがNumPyの処理である。上記コードが何をやっているかを理解する必要はあまりない。
@@ -529,8 +509,7 @@ print(f'Python標準:\t{time_py:5.4f}')
         なお、下記コードではmatplotlibも用いて可視化している。
     </p>
 <pre class=line-numbers data-label="numpy_polyfit.py">
-<code class="language-python">
-import numpy as np 
+<code class="language-python">import numpy as np 
 import matplotlib.pyplot as plt
 
 path = 'sample_ddd.txt'
@@ -558,8 +537,7 @@ ax2.plot(x, b2*x**2+b1*x+b0, color='r')
 plt.show()
 
 print(a1, a0)
-print(b2, b1, b0)
-</code>
+print(b2, b1, b0)</code>
 </pre>
     <p>
         polyfit(x, y, deg)では多項式近似しか扱えない。
