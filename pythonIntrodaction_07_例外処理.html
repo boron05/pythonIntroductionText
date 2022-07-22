@@ -46,8 +46,7 @@
        0での割り算を回避する例を見てみる
     </p>
 <pre class=line-numbers data-label="sample07_01_00_zeroDivError.py">
-<code class="language-python">
-a = 12
+<code class="language-python">a = 12
 b = 0
 
 try:
@@ -55,8 +54,7 @@ try:
 except ZeroDivisionError as zde:
     c = 0
     print(zde)  # -> division by zero
-print(c)        # -> 0
-</code>
+print(c)        # -> 0</code>
 </pre>
     <p>
         基本的な文法は上記の例のように、
@@ -103,8 +101,7 @@ print(c)        # -> 0
         単に文法エラーなので、単語のつづりやインデントを修正すればよいだけである。
     </p>
 <pre class=line-numbers data-label="sample07_01_01_bulitInExceptions.py">
-<code class="language-python">
-a = 'カエル'
+<code class="language-python">a = 'カエル'
 b = 5
 c = [1, 3, 5]
 
@@ -117,8 +114,7 @@ except TypeError:
 except ValueError:
     print('ValueError')
 except IndexError:
-    print('IndexError')
-</code>
+    print('IndexError')</code>
 </pre>
     <p>
         上記コードだと6行目でエラーが検出され、これはTypeErrorである。
@@ -129,8 +125,7 @@ except IndexError:
         受けることも出来る。
     </p>
 <pre class=line-numbers data-label="sample07_01_02_except.py">
-<code class="language-python">
-a = 'カエル'
+<code class="language-python">a = 'カエル'
 b = 5
 c = [1, 3, 5]
 
@@ -139,8 +134,7 @@ try:
     print(int(a))
     print(c[3])
 except:
-    print('何かしらのエラー')
-</code>
+    print('何かしらのエラー')</code>
 </pre>
     <p>
         記述が少なく楽で良いのだが、エラーの詳細が分からなくなるため非推奨とされている。
@@ -151,8 +145,7 @@ except:
         「finally:」は常に実行される部分となる（エラーの有無に関わらず実行）。
     </p>
 <pre class=line-numbers data-label="sample07_01_03_elseFinally.py">
-<code class="language-python">
-a = 2
+<code class="language-python">a = 2
 b = 3
 
 try:
@@ -164,8 +157,7 @@ except:
 else:
     print('finish (no error)')
 finally:
-    print('all finish')
-</code>
+    print('all finish')</code>
 </pre>
     <p>
         組み込み例外の一例を紹介したが、
@@ -182,8 +174,7 @@ finally:
         下記は、数値だけを受け付ける例である。
     </p>
 <pre class=line-numbers data-label="sample07_02_00_inputLoopTry.py">
-<code class="language-python">
-# 数値が入力されるまでループ
+<code class="language-python"># 数値が入力されるまでループ
 while True:
     input_str = input('Number >')
     try:
@@ -196,8 +187,7 @@ while True:
         print('success')
         break            # エラーが出なければbreak
 
-print('平方数: ', a**2)
-</code>
+print('平方数: ', a**2)</code>
 </pre>
     <p>
         6.1節ではisnumeric()を用いて数値判定を行ったが、
