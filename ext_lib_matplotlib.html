@@ -713,7 +713,7 @@ for row_i, row_subject_data in enumerate(subject_data_list):
         if col_i == 0:      # 0列目のとき
             ax.set_ylabel(subject_names[row_i]) # ラベルを科目名に設定
             ax.yaxis.set_visible(True)          # y軸を表示
-        if row_i == 0:      # 0列目のとき
+        if row_i == 0:      # 0行目のとき
             ax.set_xlabel(subject_names[col_i]) # ラベルを科目名に設定
             ax.xaxis.set_label_position('top')  # ラベル位置を上部に設定
             ax.xaxis.tick_top()                 # x軸目盛り位置を上部に設定
