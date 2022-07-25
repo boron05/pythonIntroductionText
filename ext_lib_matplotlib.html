@@ -182,7 +182,8 @@ plt.show()                          # 表示
 <code class="language-python">import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import matplotlib.patches as patches
-from matplotlib.gridspec import GridSpec, GridSpecFromSubplotSpec
+from matplotlib.gridspec import GridSpec
+from matplotlib.gridspec import GridSpecFromSubplotSpec as gsfss
 import math
 
 # 色の名前plot関数
@@ -220,12 +221,12 @@ def plot_color(ax, color_dict, row_num, fs=10):
     ax.axis("off")
     return ax
 
-figure = plt.figure(figsize=(15,8))
+figure = plt.figure(figsize=(15, 8))
 gs_master = GridSpec(nrows=2, ncols=2)
 
-gs1 = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[0, 0])
-gs2 = GridSpecFromSubplotSpec(nrows=1, ncols=1, subplot_spec=gs_master[0, 1])
-gs3 = GridSpecFromSubplotSpec(nrows=1, ncols=2, subplot_spec=gs_master[1, 0:2])
+gs1 = gsfss(nrows=1, ncols=1, subplot_spec=gs_master[0, 0])
+gs2 = gsfss(nrows=1, ncols=1, subplot_spec=gs_master[0, 1])
+gs3 = gsfss(nrows=1, ncols=2, subplot_spec=gs_master[1, 0:2])
 
 ax1 = figure.add_subplot(gs1[:, :])     # gs_1の全体
 ax2 = figure.add_subplot(gs2[:, :])     # gs_2の全体
@@ -674,43 +675,49 @@ plt.show()</code>
 <code class="language-python">import matplotlib.pyplot as plt
 import numpy as np
 
+# データ読み込み
 path = 'sample_data2.txt'
 data = np.loadtxt(path, delimiter='\t', dtype='object', encoding='utf8')
 
+# 科目名取得(ヘッダー部分)
 subject_names = list(data[0, 3:])
+# データ取得(得点部分)
 subject_data_list = [data[1:, col_idx].astype(np.int32) for col_idx in range(3, 8)]
 
+# 近似直線用x
 x = np.linspace(0, len(subject_data_list[0]), len(subject_data_list[0]))
 
+# Figureと5x5のaxを作成
 fig, axes = plt.subplots(5, 5)
 fig.canvas.set_window_title('correlation')
+
+# 縦:5回、横:5回繰り返してグラフ作成
 for row_i, row_subject_data in enumerate(subject_data_list):
     for col_i, col_subject_data in enumerate(subject_data_list):
         ax = axes[row_i, col_i]
-        ax.tick_params(direction='in')
-        ax.xaxis.set_visible(False)
-        ax.yaxis.set_visible(False)
-        ax.set_xlim([0, 100])
-        if row_i == col_i:
-            ax.hist(row_subject_data, bins=10)
-        else:
+        ax.tick_params(direction='in')  # 目盛の方向を内側に設定
+        ax.xaxis.set_visible(False)     # x軸とラベルを非表示に設定
+        ax.yaxis.set_visible(False)     # y軸とラベルを非表示に設定
+        ax.set_xlim([0, 100])           # x軸の範囲を設定
+        # 位置によってプロット種類を変更
+        if row_i == col_i:  # 対角線上のとき
+            ax.hist(row_subject_data, bins=10)  # ヒストグラム生成
+        else:               # 対角線上でないとき
+            # 散布図生成
             ax.scatter(row_subject_data, col_subject_data, marker='.')
+            # 線型近似の傾きaと切片b
             a, b = np.polyfit(row_subject_data, col_subject_data, 1)
+            # 近似直線プロット
             ax.plot(x, a*x + b, c='r', ls='--')
-            ax.set_ylim([0, 100])
-        if col_i == 0:
-            ax.set_ylabel(subject_names[row_i])
-            ax.yaxis.set_visible(True)
-        if row_i == 0:
-            ax.set_xlabel(subject_names[col_i])
-            ax.xaxis.set_label_position('top')
-            ax.xaxis.tick_top()
-            ax.xaxis.set_visible(True)
-
-fig_ = plt.figure('boxplot')
-ax_ = fig_.add_subplot(111)
-ax_.boxplot(subject_data_list, labels=subject_names)
-plt.show()</code>
+            ax.set_ylim([0, 100])       # y軸の範囲を設定
+        if col_i == 0:      # 0列目のとき
+            ax.set_ylabel(subject_names[row_i]) # ラベルを科目名に設定
+            ax.yaxis.set_visible(True)          # y軸を表示
+        if row_i == 0:      # 0列目のとき
+            ax.set_xlabel(subject_names[col_i]) # ラベルを科目名に設定
+            ax.xaxis.set_label_position('top')  # ラベル位置を上部に設定
+            ax.xaxis.tick_top()                 # x軸目盛り位置を上部に設定
+            ax.xaxis.set_visible(True)          # x軸を表示</code>
 </pre>
 
 <h3 class='underline'>3次元グラフ</h3>
