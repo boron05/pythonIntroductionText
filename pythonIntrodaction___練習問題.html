@@ -586,6 +586,47 @@ print('クリア時間:{:.2f}'.format(clear_time))</code>
     <p>
         「A_02_X.txt」の02部分に着目し、00～19、20～39、40～59、60～79、80～99の5つに分類し、フォルダ分けしたい。
     </p>
+ 
+<h2 id="0.">[6] 外部ライブラリ</h2>
+    <h3 id="0.1" class="underline">Q1. 2原子系の1次元連成運動(matplotlib & Numpy利用)</h3>
+    <p>
+        質量\(M\)と\(m\)が交互にばねに繋がれた系を考えたとき、分散関係は以下で与えられる。
+        \begin{align*}
+            {\omega(k)}^2=\frac{f}{Mm}\left\{(M+m)\pm\sqrt{(M+m)^2-4Mm\sin^2ka}\right\}.
+        \end{align*}
+        ここで\(f\)はばね定数、\(k\)は波数、\(a\)は原子間距離である。
+        また、質量比として\(\alpha\)を導入し、\(M=\alpha m\)を代入すれば
+        \begin{align*}
+            {\omega(k)}^2&=\frac{f}{\alpha m^2}\left\{m(1+\alpha)\pm\sqrt{m^2(1+\alpha)^2-4\alpha m^2\sin^2ka}\right\}\\
+            &=\frac{f}{\alpha m}\left\{(1+\alpha)\pm\sqrt{(1+\alpha)^2-4\alpha\sin^2ka}\right\}
+        \end{align*}
+        を得る。プロットする為に無次元化(\(f=1, m=1,a=1\))すれば、
+        \(\omega_\alpha^+(k)\)と\(\omega_\alpha^-(k)\)は、(\(\omega_\alpha^+(k)\geq\omega_\alpha^-(k)\))
+        \begin{align*}
+            {\omega_\alpha^+(k)}^2=\frac{1}{\alpha}\left\{(1+\alpha)+\sqrt{(1+\alpha)^2-4\alpha\sin^2k}\right\},\quad
+            {\omega_\alpha^-(k)}^2=\frac{1}{\alpha}\left\{(1+\alpha)-\sqrt{(1-\alpha)^2-4\alpha\sin^2k}\right\}
+        \end{align*}
+        と表せる。
+    </p>
+    <p>
+        縦軸に振動数\(\omega\)、横軸に波数\(k\)として上記関数をグラフ化し、光学ブランチと音響ブランチの形を可視化せよ。
+        また、\(\alpha\)の値によってグラフの形がどのように変わるのかを確認せよ。
+        (\(\alpha=1\)のときは光学ブランチ\(\omega_1^+(k)\)と音響ブランチ\(\omega_1^-(k)\)が\(k=\pm\pi/2\)で交わる。)
+    </p>
+    <p>
+        ※実装上は、波数と質量比を引数に持ち、振動数を返す関数を定義してあげると良いだろう。
+        なお、上記式の\(\omega\)は2乗されたものであるから、Numpyのsqrt()関数で平方根を取るようするとよい。
+        なお、sqrt(x)は(x)**(1/2)と同じ結果を返す。
+    </p>
+    <p>
+        グラフのスタイルは各自に任せるが、私だったらこんな感じにするというサンプルを下記に載せておく。
+    </p>
+    <p>
+        <div class="pic_frame">
+            <img src="fig_imgs/fig_exam_01_opticalAcousticmodestylesample.webp" title="スタイルサンプル" width="600">
+            <p>バブルソート</p>
+        </div>
+    </p>
     
 </div>
 
