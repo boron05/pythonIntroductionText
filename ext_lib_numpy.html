@@ -205,15 +205,15 @@ list0 = [
 arr0 = np.array(list0)
 
 # スライスの例
-print(arr4[0:2, 1:3])   # 0～1行目、1～3列目を取得 -> 2x2行列
-print(arr4[0:2, 1: ])   # 0～1行目、1～最終列目を取得 -> 2x4行列
-print(arr4[ :2, 1:4])   # 先頭～1行目、1～3列目を取得 -> 2x3行列
-print(arr4[0:2,  : ])   # 0～1行目、全列を取得 -> 2x5行列
-print(arr4[ : , 1:3])   # 全行、1～2列目を取得 -> 5x2行列
-print(arr4[0:2, 3])     # 0～1行目、3列目を取得 -> 1次元配列(要素数2)
-print(arr4[4, 1:4])     # 4行目、1～3列目を取得 -> 1次元配列(要素数3)
-print(arr4[:, 3])       # 4行目を取得 -> 1次元配列(要素数5)
-print(arr4[4, :])       # 4行目を取得 -> 1次元配列(要素数5)</code>
+print(arr0[0:2, 1:3])   # 0～1行目、1～2列目を取得 -> 2x2行列
+print(arr0[0:2, 1: ])   # 0～1行目、1～最終列目を取得 -> 2x4行列
+print(arr0[ :2, 1:4])   # 先頭～1行目、1～3列目を取得 -> 2x3行列
+print(arr0[0:2,  : ])   # 0～1行目、全列を取得 -> 2x5行列
+print(arr0[ : , 1:3])   # 全行、1～2列目を取得 -> 5x2行列
+print(arr0[0:2, 3])     # 0～1行目、3列目を取得 -> 1次元配列(要素数2)
+print(arr0[4, 1:4])     # 4行目、1～3列目を取得 -> 1次元配列(要素数3)
+print(arr0[:, 3])       # 3列目を取得 -> 1次元配列(要素数5)
+print(arr0[4, :])       # 4行目を取得 -> 1次元配列(要素数5)</code>
 </pre>
     <p>
         numpy_loadtext.pyではファイル読み込みの際に用いる行と列を指定したが、
@@ -378,29 +378,28 @@ print(A.dot(A_inv))</code>
     </p>
 <pre class=line-numbers data-label="numpy_simultaneous.py">
 <code class="language-python">import numpy as np
-from mymoduleinput import InputNumber
+import mymoduleinput as myinput
 
 print('3元連立方程式を求める AX = B')
 while True:
     print('xの係数を入力して下さい')
-    inputN = InputNumber()
-    a1 = inputN.input_nums_N(3, 'a11, a12, a13 >')
-    a2 = inputN.input_nums_N(3, 'a21, a22, a23 >')
-    a3 = inputN.input_nums_N(3, 'a31, a32, a33 >')
+    a1 = myinput.input_nums_N(3, 'a11, a12, a13 >')
+    a2 = myinput.input_nums_N(3, 'a21, a22, a23 >')
+    a3 = myinput.input_nums_N(3, 'a31, a32, a33 >')
     A = np.array([a1, a2, a3]) 
 
     try:
         A_inv = np.linalg.inv(A)
     except np.linalg.LinAlgError as err:
         print('Aの逆行列が存在しません（解が一意に定まらない）')
-        if inputN.input_int('終了する場合は-1を入力> ') == -1:
+        if myinput.input_int('終了する場合は-1を入力> ') == -1:
             break
     else:
-        b = inputN.input_nums(3, 'b1, b2, b3 >')
+        b = myinput.input_nums(3, 'b1, b2, b3 >')
         B = np.array(b)
         X = A_inv.dot(B)
         print(f'解はX = {X}\n')
-        if inputN.input_int('終了する場合は-1を入力> ') == -1:
+        if myinput.input_int('終了する場合は-1を入力> ') == -1:
             break
 
 print('---Finish---')</code>
