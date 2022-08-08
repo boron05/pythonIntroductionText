@@ -1,0 +1,892 @@
+﻿<html lang="ja">
+<head>
+    <title>pandas | Python Library</title>
+    <link rel="stylesheet" href="prism.css">
+    <link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+  <a href="https://boron05.github.io/pythonIntroductionText/">Index</a>
+  <a href="./pythonIntrodaction_00_はじめに.html">0. はじめに</a>
+  <a href="./pythonIntrodaction_01_インストール.html">1. インストール</a>
+  <a href="./pythonIntrodaction_02_対話型.html">2. 対話型</a>
+  <a href="./pythonIntrodaction_03_スクリプトファイルでの実行.html">3. Scriptファイルの実行</a>
+  <a href="./pythonIntrodaction_04_変数と型.html">4. 変数の型</a>
+  <a href="./pythonIntrodaction_05_条件分岐.html">5. 条件分岐</a>
+  <a href="./pythonIntrodaction_06_繰り返し処理.html">6. 繰り返し処理</a>
+  <a href="./pythonIntrodaction_07_例外処理.html">7. 例外処理</a>
+  <a href="./pythonIntrodaction_08_ファイル入出力.html">8. ファイル入出力</a>
+  <a href="./pythonIntrodaction_09_関数.html">9. 関数</a>
+  <a href="./pythonIntrodaction_10_クラス.html">10. クラス</a>
+  <a href="./pythonIntrodaction_11_ライブラリの利用.html">11. ライブラリの利用</a>
+  <a href="./pythonIntrodaction___練習問題.html">練習問題</a>
+</div>
+
+<div id="main" class="main">
+<button class="openbtn" onclick="openNav()">☰ Open Index</button> 
+<div class="section-pandas">
+
+    <h2>pandas</h2>
+    <p>
+    <div class="pic_float">
+        <img src="fig_imgs\logo_pandas.webp" title="pandasロゴ" width="200">
+        <p>公式HP:https://pandas.pydata.org/</p>
+    </div>
+    </p>
+    <p>
+    
+    例のごとくwikiに頼るとpandasの特徴は
+    <blockquote cite=”https://ja.wikipedia.org/wiki/Pandas”>
+        <ul>
+            <li>
+                データ操作のための高速で効率的なデータフレーム（DataFrame）オブジェクト
+            </li>
+            <li>
+                メモリ内のデータ構造とその他のフォーマットのデータ間で相互に読み書きするためのツール群。フォーマット例: CSV、テキストファイル、Excel、SQLデータベース、HDF5フォーマットなど
+            </li>
+            <li>
+                かしこいデータのアライメントおよび統合された欠損値処理
+            </li>
+            <li>
+                データセットの柔軟な変形およびピボット
+            </li>
+            <li>
+                ラベルに基づいたスライス、fancyインデクシング、巨大なデータセットのサブセット取得
+            </li>
+            <li>
+                データセットに対するsplit-apply-combine操作を可能にするエンジンが提供するpowerful groupを使ったデータの集計および変換
+            </li>
+            <li>
+                高性能なデータセットのマージと結合
+            </li>
+            <li>
+                時系列データ: 日付範囲生成、周波数変換、移動窓を用いた統計値や線形回帰、シフトと遅延、など
+            </li>
+            <li>
+                パフォーマンスのための高度な最適化。重要なコードはCythonまたはC言語で実装されている。
+            </li>
+        </ul>
+    </blockquote>
+    ファイルからデータ読み込んで何か処理したいのであればpandasを使うことになるだろう。
+    NumPyでもできなくはないのだが、欠損値の処理やグループ化、ピボットテーブルの作成など
+    データの加工を行いたいときはpandasの方がはるかに簡潔に書ける。
+    </p>
+    <p>
+        ネット上にある参考になりそうなサイト一覧
+        <ul>
+        <li>
+            <a href="https://note.nkmk.me/pandas/" target="_blank" rel="noopener noreferrer">
+            pandasに関する情報 | note.nkmk.me
+            </a></li>
+    </ul>
+    </p>
+    
+    <h3 class="underline">データフレーム (DataFrame) オブジェクト</h3>
+    <p>
+        pandasの扱い方とはDataFrameオブジェクトの扱い方に等しい。
+    </p>
+<pre class=line-numbers data-label="pandas00_standard.py">
+<code class="language-python">import pandas as pd     # pdとすることが多い
+
+# データフレーム作成
+data_dict = {'col1': [1, 2, 3], 'col2': [4, 5, 6]}
+df1 = pd.DataFrame(data=data_dict)  #辞書を渡して作成
+
+print(df1)</code>
+</pre>
+    <p>
+        下記のような表が出力されるであろう。
+        <table style="border-collapse: collapse" align="center">
+            <tr>
+                <th></th>
+                <th>col1</th>
+                <th>col2</th>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>1</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>3</td>
+                <td>6</td>
+            </tr>
+            </table>
+        出力結果を見れば分かると思うが、上記コードは列名が"col1"と"col2"で、
+        それぞれ[1,2,3]と[4,5,6]という値を持つデータフレームを作成している。
+        一番左の列名がないところはIndexであり、何も指定しないと0～nまでの値が入る
+        （手動指定したとしても、Indexなので重複はしない方が望ましいだろう）。
+        Index以外にもデータフレームには構造があるので下記の図を参照しておくとよい。
+    </p>
+    <p>
+        <div class="pic_frame">
+            <img src="fig_imgs\fig_pandas_dataframestructure.webp" title="データフレームの構造" width="400">
+            <p>データフレームの構造</p> 
+        </div>
+    </p>
+    <p>
+        "Series"はデータフレーム内の単一の列または行のことを言う。
+        逆にいうとSeriesが2つ以上集まればDetaFrameである。
+        Numpyの2次元配列にカラム名やインデックス名が付いたようなものと考えると良いかもしれない。
+    </p>
+
+<h3 class="underline">特定の行または列の取得</h3>
+    <p>
+        下記コードは対話型で一行づつ実行した方が分かりやすいかもしれない。
+    </p>
+<pre class=line-numbers data-label="pandas01_getrowcol.py">
+<code class="language-python">import pandas as pd 
+
+data_dict = {'age': [21, 45, 36], 'point': [46, 34, 29]}
+df1 = pd.DataFrame(data=data_dict, index=['A', 'B', 'C'])   #Indexを指定
+print(df1)
+
+# 列選択
+print('--- get Column ---')
+print(df1['age'])      # [列名]で抽出
+print(df1.age)         # ドットでも可
+
+# locプロパティ（名前で取得）
+print('--- loc ---')
+print(df1.loc['A', 'point'])    # IndexがAで、列名がpointの要素
+# スライス:を用いると複数の要素を取得可能
+print('--- loc slice ---')
+print(df1.loc['A':'B', 'point'])    # IndexがA～Bで、列名がpointの要素
+print(df1.loc['A', :])              # IndexがAの行を取得
+print(df1.loc[:, 'age'])            # df1['age']と同じ
+# リストで指定もできる
+print('--- loc list ---')
+print(df1.loc[['A', 'C'], 'age'])    # IndexがAとCで列名がage
+
+# ilocプロパティ（番号で取得）
+print('--- iloc ---')
+print(df1.iloc[0, 1])    # Index番号が0(=A)で、列番号が1(=point)の要素
+# スライス:を用いると複数の要素を取得可能
+print('--- iloc slice ---')
+print(df1.iloc[0:2, 1])     # Indexが0～1で(2は含まない)、列番号が1
+print(df1.iloc[0, :])       # df1.loc['A', :]と同じ
+print(df1.iloc[:, 0])       # df1['age']と同じ
+# リストで指定もできる
+print('--- iloc list ---')
+print(df1.iloc[[0, 2], 0])  # df1.loc[['A', 'C'],'age']と同じ</code>
+</pre>
+
+<h3 class="underline">行または列の追加及び削除</h3>
+    <p>
+        列の追加は容易だが、行の追加はやや面倒である。
+    </p>
+<pre class=line-numbers data-label="pandas01_insertrowcol.py">
+<code class="language-python">import pandas as pd 
+
+data_dict = {'age': [21, 45, 36], 'point': [46, 34, 29]}
+df1 = pd.DataFrame(data=data_dict, index=['A', 'B', 'C'])   #Indexを指定
+print(df1)
+
+# 新規列追加
+df1['new_col'] = 2          # スカラーを追加
+df1['score'] = [78, 84, 68] # リスト追加（ndarrayでも可）
+# Seriesの演算とかも可能
+df1['calc'] = df1['age'] * df1['point']
+print(df1)
+
+# locプロパティでの追加
+df1.loc['D'] = [9, 73, 5, 55, 0]    # locで新しく行を追加する。
+df1.loc[:, 'point2'] = 0            # 新規列の追加
+print(df1)
+
+# 削除
+df1.drop('D', inplace=True)         # inplaceをTrueにすると元のDataFrameが変更される
+df1 = df1.drop('new_col', axis=1)   # axis=1で列を選択。省略するとaxis=0で行を削除する
+print(df1)</code>
+</pre>
+    <p>
+        なお、追加するにはappend()というのもあるが、
+        Indexの指定が解除され0,1,…に置き換わったりする。
+        さらに、速度も遅いのでお勧めしない。
+    </p>
+
+<h3 class="underline">条件に応じて処理する</h3>
+    <p>
+        この当りから記述に慣れがいる。
+        便利なんですけどね。
+    </p>
+<pre class=line-numbers data-label="pandas01_condition.py">
+<code class="language-python">import pandas as pd 
+
+data_dict = {'age': [21, 45, 36, 30], 'point': [46, 34, 29, 36]}
+df1 = pd.DataFrame(data=data_dict)
+print(df1)
+
+# pointが40以上ならTrue
+print(df1['point'] > 40)
+print(df1[df1['point']>40])
+
+# Trueな行だけ選択し、新規列を作成
+df1.loc[df1['point'] > 40, 'judge'] = True  # スカラーを渡す
+df1.loc[df1['point'] < 40, 'point2'] = df1['point'] * 1.5
+print(df1)
+
+# 既存の列に適用
+df1.loc[df1['point'] > 40, 'point2'] = df1['point']
+print(df1)</code>
+</pre>
+    <p>
+        条件に応じた処理にはwhere()やmask()メソッドというものある。
+    </p>
+    <h4>where() / mask()メソッド</h4>
+    <p>
+        where()は条件に対してFalseのものをNaNまたは第2引数の値にする。
+    </p>
+<pre class=line-numbers data-label="pandas01_where.py">
+<code class="language-python">import pandas as pd 
+
+data_dict = {
+    'name': ['John', 'Tom', 'Alice', 'Emma', 'Alex'],
+    'age': [20, 13, 25, 17, 15],
+    'score': [67, 55, 74, 60, 62]
+    }
+df1 = pd.DataFrame(data=data_dict)
+df1['class'] = 'A'
+print(df1.where(df1['age'] > 17))
+print(df1['score'].where(df1['age']>17, df1['score']*1.2))
+
+df1['score2'] = df1['score'].where(df1['age']>17, df1['score']*1.2)
+# 元のオブジェクトを変更したければ、inplace=True
+df1['class'].where(df1['score2']>70, 'B', inplace=True)
+print(df1)</code>
+</pre>
+    <p>
+        mask()は条件に対してTrueのものをNaNまたは、第2引数の値にする。
+    </p>
+<pre class=line-numbers data-label="pandas01_mask.py">
+<code class="language-python">import pandas as pd 
+
+data_dict = {
+    'name': ['John', 'Tom', 'Alice', 'Emma', 'Alex'],
+    'age': [20, 13, 25, 17, 15],
+    'score': [67, 55, 74, 60, 62]
+    }
+df1 = pd.DataFrame(data=data_dict)
+df1['class'] = 'A'
+print(df1.mask(df1['age'] > 17))
+print(df1['score'].mask(df1['age']>17, df1['score']*1.2))
+
+df1['score2'] = df1['score'].mask(df1['age']>17, df1['score']*1.2)
+# 元のオブジェクトを変更したければ、inplace=True
+df1['class'].mask(df1['score2']>70, 'B', inplace=True)
+print(df1)</code>
+</pre>
+    <p>
+        pandasのwhereおよびmaskメソッドでは、
+        第2引数にTrueまたはFalseのときの変更後の値を設定できるが、
+        もう一方は元のオブジェクトの値がそのまま使われる。
+        Numpyにもwhereメソッドが存在し、
+        こちらは第1引数に条件、第2引数にTrueの時の値、第3引数にFlaseの時の値を渡すことが出来る。
+    </p>
+<pre class=line-numbers data-label="pandas01_npwhere.py">
+<code class="language-python">import pandas as pd
+import numpy as np
+
+data_dict = {
+    'name': ['John', 'Tom', 'Alice', 'Emma', 'Alex'],
+    'age': [20, 13, 25, 17, 15],
+    'score': [67, 55, 74, 60, 62]
+    }
+df1 = pd.DataFrame(data=data_dict)
+df1['score2'] = df1['score'].where(df1['age']>17, df1['score']*1.2)
+
+df1['class'] = np.mask(df1['score2']>70, 'A', 'B')
+print(df1)</code>
+</pre>
+<h3 class="underline">ファイルの読み込みと統計処理</h3>
+    <p>
+        「とりあえずcsv読み込むならpandasで」とよく書かれている。それぐらい便利。
+    </p>
+<pre class=line-numbers data-label="pandas01_readcsv.py">
+<code class="language-python">import pandas as pd 
+
+# 特に指定せずに読み込んだ場合
+df = pd.read_csv('sample_data2.txt', sep='\t')
+print(df)
+print(df.dtypes)    # pandasが賢いので科目列はintとして読み込んでくれる
+
+# いろいろ指定して読み込むこともできる
+COL_TYPES = {'氏名':str, 'クラス':str, '英語':int, '数学':int, '国語':int, '理科':int,'社会':int}
+df = pd.read_csv(
+    'sample_data2.txt',
+    sep = '\t',
+    dtype = COL_TYPES,  # 列ごとに型を明示
+    index_col = 0,      # Indexとして利用する列を指定
+    encoding = 'UTF-8'  # 文字コード指定
+    )
+
+print(df.head())    # 最初の5行
+
+# 統計量（数値型以外の列は無視してくれる）
+print(df.mean())        # 平均
+print(df.std())         # 標準偏差
+print(df.describe())    # いろいろまとめて計算
+
+# 列の追加
+df['tot'] = df.sum(axis=1)  # 行ごとの合計
+df['ave'] = df.mean(axis=1) # 行ごとの平均
+print(df.head())
+
+# ソート
+print(df.sort_values('tot', ascending=False))</code>
+</pre>
+    <p>
+        何かしらの計算を行うときに数値型かどうかを自動で判定し、処理を行う列をpandasが決めてくれる。
+    </p>
+
+<h3 class="underline">データの加工（グループ化やpivotテーブル）</h3>
+    <p>
+        NumPyでは面倒であったグループ化の処理も用意にできる。
+    </p>
+<pre class=line-numbers data-label="pandas01_groupby.py">
+<code class="language-python">import pandas as pd 
+
+# いろいろ指定してやる
+COL_TYPES = {'氏名':str, 'クラス':str, '英語':int, '数学':int, '国語':int, '理科':int,'社会':int}
+df = pd.read_csv('sample_data2.txt', sep='\t', dtype=COL_TYPES, index_col=0, encoding='UTF-8')
+
+# クラスごとにグループ化
+df_groupby_class = df.groupby('クラス')
+print(df_groupby_class.mean())  # 平均計算</code>
+</pre>
+    <p>
+        pandasはdatetime(日付)に関する処理も強力なので以下にその例を示す。
+        用いているサンプルデータは都道府県別のCOVID-19の感染者数データ
+        （出典:<a href="https://www3.nhk.or.jp/news/special/coronavirus/data-widget/" target="_blank" rel="noopener noreferrer">NHK</a>）
+        で
+        <table border="1" style="border-collapse: collapse" align="center">
+            <tr>
+                <th>日付</th>
+                <th>都道府県コード</th>
+                <th>都道府県名</th>
+                <th>各地の感染者数_1日ごとの発表数</th>
+                <th>各地の感染者数_累計</th>
+                <th>各地の死者数_1日ごとの発表数</th>
+                <th>各地の死者数_累計</th>
+                <th>各地の直近1週間の人口10万人あたりの感染者数</th>
+            </tr>
+            <tr>
+                <td>2020/1/16</td>
+                <td>01</td>
+                <td>北海道</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+            </tr>
+            <tr>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+                <td>・</td>
+            </tr>
+            </table>
+            のようなデータである。（ファイル名は"sampledata_covid19_220303.csv"としてある。）
+            これを処理してみよう。
+            まずはデータを読み込み、使用する列を"日付"、"都道府県名"、"各地の感染者数_1日ごとの発表数","各地の死者数_1日ごとの発表数"の4列に絞る。
+    </p>
+<pre class=line-numbers data-label="pandas01_covid19.py">
+<code class="language-python">import pandas as pd
+
+df = pd.read_csv(
+    'sampledata_covid19_220303.csv',
+    sep = ',',
+    parse_dates = ['日付'],
+    encoding = 'UTF-8')
+print(df.dtypes)
+
+# 使用する列選択
+df = df.loc[:, ['日付', '都道府県名','各地の感染者数_1日ごとの発表数', '各地の死者数_1日ごとの発表数']]
+
+# 列名が長いので変更
+re_columns = {
+    '日付': 'date',
+    '都道府県名': 'prefecture',
+    '各地の感染者数_1日ごとの発表数': 'infections',
+    '各地の死者数_1日ごとの発表数': 'death'
+    }
+df.rename(columns=re_columns, inplace=True)
+print(df)
+
+# pivotテーブル作成(crosstab()というものある)
+df_pivot = df.pivot_table(index='date', columns='prefecture', values=['infections', 'death'])
+print(df_pivot)
+
+# 1ヶ月毎に集計
+df_pivot_month = df.pivot_table(
+    index = pd.Grouper(key='date', freq='M'),   # Mで1ヶ月、2Mで2ヶ月、7Dで7日など指定出来る
+    columns = 'prefecture',
+    values = ['infections', 'death'],
+    aggfunc = sum                               # 1ヶ月ごとの和を計算
+    )
+print(df_pivot_month)
+
+# 保存
+#df_pivot_month.to_csv('ivot_month_covid19_220303.csv')   # csv形式で出力
+df_pivot_month.to_pickle('pivot_month_covid19_220303.pkl')  # pkl形式で出力</code>
+</pre>
+    <p>
+        上記コードにおいてピポットテーブルを作成しているのは24行目と28行目である。
+        "df_pivot"は一日ごとの集計であり、df_pivot_monthは1ヶ月ごとの集計となる。
+        日付のグループ化にはpd.Grouper(key, freq)を用いることが多い。
+        keyには使用する列、freqには集計間隔（'D'、'M'以外にも週ごとを表す'W'などもある）を渡す。
+    </p>
+    <p>
+        また、保存処理もここで紹介しておく。
+        to_csv()はその名の通りcsv形式で保存するメソッドである。
+        csv形式への出力は、出力後のデータをエクセルなど別のアプリケーションにいれて処理し直す
+        場合には便利だが、Python（pandas）で再度読み込む場合には、read_csv()で色々指定し直す
+        必要があり面倒である。
+        そのような時に使われるのがto_pickleでこれはDataFrameオブジェクトをそのままバイナリファイルとして
+        保存する。
+        csv形式のように人間に読めるデータではない（テキストエディタで開けばおそらく文字化けする）が、
+        Pythonにとっては直接読めるので処理速度が速くなるだけでなく、
+        csvと比べてファイルサイズも削減できる（場合もある）。
+        なお、読み込む際はpd.read_pickle(path)で読み込める。
+    </p>
+    
+<h3 class="underline">可視化（matplotlibと兼用）</h3>
+    <p>
+        前のセクションで作った'pivot_month_covid19_220303.pkl'を利用して
+        グラフを作ってみる。
+    </p>
+<pre class=line-numbers data-label="pandas01_covid19_plot.py">
+<code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+import datetime as dt
+
+df = pd.read_pickle('pivot_month_covid19_220303.pkl')
+print(df)
+
+# 何も考えずにただplotするなら以下で済む
+#df.plot()
+#plt.show()
+
+# 東京の新規感染者数
+df['infections']['東京都'].plot(label='TOKYO')
+df['infections'].mean(axis=1).plot(label='National Ave')
+plt.legend()
+plt.show()
+
+# 東京・神奈川・埼玉のデータ抽出
+df_inf_tks = df['infections'].loc[:, ['東京都','神奈川県','埼玉県']]
+df_inf_tks_ave = df_inf_tks.mean(axis=1)        # 3都県平均
+df_inf_all_ave = df['infections'].mean(axis=1)  # 全国平均
+
+# axオブジェクトを作ってからその中にいれることもできる
+fig = plt.figure()
+ax1 = fig.add_subplot(1, 2, 1)
+df_inf_tks.plot(ax=ax1)
+df_inf_tks_ave.plot(label='3都県平均', ls='--', ax=ax1)
+df_inf_all_ave.plot(label='全国平均', ls='--', c='k', ax=ax1)
+
+ax1.set_title('New Infections')
+xmin, xmax =  dt.date(2020, 1, 1), dt.date(2022, 2, 28) # x軸範囲
+ax1.set_xlim([xmin, xmax])
+ax1.legend()
+
+ax2 = fig.add_subplot(1, 2, 2)
+df_inf_tks.cumsum().plot(ax=ax2)    # cumsumで累計計算
+df_inf_tks_ave.cumsum().plot(label='3都県平均', ls='--', ax=ax2)
+df_inf_all_ave.cumsum().plot(label='全国平均', ls='--', c='k', ax=ax2)
+
+ax2.set_title('Cumulative Infections')
+ax2.set_xlim([xmin, xmax])
+ax2.legend()
+
+plt.show()</code>
+</pre>
+    <p>
+        線グラフplot()以外にもdf.plot.bar() [df.plot(kind='bar')]や
+        df.plot.scatter() [df.plot(kind='scatter')]など他のグラフも書ける。
+        なお、累計を求める際にcumsum()を用いているが、安全に行うならdateをキーにして
+        ソートしてからcumsum()した方がよいだろう。
+    </p>
+
+<h3 class="underline">matplotlibとの連携</h3>
+    <p>
+        matplotlibとの連携をもう少し詳しく見ていく。
+    </p>
+<h4>DataFrame.plot()</h4>
+    <p>
+        pandasはmatplotlibとの連携が容易にできる。
+    </p>
+<pre class=line-numbers data-label="pandas01_dfplot.py">
+<code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+
+data_dict = {
+    'x':[1,2,3,5,6,7,9],
+    'y1':[2,5,4,3,7,9,2],
+    'y2':[3,4,6,9,2,1,5],
+    'y3':[1,4,6,9,11,13,15],
+}
+# DataFrame作成
+df = pd.DataFrame(data_dict)
+# plot
+df.plot()
+# 表示
+plt.show()</code>
+</pre>
+    <p>
+        plotを行っているのは13行目である。
+        plot()に渡す引数を省略した場合、x軸はdfのIndexの値となり、
+        dfが持つ['x', 'y1', 'y2', 'y3']列の全てyの値として描画される。
+        plotに渡せる引数は主に以下である。
+        (大量にあるので詳しくは公式を確認すると良い。)
+    </p>
+<pre data-label="DataFrame.plot()の引数">
+<code class="language-python">df.plot(
+    data    # DataFrameかSeries
+    x       # labelかposition
+    y       # labelかposition
+    kind    # グラフの種類
+    ax      # axオブジェクト
+    )</code>
+</pre>
+    <p>
+        xに'x'列を指定し、yを'y1'と'y2'に限定する。
+        また、kindを省略するとデフォルトの'line'が選択されるが、
+        これを明示してみると
+    </p>
+<pre class=line-numbers data-label="pandas01_dfplotkind1.py">
+<code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+
+data_dict = {
+    'x':[1,2,3,5,6,7,9],
+    'y1':[2,5,4,3,7,9,2],
+    'y2':[3,4,6,9,2,1,5],
+    'y3':[1,4,6,9,11,13,15],
+}
+# DataFrame作成
+df = pd.DataFrame(data_dict)
+# plot
+df.plot(x='x', y=['y1','y2'], kind='line')
+# 表示
+plt.show()</code>
+</pre>
+    <p>
+        kindに'line'を指定したがこれは別の書き方も可能で、
+    </p>
+<pre data-label="pandas01_dfplotkind2.py">
+<code class="language-python">df.plot.line()</code>
+</pre>
+    <p>
+        と同じ結果になる。また、kindで指定できるグラフは以下である。
+        <table align="center">
+            <tr>
+                <th style="border-bottom: 1px solid black;">引数名</th>
+                <th style="border-bottom: 1px solid black;">グラフ種類</th>
+            </tr>
+            <tr>
+                <td>line</td>
+                <td>線グラフ(デフォルト)</td>
+            </tr>
+            <tr style="background: #eee;">
+                <td>bar</td>
+                <td>棒グラフ(鉛直方向)</td>
+            </tr>
+            <tr>
+                <td>barh</td>
+                <td>棒グラフ(水平方向)</td>
+            </tr>
+            <tr style="background: #eee;">
+                <td>hist</td>
+                <td>ヒストグラム</td>
+            </tr>
+            <tr>
+                <td>box</td>
+                <td>箱ひげ図</td>
+            </tr>
+            <tr style="background: #eee;">
+                <td>kde</td>
+                <td>カーネル密度推定</td>
+            </tr>
+            <tr>
+                <td>density</td>
+                <td>カーネル密度推定のようなもの</td>
+            </tr>
+            <tr style="background: #eee;">
+                <td>area</td>
+                <td>面グラフ</td>
+            </tr>
+            <tr>
+                <td>pie</td>
+                <td>円グラフ</td>
+            </tr>
+            <tr style="background: #eee;">
+                <td>scatter</td>
+                <td>散布図</td>
+            </tr>
+            <tr>
+                <td>hexbin</td>
+                <td>2次元ヒストグラム</td>
+            </tr>
+        </table>
+        各グラフによって渡せる引数が異なるため、ここでは深堀しない。
+    </p>
+    <p>
+        引数axには独自に用意したaxオブジェクト渡すことができる。
+        DataFrame.plot()に渡せる引数の中にはグラフの細かい設定を行うための引数が容易されているのだが、
+        渡す引数の数が多くなり、可読性が悪くなる。
+        そこで、axオブジェクトを別に用意し、それを調整したものをDataFrame.plot()に渡した方が分かりやすい。
+        axオブジェクトはmatplotlibのものであるから、matplotlibで扱った時と同じ扱いでよい。
+    </p>
+<pre class=line-numbers data-label="pandas01_dfplotax.py">
+<code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+
+data_dict = {
+    'x':[1,2,3,5,6,7,9],
+    'y1':[2,5,4,3,7,9,2],
+    'y2':[3,4,6,9,2,1,5],
+    'y3':[1,4,6,9,11,13,15],
+}
+# DataFrame作成
+df = pd.DataFrame(data_dict)
+'''
+# plot
+df.plot.line(
+    x = 'x',
+    xlim = [1, 8],
+    ylim = [0, 16],
+    grid=True,
+    title='test',
+    figsize=(5, 5)
+    )
+'''
+fig, ax = plt.subplots(figsize=(5, 5))
+
+df.plot.line(x='x', ax=ax)
+
+ax.set_xlim(1, 8)
+ax.set_ylim(0, 16)
+ax.grid()
+ax.set_title('test')
+
+# 表示
+plt.show()</code>
+</pre>
+    <p>
+        コメントアウトした14～20行目でplot()の引数に色々渡して設定するか、
+        23行目に書いたようにaxオブジェクトを用意し、それを27～30行目のように設定するか
+        という違いになる。
+    </p>
+    <p>
+        実際は別の書き方もできて、DataFrame.plot()はaxオブジェクトを返すので、
+        その返されたaxオブジェクトに対して設定を行っても良い。
+    </p>
+<pre class=line-numbers data-label="pandas01_axdfplot.py">
+<code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+
+data_dict = {
+    'x':[1,2,3,5,6,7,9],
+    'y1':[2,5,4,3,7,9,2],
+    'y2':[3,4,6,9,2,1,5],
+    'y3':[1,4,6,9,11,13,15],
+}
+# DataFrame作成
+df = pd.DataFrame(data_dict)
+
+# plot
+ax = df.plot.line(x='x')
+
+ax.set_xlim(1, 8)
+ax.set_ylim(0, 16)
+ax.grid()
+ax.set_title('test')
+
+# 表示
+plt.show()</code>
+</pre>
+    <p>
+        個人的なおすすめは2番目に紹介したfigureとaxオブジェクトを別に用意する方法である。
+        その理由としてはmatplotlibと同じように設定すれば済む
+        (複雑なグラフのレイアウト設定などもmatplotlibでやった様に書ける)という点と、
+        オブジェクトの生成を明示した方が読みやすい気がするからである。
+    </p>
+    <p>
+        axオブジェクトを生成することで、グラフを重ねることも容易になる。
+    </p>
+<pre class=line-numbers data-label="pandas01_multiplot.py">
+<code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+
+data_dict1 = {
+    'x':[1,2,3,5,6,7,9],
+    'y1':[2,5,4,3,7,9,2],
+    'y2':[3,4,6,9,2,1,5],
+    'y3':[1,4,6,9,11,13,15],
+}
+
+data_dict2 = {
+    'X':[2, 4, 6, 7, 8],
+}
+# DataFrame作成
+df1 = pd.DataFrame(data_dict1)
+
+df2 = pd.DataFrame(data_dict2)
+df2['Y1'] = df2['X'] ** (1/2)
+
+fig, ax = plt.subplots(figsize=(5, 5))
+
+df1.plot.line(x='x', ax=ax)
+df2.plot.scatter(x='X', y='Y1', color='red', marker='D', ax=ax)
+
+ax.set_xlim(1, 8)
+ax.set_ylim(0, 16)
+ax.grid()
+ax.set_title('test')
+
+# 表示
+plt.show()</code>
+</pre>
+
+<h4>ax.plot()</h4>
+    <p>
+        ここまで紹介したのはDataFrameオブジェクトが持つplot()メソッドを用いたグラフ作成であった。
+        この方法でも良いのだが、
+        matplotlibのaxオブジェクトにもplot()メソッドがあったことを思い出して欲しい。
+    </p>
+<pre class=line-numbers data-label="pandas01_axplot.py">
+<code class="language-python">import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 5, 6, 7, 9]
+y = [2, 5, 4, 3, 7, 9, 2]
+
+fig, ax = plt.subplots(figsize=(5, 5))
+
+ax.plot(x, y, label='y')
+
+ax.set_xlim(1, 8)
+ax.set_ylim(0, 16)
+ax.grid()
+ax.legend()
+ax.set_title('test')
+
+# 表示
+plt.show()</code>
+</pre>
+    <p>
+        結局のところ、ax.plot(x, y)のxとyにDataFrameのSeriesを渡しても同じ挙動になる。
+        （PandasのSeriesはNumpyのndarrayと同じように扱えるので、plot()の引数に問題なく渡せる。）
+    </p>
+<pre class=line-numbers data-label="pandas01_axplotseries.py">
+<code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+
+data_dict = {
+    'x':[1,2,3,5,6,7,9],
+    'y1':[2,5,4,3,7,9,2],
+    'y2':[3,4,6,9,2,1,5],
+    'y3':[1,4,6,9,11,13,15],
+}
+# DataFrame作成
+df = pd.DataFrame(data_dict)
+
+# plot
+fig, ax = plt.subplots(figsize=(5, 5))
+print(df.columns)
+ax.plot(df['x'], df['y1'], label='y1')
+ax.plot(df['x'], df['y2'], label='y2')
+ax.plot(df['x'], df['y3'], label='y3')
+ax.set_xlim(1, 8)
+ax.set_ylim(0, 16)
+ax.grid()
+ax.legend()
+ax.set_title('test')
+
+# 表示
+plt.show()</code>
+</pre>
+    <p>
+        上記例だと、ax.plot()を3回も書いていて面倒なのでplot()部分をfor文で回すようにすると
+    </p>
+<pre class=line-numbers data-label="pandas01_foraxplot.py">
+<code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+
+data_dict = {
+    'x':[1,2,3,5,6,7,9],
+    'y1':[2,5,4,3,7,9,2],
+    'y2':[3,4,6,9,2,1,5],
+    'y3':[1,4,6,9,11,13,15],
+}
+# DataFrame作成
+df = pd.DataFrame(data_dict)
+print('オリジナルのdf')
+print(df)
+print('列リスト', df.columns)
+df.index = df['x']                  # Indexをx列と同じ値に設定
+df.drop('x', axis=1, inplace=True)  # x列削除
+
+print('Index設定後')
+print(df)
+print('列リスト', df.columns)
+
+# figureとax作成
+fig, ax = plt.subplots(figsize=(5, 5))
+# 列に対してforループ
+for col in df.columns:
+    ax.plot(df.index, df[col], label=col)
+
+ax.set_xlim(1, 8)
+ax.set_ylim(0, 16)
+ax.grid()
+ax.legend()
+ax.set_title('test')
+
+# 表示
+plt.show()</code>
+</pre>
+    <p>
+        最終的に言えるのは、グラフ描画するには色々な方法があるので、好きなもの使えばよいということである。
+    </p>
+</div>
+</div>
+
+<script>
+function openNav() {
+  document.getElementById("mySidebar").style.width = "200px";
+  document.getElementById("main").style.marginLeft = "200px";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+<script src="prism.js"></script>
+<script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</body>
+</html>
