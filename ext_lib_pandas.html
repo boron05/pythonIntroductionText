@@ -179,7 +179,7 @@ print(df1.loc[['A', 'C'], 'age'])    # IndexがAとCで列名がage
 # ilocプロパティ（番号で取得）
 print('--- iloc ---')
 print(df1.iloc[0, 1])    # Index番号が0(=A)で、列番号が1(=point)の要素
-# スライス:を用いると複数の要素を取得可能
+# スライス:を用いると複数の要素を取得可能(NumPyの2次元配列と同じ)
 print('--- iloc slice ---')
 print(df1.iloc[0:2, 1])     # Indexが0～1で(2は含まない)、列番号が1
 print(df1.iloc[0, :])       # df1.loc['A', :]と同じ
