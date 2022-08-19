@@ -888,6 +888,143 @@ plt.show()</code>
     <p>
         上記コードでは前述したGridSpecのレイアウトを用いた。
     </p>
+<h4>「ArtistAnimation」と「FuncAnimation」</h4>
+    <p>
+        波束の時間変化のアニメーションをArtistAnimationとFuncAnimationで実装してみる。
+        波束を複素指数関数で
+        \begin{align}
+            \psi(x,t)=\sqrt{\frac{1}{\sqrt{2\pi}\sigma(1 + it/\sigma^2)}}
+            \exp\left[{\frac{-x^2/4\sigma^2+i(kx-\omega t)}{1 + it/\sigma^2}}\right]
+        \end{align}
+        と表せたとする。
+        ここで\(\omega\)は分散関係\(\omega=k^2\)が成り立ってるとすると
+        \begin{align}
+            \psi(x,t)=\sqrt{\frac{1}{\sqrt{2\pi}\sigma(1 + it/\sigma^2)}}
+            \exp\left[{\frac{-x^2/4\sigma^2+i(kx-k^2t)}{1 + it/\sigma^2}}\right]
+        \end{align}
+        と書ける。
+    </p>
+    <p>
+        コードでは\(k=7,\sigma=0.7\)として上記の関数を実装することにする。
+        まず、FuncAnimationでの例を紹介する。
+    </p>
+<pre class=line-numbers data-label="matplot_wavepacketfuncani.py">
+<code class="language-python">'''
+波束の時間変化グラフ描画
+'''
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+# 波束関数
+def f(x, t):
+    k = 7
+    s = 0.7
+
+    A = 1 + 1j*t/s**2
+    B = 1 / np.sqrt(np.sqrt(2*np.pi)*s*A)
+    C = (-x**2/((2*s)**2) + 1j*(k*x-k**2*t)) / A
+
+    return B*np.exp(C).real
+
+# 更新用関数
+def plot(i):
+    # 前のフレームの描画をクリア
+    ax.cla()
+    # t=0のときの波束プロット
+    ax.plot(x, f(x, 0), c='k', lw=0.9, ls='--')
+    # 時間
+    t = i * 0.05
+    # 波束関数
+    y = f(x, t)
+    # 時刻tでの波束プロット
+    ax.plot(x, y, c='r')
+    # 時刻テキストプロット
+    ax.text(35, -0.9, r'$t={:.1f}$'.format(t))
+    # 軸範囲とラベル設定
+    ax.set_xlim(-2, 40)
+    ax.set_ylim(-1, 1)
+    ax.set_xlabel(r'$x$')
+    ax.set_ylabel(r'$\phi(x, t)$')
+    ax.tick_params(axis='both', which='major', direction='in')
+
+x = np.linspace(-2, 40, 400)
+# figureとaxオブジェクト作成
+fig, ax = plt.subplots()
+fig.suptitle('The temporal changes of wave packets')
+# 上下左右余白調整
+plt.subplots_adjust(left=0.15, right=0.95, bottom=0.15, top=0.95)
+# フレーム数40,、描画間隔100ミリ秒
+anim = FuncAnimation(fig, plot, frames=40, interval=100)
+
+plt.show()</code>
+</pre>
+    <p>
+        ArtistAnimationでの例は以下である。
+    </p>
+<pre class=line-numbers data-label="matplot_wavepacketartistani.py">
+<code class="language-python">'''
+波束の時間変化グラフ描画
+'''
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import ArtistAnimation
+
+# 波束関数
+def f(x, t):
+    k = 7
+    s = 0.7
+
+    A = 1 + 1j*t/s**2
+    B = 1 / np.sqrt(np.sqrt(2*np.pi)*s*A)
+    C = (-x**2/((2*s)**2) + 1j*(k*x-k**2*t)) / A
+
+    return B*np.exp(C).real
+
+x = np.linspace(-2, 40, 400)
+# figureとaxオブジェクト作成
+fig, ax = plt.subplots()
+fig.suptitle('The temporal changes of wave packets')
+# 上下左右余白調整
+plt.subplots_adjust(left=0.15, right=0.95, bottom=0.15, top=0.95)
+# 軸範囲とラベル設定
+ax.set_xlim(-2, 40)
+ax.set_ylim(-1, 1)
+ax.set_xlabel(r'$x$')
+ax.set_ylabel(r'$\phi(x, t)$')
+ax.tick_params(axis='both', which='major', direction='in')
+# t=0のときの波束プロット
+ax.plot(x, f(x, 0), c='k', lw=0.9, ls='--')
+
+# 1フレームごとのグラフ格納用リスト
+artist_list = []
+for i in range(40):
+    # 時間
+    t = i * 0.05
+    # 波束関数
+    y = f(x, t)
+    # 時刻tでの波束プロット
+    line, = ax.plot(x, y, c='r') 
+    # 時刻テキストプロット
+    text = ax.text(30, -0.9, r'$t={:.1f}$sec'.format(t))
+    # 波束プロットと時刻テキストプロットを格納用リストに追加
+    artist_list.append([line, text])
+
+# 描画間隔100ミリ秒
+ani = ArtistAnimation(fig=fig, artists=artist_list, interval=100)
+
+plt.show()
+</code>
+</pre>
+    <p>
+        FuncAnimationはArtistAnimationよりも動作が軽いと紹介したが、
+        この波束アニメーションの例だとおそらく（実行環境にもよるが）
+        ArtistAnimationの方がアニメーションが滑らかに動くと思われる。
+        ArtistAnimationは予め40個のグラフ画像を作成するため(36～46行のforの中身)、アニメーションの開始まで少し時間を要するが、一度作成してしまえばその後は滑らかに動かせる。（グラフ枚数が40枚程度なら問題なし。）
+        一方のFuncAnimationは更新用関数の中でax.cla()を行い、ラベルや軸範囲設定を毎回実行しているため、動作が重めになっている。
+    </p>
+
+
 </div>
 </div>
 
